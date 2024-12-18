@@ -1,1 +1,0 @@
-workspace "Maselniczka Core API"
