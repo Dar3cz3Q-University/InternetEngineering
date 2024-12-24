@@ -1,0 +1,85 @@
+name: glovo-maslo
+
+services:
+  client:
+    build:
+      context: ./client/react-app
+    container_name: client
+    ports:
+      - '${VITE_APP_PORT}:${VITE_APP_PORT}'
+    volumes:
+      - ./client/react-app:/app
+      - /app/node_modules
+    networks:
+      - frontend
+  #   depends_on:
+  #     - core-api
+
+  # core-api:
+  #   build:
+  #     context: ./server
+  #   container_name: core-api
+  #   networks:
+  #     - application-network
+  #     - client-network
+  #   depends_on:
+  #     - database
+  #     - redis
+  #     - rabbitmq
+
+  database:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: mssql
+    ports:
+      - 1433:${MSSQL_PORT}
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
+      - MSSQL_PID=Developer
+    networks:
+      - backend
+
+  redis:
+    image: redis:7.0
+    container_name: redis
+    ports:
+      - 6379:${REDIS_PORT}
+    volumes:
+      - ./cache:/data
+    environment:
+      - REDIS_DB=${REDIS_DB}
+      - REDIS_HOST=${REDIS_HOST}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+      - REDIS_TLS=${REDIS_TLS}
+    networks:
+      - backend
+
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    container_name: rabbitmq
+    volumes:
+      - ./.docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    ports:
+      - 15672:${RABBITMQ_MANAGEMENT_PORT}
+      - 5672:${RABBITMQ_AMQP_PORT}
+      - 1883:${RABBITMQ_MQTT_PORT}
+    networks:
+      - backend
+
+networks:
+  frontend:
+    name: client-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.16.50.0/24
+
+  backend:
+    name: application-network
+    ipam:
+      driver: default
+      config:
+        - subnet: 192.168.50.0/24
