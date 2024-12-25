@@ -1,0 +1,11 @@
+FROM mcr.microsoft.com/dotnet/sdk:8.0
+
+WORKDIR /src
+
+COPY ["src/Core.Api/Core.Api.csproj", "Core.Api/"]
+
+RUN dotnet restore "Core.Api/Core.Api.csproj"
+
+COPY src .
+
+CMD ["dotnet", "watch", "run", "--project", "Core.Api/Core.Api.csproj"]

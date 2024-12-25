@@ -1,0 +1,53 @@
+name: Client-App
+run-name: Deploy on ${{ github.ref_name }} by @${{ github.actor }}
+
+on:
+    push:
+      branches:
+        - master
+    pull_request:
+      branches:
+        - master
+
+jobs:
+    lint:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+
+            - name: Install dependencies
+              run: |
+                cd src/client-app/src
+                npm i
+
+            - name: Run lint
+              run: |
+                cd src/client-app/src
+                npm run lint
+    
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+
+            - name: Setup Node
+              uses: actions/setup-node@v4
+              with:
+                node-version: '20'
+
+            - name: Install dependencies
+              run: |
+                cd src/client-app/src
+                npm i
+
+            - name: Run build
+              run: |
+                cd src/client-app/src
+                npm run build

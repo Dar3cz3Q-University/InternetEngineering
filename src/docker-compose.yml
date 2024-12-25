@@ -1,83 +1,132 @@
-name: glovo-maslo
+name: maselniczka
 
 services:
-  client:
+  client-app:
     build:
-      context: ./client/react-app
-    container_name: client
+      context: ./client-app
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    container_name: client-app
     ports:
-      - '${VITE_APP_PORT}:${VITE_APP_PORT}'
+      - '${CLIENT_APP_PORT}:3000'
     volumes:
-      - ./client/react-app:/app
+      - ./client-app/src:/app
       - /app/node_modules
-    networks:
-      - frontend
-  #   depends_on:
-  #     - core-api
-
-  # core-api:
-  #   build:
-  #     context: ./server
-  #   container_name: core-api
-  #   networks:
-  #     - application-network
-  #     - client-network
-  #   depends_on:
-  #     - database
-  #     - redis
-  #     - rabbitmq
-
-  database:
-    image: mcr.microsoft.com/mssql/server:2022-latest
-    container_name: mssql
-    ports:
-      - 1433:${MSSQL_PORT}
+      - /app/.next
+    env_file:
+      - ./client-app/.env
     environment:
-      - ACCEPT_EULA=Y
-      - MSSQL_SA_PASSWORD=${MSSQL_SA_PASSWORD}
-      - MSSQL_PID=Developer
+      - NODE_ENV=${CLIENT_NODE_ENV}
+      - CHOKIDAR_USEPOLLING=true
     networks:
-      - backend
+      - client-network
+    depends_on:
+      - core-api
+
+  core-api:
+    build:
+      context: ./core-api
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    container_name: core-api
+    ports:
+      - '${CORE_API_HTTP_PORT}:5042'
+      - '${CORE_API_HTTPS_PORT}:7038'
+    volumes:
+      - ./core-api/src:/app
+      - /app/bin
+      - /app/obj
+    env_file:
+      - ./core-api/.env
+    environment:
+      DOTNET_USE_POLLING_FILE_WATCHER: "1"
+      DOTNET_RUNNING_IN_CONTAINER: "true"
+      ASPNETCORE_ENVIRONMENT: ${CORE_API_ENV}
+    networks:
+      - application-network
+      - client-network
+    depends_on:
+      - postgres-db
+      - redis
+      - rabbitmq
+
+  postgres-db:
+    image: postgres
+    restart: unless-stopped
+    container_name: postgres-db
+    ports:
+      - '${POSTGRES_DB_PORT}:5432'
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_DB_ROOT_PASSWORD}
+    networks:
+      - application-network
+
+  mongo-db:
+    image: mongo
+    restart: unless-stopped
+    container_name: mongo-db
+    ports:
+      - '${MONGO_DB_PORT}:27017'
+    volumes:
+      - ./data/mongo/data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_ROOT_PASSWORD}
+    networks:
+      - application-network
+
+  rabbitmq:
+    image: rabbitmq:4.0-management
+    restart: unless-stopped
+    container_name: rabbitmq
+    ports:
+      - '${RABBITMQ_MANAGEMENT_PORT}:15672'
+      - '${RABBITMQ_AMQP_PORT}:5672'
+      - '${RABBITMQ_MQTT_PORT}:1883'
+    volumes:
+      - ./.docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+    environment:
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+    networks:
+      - application-network
 
   redis:
     image: redis:7.0
+    restart: unless-stopped
     container_name: redis
     ports:
-      - 6379:${REDIS_PORT}
+      - '${REDIS_PORT}:6379'
     volumes:
-      - ./cache:/data
+      - ./data/redis/cache:/data
     environment:
       - REDIS_DB=${REDIS_DB}
       - REDIS_HOST=${REDIS_HOST}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - REDIS_TLS=${REDIS_TLS}
     networks:
-      - backend
+      - application-network
 
-  rabbitmq:
-    image: rabbitmq:4.0-management
-    container_name: rabbitmq
-    volumes:
-      - ./.docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
-    environment:
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+  structurizr:
+    image: structurizr/lite:latest
+    container_name: structurizr
+    restart: unless-stopped
     ports:
-      - 15672:${RABBITMQ_MANAGEMENT_PORT}
-      - 5672:${RABBITMQ_AMQP_PORT}
-      - 1883:${RABBITMQ_MQTT_PORT}
-    networks:
-      - backend
+      - '${STRUCTURIZR_PORT}:8080'
+    volumes:
+      - ./structurizr:/usr/local/structurizr
+    environment:
+      STRUCTURIZR_WORKSPACE_PATH: workspace
 
 networks:
-  frontend:
+  client-network:
     name: client-network
     ipam:
       driver: default
       config:
         - subnet: 172.16.50.0/24
 
-  backend:
+  application-network:
     name: application-network
     ipam:
       driver: default

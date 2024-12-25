@@ -1,6 +1,6 @@
 # GlovoMaslo - Client
 
-[![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client)
+[![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client-app.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client-app)
 
 {description}
 
@@ -14,7 +14,7 @@
 ### Local development
 1. Go into application directory:
    ```shell
-   cd react-app
+   cd src
    ```
 2. Create and fill environment file:
    ```shell
@@ -38,8 +38,9 @@
 
 ### Environment Variables
 
-All default environment variables are in [.env.dist](react-app/.env.dist)
+All default environment variables are in [.env.dist](src/.env.dist)
 
 #### Client
 
-`VITE_APP_PORT` - port Client app starts on, default `5173`
+`CLIENT_APP_PORT` - port Client-App starts on, default `3000`
+`CLIENT_NODE_ENV` - environment Client-App starts on, default `development`

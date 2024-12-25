@@ -5,9 +5,9 @@ Glovo but only butter.
 ---
 
 ## Applications workflows
-[![Client workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client)
+[![Client-App workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client-app.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client)
 
-[![CoreAPI workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/server)
+[![Core-Api workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/server)
 
 ---
 
@@ -23,8 +23,8 @@ Glovo but only butter.
    cd projekt-zaliczeniowy-maselniczka
    ```
 2. Setup applications:
-    * [Client](/src/client)
-    * [CoreAPI](/src/server)
+    * [Client-App](/src/client-app)
+    * [Core-Api](/src/core-api)
 3. Start applications:
    ```shell
    docker compose up
@@ -38,11 +38,12 @@ Glovo but only butter.
 
 All default environment variables are in [.env.dist](src/.env.dist)
 
-#### Client
+#### Client-App
 
-`VITE_APP_PORT` - port Client app starts on, default `5173`
+`CLIENT_APP_PORT` - port Client-App starts on, default `3000`
+`CLIENT_NODE_ENV` - environment Client-App starts on, default `development`
 
-#### CoreAPI
+#### Core-Api
 
 #### MSSQL
 `MSSQL_SA_PASSWORD` - database sa password, default `zaq1@WSX` \

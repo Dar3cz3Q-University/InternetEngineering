@@ -1,2 +1,9 @@
-# Redis
-cache
+# Environment
+.env*
+!.env.dist
+
+# Structurizr
+.structurizr
+
+# Data persistency
+data
