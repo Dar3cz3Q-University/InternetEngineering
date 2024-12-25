@@ -13,5 +13,3 @@
 ### Environment Variables
 
 All default environment variables are in [.env.dist](.env.dist)
-
-#### CoreAPI

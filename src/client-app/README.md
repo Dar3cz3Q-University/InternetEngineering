@@ -39,8 +39,3 @@
 ### Environment Variables
 
 All default environment variables are in [.env.dist](src/.env.dist)
-
-#### Client
-
-`CLIENT_APP_PORT` - port Client-App starts on, default `3000`
-`CLIENT_NODE_ENV` - environment Client-App starts on, default `development`
