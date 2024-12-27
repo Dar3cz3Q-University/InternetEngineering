@@ -5,6 +5,22 @@
     {
       "AbsoluteMoniker": "D:0:0:{2BA4EA8B-09DD-4BFE-8FFE-70B2F2FDAD8A}|Core.Api\\Core.Api.csproj|d:\\studia\\in\u017Cynieria internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\core.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{2BA4EA8B-09DD-4BFE-8FFE-70B2F2FDAD8A}|Core.Api\\Core.Api.csproj|solutionrelative:core.api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2C90A0D8-BEFE-4023-AC22-899E21F69937}|Core.Infrastructure\\Core.Infrastructure.csproj|d:\\studia\\in\u017Cynieria internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\core.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2C90A0D8-BEFE-4023-AC22-899E21F69937}|Core.Infrastructure\\Core.Infrastructure.csproj|solutionrelative:core.infrastructure\\dependencyinjection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2BA4EA8B-09DD-4BFE-8FFE-70B2F2FDAD8A}|Core.Api\\Core.Api.csproj|d:\\studia\\in\u017Cynieria internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\core.api\\core.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{2BA4EA8B-09DD-4BFE-8FFE-70B2F2FDAD8A}|Core.Api\\Core.Api.csproj|solutionrelative:core.api\\core.api.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{2BA4EA8B-09DD-4BFE-8FFE-70B2F2FDAD8A}|Core.Api\\Core.Api.csproj|d:\\studia\\in\u017Cynieria internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\core.api\\controllers\\dinnerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{2BA4EA8B-09DD-4BFE-8FFE-70B2F2FDAD8A}|Core.Api\\Core.Api.csproj|solutionrelative:core.api\\controllers\\dinnerscontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D9F2C4FD-E08F-4C03-A8FF-CB24E9E85FC4}|Core.Application\\Core.Application.csproj|d:\\studia\\in\u017Cynieria internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\core.application\\authentication\\queries\\loginquery\\loginqueryvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D9F2C4FD-E08F-4C03-A8FF-CB24E9E85FC4}|Core.Application\\Core.Application.csproj|solutionrelative:core.application\\authentication\\queries\\loginquery\\loginqueryvalidator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,8 +30,70 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Core.Api\\Program.cs",
+              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
+              "RelativeToolTip": "Core.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T18:36:44.727Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "DependencyInjection.cs",
+              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Infrastructure\\DependencyInjection.cs",
+              "RelativeDocumentMoniker": "Core.Infrastructure\\DependencyInjection.cs",
+              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Infrastructure\\DependencyInjection.cs",
+              "RelativeToolTip": "Core.Infrastructure\\DependencyInjection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABYAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T18:09:11.302Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Core.Api.csproj",
+              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Core.Api.csproj",
+              "RelativeDocumentMoniker": "Core.Api\\Core.Api.csproj",
+              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Core.Api.csproj",
+              "RelativeToolTip": "Core.Api\\Core.Api.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAMAAAAZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-12-27T18:16:29.727Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "DinnersController.cs",
+              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Controllers\\DinnersController.cs",
+              "RelativeDocumentMoniker": "Core.Api\\Controllers\\DinnersController.cs",
+              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Controllers\\DinnersController.cs",
+              "RelativeToolTip": "Core.Api\\Controllers\\DinnersController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T18:05:21.889Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "LoginQueryValidator.cs",
+              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Application\\Authentication\\Queries\\LoginQuery\\LoginQueryValidator.cs",
+              "RelativeDocumentMoniker": "Core.Application\\Authentication\\Queries\\LoginQuery\\LoginQueryValidator.cs",
+              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Application\\Authentication\\Queries\\LoginQuery\\LoginQueryValidator.cs",
+              "RelativeToolTip": "Core.Application\\Authentication\\Queries\\LoginQuery\\LoginQueryValidator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-27T17:57:41.745Z"
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -25,17 +103,8 @@
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
-              "RelativeDocumentMoniker": "Core.Api\\Program.cs",
-              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
-              "RelativeToolTip": "Core.Api\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAAVAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T14:44:50.34Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
             }
           ]
         }

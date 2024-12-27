@@ -4,6 +4,9 @@
 # Temporary VisualStudio Files
 .vs/
 
+# Data folder
+!Data
+
 # User-specific files
 *.rsuser
 *.suo

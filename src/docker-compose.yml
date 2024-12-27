@@ -34,8 +34,6 @@ services:
       - '${CORE_API_HTTPS_PORT}:7038'
     volumes:
       - ./core-api/src:/app
-      - /app/bin
-      - /app/obj
     env_file:
       - ./core-api/.env
     environment:
@@ -56,6 +54,8 @@ services:
     container_name: postgres-db
     ports:
       - '${POSTGRES_DB_PORT}:5432'
+    volumes:
+      - ./data/postgres/data:/var/lib/postgresql/data
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_DB_ROOT_PASSWORD}
     networks:

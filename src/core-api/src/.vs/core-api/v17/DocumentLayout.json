@@ -14,8 +14,22 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
+              "RelativeDocumentMoniker": "Core.Api\\Program.cs",
+              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
+              "RelativeToolTip": "Core.Api\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAHAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-26T18:36:44.727Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
@@ -25,17 +39,8 @@
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
             },
             {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Program.cs",
-              "DocumentMoniker": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
-              "RelativeDocumentMoniker": "Core.Api\\Program.cs",
-              "ToolTip": "D:\\Studia\\In\u017Cynieria Internetu\\projekt-zaliczeniowy-maselniczka\\src\\core-api\\src\\Core.Api\\Program.cs",
-              "RelativeToolTip": "Core.Api\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAnAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-24T14:44:50.34Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{0174dea2-fdbe-4ef1-8f99-c0beae78880f}"
             }
           ]
         }

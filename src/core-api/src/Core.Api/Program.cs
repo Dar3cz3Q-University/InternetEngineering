@@ -1,31 +1,43 @@
+using Core.Api;
+using Core.Application;
+using Core.Infrastructure;
+using HealthChecks.UI.Client;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// TODO: Add HTTPS port
-builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5042);
-});
+    // TODO: Add HTTPS port
+    builder.WebHost.ConfigureKestrel(options =>
+    {
+        options.ListenAnyIP(5042);
+    });
 
-// Add services to the container.
-
-builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    builder.Services.AddPresentation(builder.Configuration);
+    builder.Services.AddApplication();
+    builder.Services.AddInfrastructure(builder.Configuration);
 }
 
-app.UseHttpsRedirection();
+var app = builder.Build();
+{
+    app.UsePathBase("/api/v1");
 
-app.UseAuthorization();
+    app.MapHealthChecks("/_health", new HealthCheckOptions
+    {
+        ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+    });
 
-app.MapControllers();
+    app.UseExceptionHandler("/error");
 
-app.Run();
+    if (app.Environment.IsDevelopment())
+    {
+        app.UseSwagger();
+        app.UseSwaggerUI();
+    }
+
+    app.UseHttpsRedirection();
+    app.UseAuthentication();
+    app.UseAuthorization();
+    app.MapControllers();
+
+    app.Run();
+}
