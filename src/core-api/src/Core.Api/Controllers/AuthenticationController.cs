@@ -1,6 +1,6 @@
-﻿using Core.Application.Authentication.Commands.RegisterCommand;
+﻿using Core.Application.Authentication.Commands.Register;
 using Core.Application.Authentication.Common;
-using Core.Application.Authentication.Queries.LoginQuery;
+using Core.Application.Authentication.Queries.Login;
 using Core.Contracts.Authentication.Request;
 using Core.Contracts.Authentication.Response;
 using Core.Domain.Common.Errors;

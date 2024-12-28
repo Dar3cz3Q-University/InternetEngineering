@@ -5,6 +5,7 @@ WORKDIR /app
 EXPOSE 5042
 EXPOSE 7038
 
+COPY ["src/Directory.Build.props", "./"]
 COPY ["src/Core.Api/Core.Api.csproj", "./Core.Api/"]
 COPY ["src/Core.Application/Core.Application.csproj", "./Core.Application/"]
 COPY ["src/Core.Infrastructure/Core.Infrastructure.csproj", "./Core.Infrastructure/"]

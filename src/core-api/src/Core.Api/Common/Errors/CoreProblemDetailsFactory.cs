@@ -8,7 +8,9 @@ using System.Diagnostics;
 
 namespace Core.Api.Common.Errors
 {
-    public class CoreProblemDetailsFactory(IOptions<ApiBehaviorOptions> options) : ProblemDetailsFactory
+    public class CoreProblemDetailsFactory(
+        IOptions<ApiBehaviorOptions> options) 
+        : ProblemDetailsFactory
     {
         private readonly ApiBehaviorOptions _options = options.Value;
         public override ProblemDetails CreateProblemDetails(
@@ -35,7 +37,14 @@ namespace Core.Api.Common.Errors
             return problemDetails;
         }
 
-        public override ValidationProblemDetails CreateValidationProblemDetails(HttpContext httpContext, ModelStateDictionary modelStateDictionary, int? statusCode = null, string? title = null, string? type = null, string? detail = null, string? instance = null)
+        public override ValidationProblemDetails CreateValidationProblemDetails(
+            HttpContext httpContext,
+            ModelStateDictionary modelStateDictionary,
+            int? statusCode = null,
+            string? title = null,
+            string? type = null,
+            string? detail = null,
+            string? instance = null)
         {
             if (modelStateDictionary == null)
             {
@@ -62,7 +71,10 @@ namespace Core.Api.Common.Errors
             return problemDetails;
         }
 
-        private void ApplyProblemDetailsDefaults(HttpContext httpContext, ProblemDetails problemDetails, int statusCode)
+        private void ApplyProblemDetailsDefaults(
+            HttpContext httpContext,
+            ProblemDetails problemDetails,
+            int statusCode)
         {
             problemDetails.Status ??= statusCode;
 

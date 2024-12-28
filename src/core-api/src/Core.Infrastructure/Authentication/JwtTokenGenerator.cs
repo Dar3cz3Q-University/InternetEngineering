@@ -1,6 +1,6 @@
 ﻿using Core.Application.Common.Interfaces.Authentication;
 using Core.Application.Common.Interfaces.Services;
-using Core.Domain.User;
+using Core.Domain.UserAggregate;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;

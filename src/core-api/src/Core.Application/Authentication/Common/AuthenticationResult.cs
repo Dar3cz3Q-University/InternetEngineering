@@ -1,4 +1,4 @@
-﻿using Core.Domain.User;
+﻿using Core.Domain.UserAggregate;
 
 namespace Core.Application.Authentication.Common
 {

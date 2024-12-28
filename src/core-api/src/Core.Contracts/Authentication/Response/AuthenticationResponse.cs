@@ -1,10 +1,16 @@
-﻿namespace Core.Contracts.Authentication.Response
+﻿using Core.Contracts.Authentication.DTO;
+
+namespace Core.Contracts.Authentication.Response
 {
     public record AuthenticationResponse(
-        Guid Id,
+        string Id,
         string FirstName,
         string LastName,
         string Email,
-        string Token
+        string PhoneNumber,
+        UserRoleDTO UserRole,
+        string Token,
+        DateTime CreatedDateTime,
+        DateTime UpdatedDateTime
     );
 }

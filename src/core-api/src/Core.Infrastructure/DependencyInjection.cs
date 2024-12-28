@@ -4,8 +4,11 @@ using Core.Application.Common.Interfaces.Services;
 using Core.Infrastructure.Authentication;
 using Core.Infrastructure.Config;
 using Core.Infrastructure.Persistence;
+using Core.Infrastructure.Persistence.Interceptors;
+using Core.Infrastructure.Persistence.Repositories.InMemory;
 using Core.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -16,20 +19,39 @@ namespace Core.Infrastructure
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfigurationManager configuration)
+        public static IServiceCollection AddInfrastructure(
+            this IServiceCollection services,
+            IConfigurationManager configuration)
         {
             services.AddAuth(configuration);
 
-            services.AddDatabase(configuration);
+            services.AddPersistance(configuration);
 
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
-
-            services.AddScoped<IUserRepository, UserRepository>();
 
             return services;
         }
 
-        public static IServiceCollection AddAuth(this IServiceCollection services, IConfigurationManager configuration)
+        public static IServiceCollection AddPersistance(
+            this IServiceCollection services,
+            IConfigurationManager configuration)
+        {
+            var connectionString = ConnectionStringBuilder.Build(configuration);
+
+            services.AddDbContext<MainDbContext>(options => options.UseNpgsql(connectionString));
+
+            services.AddScoped<PublishDomainEventsInterceptor>();
+
+            services.AddScoped<IUserRepository, InMemoryUserRepository>();
+            services.AddScoped<IRestaurantRepository, InMemoryRestaurantRepository>();
+            services.AddScoped<IMenuRepository, InMemoryMenuRepository>();
+
+            return services;
+        }
+
+        public static IServiceCollection AddAuth(
+            this IServiceCollection services,
+            IConfigurationManager configuration)
         {
             var jwtSettings = new JwtSettings();
             configuration.Bind(JwtSettings.SECTION_NAME, jwtSettings);
