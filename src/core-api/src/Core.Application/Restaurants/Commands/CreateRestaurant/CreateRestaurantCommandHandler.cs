@@ -7,7 +7,7 @@ using MediatR;
 
 namespace Core.Application.Restaurants.Commands.CreateRestaurant
 {
-    public class CreateRestaurantCommandHandler : 
+    public class CreateRestaurantCommandHandler :
         IRequestHandler<CreateRestaurantCommand, ErrorOr<Restaurant>>
     {
         private readonly IRestaurantRepository _restaurantRepository;

@@ -21,7 +21,7 @@ namespace Core.Domain.Common.ValueObjects
         public static Address Create(
             string street,
             string city,
-            string postalCode) 
+            string postalCode)
         {
             return new(street, city, postalCode);
         }

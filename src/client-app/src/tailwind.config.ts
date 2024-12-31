@@ -8,13 +8,18 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        roboto: ["var(--font-roboto)"],
+        chakra: ["var(--font-chakra)"]
+      },
       colors: {
-        c_primary: "#fe5c01",
-        c_secondary: "#2e2e2e",
-        c_background: "#111111",
-        t_white: "#FFFFFF",
-        t_black: "#000000",
-        t_gray: "#666666"
+        primary: "var(--color-primary)",
+        secondary: "var(--color-secondary)",
+        background_dark: "var(--color-background-dark)",
+        background_light: "var(--color-background-light)",
+        white: "var(--color-white)",
+        black: "var(--color-black)",
+        gray: "var(--color-gray)"
       },
     },
   },

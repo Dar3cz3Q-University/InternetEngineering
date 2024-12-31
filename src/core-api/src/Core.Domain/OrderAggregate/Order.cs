@@ -7,7 +7,7 @@ using Core.Domain.UserAggregate.ValueObjects;
 
 namespace Core.Domain.OrderAggregate
 {
-    public sealed class Order : AggregateRoot<OrderId>
+    public sealed class Order : AggregateRoot<OrderId>, IHasTimestamps
     {
         private readonly List<MenuItem> _items = [];
         public UserId UserId { get; private set; }
@@ -19,7 +19,7 @@ namespace Core.Domain.OrderAggregate
         public IReadOnlyList<MenuItem> Items => _items.AsReadOnly();
         public DateTime? DeliveryTime { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTIme { get; private set; }
+        public DateTime UpdatedDateTime { get; private set; }
 
         private Order(
             UserId userId,
@@ -38,7 +38,7 @@ namespace Core.Domain.OrderAggregate
             TotalPrice = totalPrice;
             _items = items;
             CreatedDateTime = createdDateTime;
-            UpdatedDateTIme = updatedDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static Order Create(

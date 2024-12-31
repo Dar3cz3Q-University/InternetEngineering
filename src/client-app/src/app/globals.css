@@ -3,16 +3,17 @@
 @tailwind utilities;
 
 :root {
+  --font-chakra: 'Chakra Petch', sans-serif;
+  --font-roboto: 'Roboto', sans-serif;
+
   --color-primary: #fe5c01;
   --color-secondary: #2e2e2e;
-  --color-background: #111111;
-  --color-t_white: #FFFFFF;
-  --color-t_black: #000000;
-  --color-t_gray: #666666;
-}
+  --color-background-dark: #111111;
+  --color-background-light: #FAFAFA;
 
-body {
-  color: var(--color-t_white);
-  background: var(--color-background);
-  font-family: 'Roboto', sans-serif;
+  --color-white: #FFFFFF;
+  --color-black: #000000;
+  --color-gray: #666666;
+
+  font-family: var(--font-roboto);
 }

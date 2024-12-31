@@ -10,18 +10,24 @@ services:
     ports:
       - '${CLIENT_APP_PORT}:3000'
     volumes:
-      - ./client-app/src:/app
       - /app/node_modules
-      - /app/.next
     env_file:
       - ./client-app/.env
     environment:
       - NODE_ENV=${CLIENT_NODE_ENV}
-      - CHOKIDAR_USEPOLLING=true
     networks:
       - client-network
     depends_on:
       - core-api
+    develop:
+      watch:
+        - action: sync
+          path: ./client-app/src
+          target: /app
+          ignore: 
+            - node_modules/
+        - action: rebuild
+          path: ./client-app/src/package.json
 
   core-api:
     build:

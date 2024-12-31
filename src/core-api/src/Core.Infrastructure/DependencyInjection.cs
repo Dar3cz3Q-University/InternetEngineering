@@ -41,6 +41,7 @@ namespace Core.Infrastructure
             services.AddDbContext<MainDbContext>(options => options.UseNpgsql(connectionString));
 
             services.AddScoped<PublishDomainEventsInterceptor>();
+            services.AddScoped<UpdateTimestampsInterceptor>();
 
             services.AddScoped<IUserRepository, InMemoryUserRepository>();
             services.AddScoped<IRestaurantRepository, InMemoryRestaurantRepository>();

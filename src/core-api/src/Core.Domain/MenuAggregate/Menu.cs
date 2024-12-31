@@ -6,7 +6,7 @@ using Core.Domain.RestaurantAggregate.ValueObjects;
 
 namespace Core.Domain.MenuAggregate
 {
-    public sealed class Menu : AggregateRoot<MenuId>
+    public sealed class Menu : AggregateRoot<MenuId>, IHasTimestamps
     {
         private readonly List<MenuSection> _sections = [];
         public string Name { get; private set; }

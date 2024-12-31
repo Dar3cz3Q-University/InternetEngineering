@@ -3,7 +3,7 @@ using Core.Domain.MenuAggregate.ValueObjects;
 
 namespace Core.Domain.MenuAggregate.Entities
 {
-    public sealed class MenuSection : Entity<MenuSectionId>
+    public sealed class MenuSection : Entity<MenuSectionId>, IHasTimestamps
     {
         private readonly List<MenuItem> _items = [];
         public string Name { get; private set; }

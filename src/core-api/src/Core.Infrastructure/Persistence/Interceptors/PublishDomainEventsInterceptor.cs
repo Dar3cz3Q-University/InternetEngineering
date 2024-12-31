@@ -34,10 +34,7 @@ namespace Core.Infrastructure.Persistence.Interceptors
 
         private async Task PublishDomainEvents(DbContext? dbContext)
         {
-            if (dbContext is null)
-            {
-                return;
-            }
+            if (dbContext is null) return;
 
             var entitiesWithDomainEvents = dbContext.ChangeTracker.Entries<IHasDomainEvents>()
                 .Where(entry => entry.Entity.DomainEvents.Any())
@@ -47,7 +44,7 @@ namespace Core.Infrastructure.Persistence.Interceptors
 
             entitiesWithDomainEvents.ForEach(entity => entity.ClearDomainEvents());
 
-            foreach(var domainEvent in domainEvents)
+            foreach (var domainEvent in domainEvents)
             {
                 await _mediator.Publish(domainEvent);
             }

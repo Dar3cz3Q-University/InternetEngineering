@@ -5,7 +5,7 @@ using Core.Domain.RestaurantAggregate.ValueObjects;
 
 namespace Core.Domain.RestaurantAggregate
 {
-    public sealed class Restaurant : Entity<RestaurantId>
+    public sealed class Restaurant : Entity<RestaurantId>, IHasTimestamps
     {
         public string Name { get; private set; }
         public Address Location { get; private set; }
