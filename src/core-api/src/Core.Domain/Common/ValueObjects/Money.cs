@@ -17,7 +17,7 @@ namespace Core.Domain.Common.ValueObjects
 
         public static Money Create(
             decimal amount,
-            string currency) 
+            string currency)
         {
             return new(amount, currency);
         }

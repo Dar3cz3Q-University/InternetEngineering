@@ -3,7 +3,7 @@ using Core.Domain.UserAggregate.ValueObjects;
 
 namespace Core.Domain.UserAggregate
 {
-    public sealed class User : AggregateRoot<UserId>
+    public sealed class User : AggregateRoot<UserId>, IHasTimestamps
     {
         public string FirstName { get; private set; }
         public string LastName { get; private set; }

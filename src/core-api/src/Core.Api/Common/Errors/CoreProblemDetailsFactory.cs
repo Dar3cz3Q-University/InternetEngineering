@@ -9,7 +9,7 @@ using System.Diagnostics;
 namespace Core.Api.Common.Errors
 {
     public class CoreProblemDetailsFactory(
-        IOptions<ApiBehaviorOptions> options) 
+        IOptions<ApiBehaviorOptions> options)
         : ProblemDetailsFactory
     {
         private readonly ApiBehaviorOptions _options = options.Value;
