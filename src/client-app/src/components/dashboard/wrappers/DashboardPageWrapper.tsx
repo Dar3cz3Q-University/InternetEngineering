@@ -18,7 +18,7 @@ const DashboardPageWrapper: React.FC<DashboardPageWrapperProps> = ({
                 {main}
             </main>
             <nav className="fixed bottom-0 w-full shadow-lg">
-                <DashboardNavigation />
+                {/* <DashboardNavigation /> */}
             </nav>
         </div>
     )

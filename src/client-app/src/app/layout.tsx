@@ -6,15 +6,13 @@ import "./globals.css";
 const chakraPetch = Chakra_Petch({
   variable: "--font-chakra",
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap"
+  weight: ["300", "400", "500", "600", "700"]
 })
 
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ['latin'],
-  weight: ['100', '300', '400', '500', '700', '900'],
-  display: "swap"
+  weight: ['100', '300', '400', '500', '700', '900']
 });
 
 export const metadata: Metadata = {
