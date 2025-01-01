@@ -2,9 +2,35 @@
 
 [![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/server)
 
+{description}
+
 ---
 
 ## Setup
+
+### Requirements
+* [.NET 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+
+### Local development
+1. Go into application directory:
+   ```shell
+   cd src
+   ```
+2. Create and fill environment file:
+   ```shell
+   cp .env.dist .env
+   ```
+3. Continue with [Global README.md](../../README.md)
+
+#### If you want to run only Core api:
+1. Install dependencies:
+   ```shell
+   dotnet restore "./Core.Api/Core.Api.csproj"
+   ```
+2. Start application:
+   ```shell
+   dotnet watch run --project "./Core.Api/Core.Api.csproj"
+   ```
 
 ---
 

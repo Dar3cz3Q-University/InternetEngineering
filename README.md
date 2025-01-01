@@ -27,7 +27,7 @@ Glovo but only butter.
     * [Core-Api](/src/core-api)
 3. Start applications:
    ```shell
-   docker compose up
+   docker compose up --watch
    ```
 
 ---
