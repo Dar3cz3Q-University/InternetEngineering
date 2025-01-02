@@ -1,0 +1,260 @@
+{
+  "configuration" : {
+    "scope" : "SoftwareSystem"
+  },
+  "description" : "Description",
+  "documentation" : { },
+  "id" : 1,
+  "lastModifiedAgent" : "structurizr-ui",
+  "lastModifiedDate" : "2025-01-02T21:36:43Z",
+  "model" : {
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Main REST Api",
+        "documentation" : { },
+        "group" : "Application-Network",
+        "id" : "2",
+        "name" : "Core-Api",
+        "properties" : {
+          "structurizr.dsl.identifier" : "coreapi"
+        },
+        "relationships" : [ {
+          "description" : "Query data",
+          "destinationId" : "5",
+          "id" : "9",
+          "sourceId" : "2",
+          "tags" : "Relationship",
+          "technology" : "TCP 5432"
+        }, {
+          "description" : "Publish new order",
+          "destinationId" : "4",
+          "id" : "10",
+          "sourceId" : "2",
+          "tags" : "Relationship",
+          "technology" : "MQTT 1883"
+        } ],
+        "tags" : "Element,Container,Service",
+        "technology" : ".Net"
+      }, {
+        "description" : "Service mocking restaurant",
+        "documentation" : { },
+        "group" : "Application-Network",
+        "id" : "3",
+        "name" : "Restaurant-Service",
+        "properties" : {
+          "structurizr.dsl.identifier" : "restaurantservice"
+        },
+        "relationships" : [ {
+          "description" : "Publish order status update",
+          "destinationId" : "4",
+          "id" : "13",
+          "sourceId" : "3",
+          "tags" : "Relationship",
+          "technology" : "MQTT 1883"
+        }, {
+          "description" : "Query data",
+          "destinationId" : "6",
+          "id" : "14",
+          "sourceId" : "3",
+          "tags" : "Relationship",
+          "technology" : "TCP 27017"
+        } ],
+        "tags" : "Element,Container,Service",
+        "technology" : "SpringBoot"
+      }, {
+        "description" : "Handles messages",
+        "documentation" : { },
+        "group" : "Application-Network",
+        "id" : "4",
+        "name" : "MQTT",
+        "properties" : {
+          "structurizr.dsl.identifier" : "rabbit"
+        },
+        "relationships" : [ {
+          "description" : "Subscribe for order status update",
+          "destinationId" : "2",
+          "id" : "11",
+          "sourceId" : "4",
+          "tags" : "Relationship",
+          "technology" : "MQTT 1883"
+        }, {
+          "description" : "Subscribe for new order",
+          "destinationId" : "3",
+          "id" : "12",
+          "sourceId" : "4",
+          "tags" : "Relationship",
+          "technology" : "MQTT 1883"
+        } ],
+        "tags" : "Element,Container,Queue",
+        "technology" : "rabbitmq"
+      }, {
+        "description" : "Main database",
+        "documentation" : { },
+        "group" : "Application-Network",
+        "id" : "5",
+        "name" : "PostgreSQL",
+        "properties" : {
+          "structurizr.dsl.identifier" : "postgre"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "postgres-db"
+      }, {
+        "description" : "Database for restaurant service",
+        "documentation" : { },
+        "group" : "Application-Network",
+        "id" : "6",
+        "name" : "MongoDB",
+        "properties" : {
+          "structurizr.dsl.identifier" : "mongo"
+        },
+        "tags" : "Element,Container,Database",
+        "technology" : "mongo-db"
+      }, {
+        "description" : "Frontend application",
+        "documentation" : { },
+        "group" : "Client-Network",
+        "id" : "7",
+        "name" : "Client-App",
+        "properties" : {
+          "structurizr.dsl.identifier" : "clientapp"
+        },
+        "relationships" : [ {
+          "description" : "API Requests",
+          "destinationId" : "2",
+          "id" : "8",
+          "sourceId" : "7",
+          "tags" : "Relationship",
+          "technology" : "HTTP 8080"
+        } ],
+        "tags" : "Element,Container,UI",
+        "technology" : "Next.js"
+      } ],
+      "documentation" : { },
+      "id" : "1",
+      "location" : "Unspecified",
+      "name" : "Maselniczka",
+      "properties" : {
+        "structurizr.dsl.identifier" : "maselniczka"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.dsl" : "d29ya3NwYWNlICB7CgogICAgbW9kZWwgewogICAgICAgIG1hc2VsbmljemthID0gc29mdHdhcmVTeXN0ZW0gIk1hc2VsbmljemthIiB7CiAgICAgICAgICAgIGdyb3VwICJBcHBsaWNhdGlvbi1OZXR3b3JrIiB7CiAgICAgICAgICAgICAgICBjb3JlYXBpID0gY29udGFpbmVyICJDb3JlLUFwaSIgIk1haW4gUkVTVCBBcGkiICIuTmV0IiAiU2VydmljZSIKICAgICAgICAgICAgICAgIHJlc3RhdXJhbnRzZXJ2aWNlID0gY29udGFpbmVyICJSZXN0YXVyYW50LVNlcnZpY2UiICJTZXJ2aWNlIG1vY2tpbmcgcmVzdGF1cmFudCIgIlNwcmluZ0Jvb3QiICJTZXJ2aWNlIgoKICAgICAgICAgICAgICAgIHJhYmJpdCA9IGNvbnRhaW5lciAiTVFUVCIgIkhhbmRsZXMgbWVzc2FnZXMiICJyYWJiaXRtcSIgIlF1ZXVlIgogICAgICAgICAgICAgICAgcG9zdGdyZSA9IGNvbnRhaW5lciAiUG9zdGdyZVNRTCIgIk1haW4gZGF0YWJhc2UiICJwb3N0Z3Jlcy1kYiIgIkRhdGFiYXNlIgogICAgICAgICAgICAgICAgbW9uZ28gPSBjb250YWluZXIgIk1vbmdvREIiICJEYXRhYmFzZSBmb3IgcmVzdGF1cmFudCBzZXJ2aWNlIiAibW9uZ28tZGIiICJEYXRhYmFzZSIKICAgICAgICAgICAgfQoKICAgICAgICAgICAgZ3JvdXAgIkNsaWVudC1OZXR3b3JrIiB7CiAgICAgICAgICAgICAgICBjbGllbnRhcHAgPSBjb250YWluZXIgIkNsaWVudC1BcHAiICJGcm9udGVuZCBhcHBsaWNhdGlvbiIgIk5leHQuanMiICJVSSIKICAgICAgICAgICAgfQogICAgICAgIH0KCiAgICAgICAgY2xpZW50YXBwIC0+IGNvcmVhcGkgIkFQSSBSZXF1ZXN0cyIgIkhUVFAgODA4MCIKICAgICAgICBjb3JlYXBpIC0+IHBvc3RncmUgIlF1ZXJ5IGRhdGEiICJUQ1AgNTQzMiIKICAgICAgICBjb3JlYXBpIC0+IHJhYmJpdCAiUHVibGlzaCBuZXcgb3JkZXIiICJNUVRUIDE4ODMiCiAgICAgICAgcmFiYml0IC0+IGNvcmVhcGkgIlN1YnNjcmliZSBmb3Igb3JkZXIgc3RhdHVzIHVwZGF0ZSIgIk1RVFQgMTg4MyIKICAgICAgICByYWJiaXQgLT4gcmVzdGF1cmFudHNlcnZpY2UgIlN1YnNjcmliZSBmb3IgbmV3IG9yZGVyIiAiTVFUVCAxODgzIgogICAgICAgIHJlc3RhdXJhbnRzZXJ2aWNlIC0+IHJhYmJpdCAiUHVibGlzaCBvcmRlciBzdGF0dXMgdXBkYXRlIiAiTVFUVCAxODgzIgogICAgICAgIHJlc3RhdXJhbnRzZXJ2aWNlIC0+IG1vbmdvICJRdWVyeSBkYXRhIiAiVENQIDI3MDE3IgogICAgfQoKICAgIHZpZXdzIHsKICAgICAgICBzeXN0ZW1Db250ZXh0IG1hc2VsbmljemthIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgICAgIGF1dG9sYXlvdXQgbHIKICAgICAgICB9CgogICAgICAgIGNvbnRhaW5lciBtYXNlbG5pY3prYSAiTWFzZWxuaWN6a2EiIHsKICAgICAgICAgICAgaW5jbHVkZSAqCiAgICAgICAgfQoKICAgICAgICBzdHlsZXMgewogICAgICAgICAgICBlbGVtZW50ICJVSSIgewogICAgICAgICAgICAgICAgc2hhcGUgV2ViQnJvd3NlcgogICAgICAgICAgICAgICAgY29sb3IgI2ZmZmZmZgogICAgICAgICAgICAgICAgYmFja2dyb3VuZCAjMDAwMGZjCiAgICAgICAgICAgIH0KICAgICAgICAgICAgZWxlbWVudCAiUXVldWUiIHsKICAgICAgICAgICAgICAgIHNoYXBlIFBpcGUKICAgICAgICAgICAgfQogICAgICAgICAgICBlbGVtZW50ICJTZXJ2aWNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBCb3gKICAgICAgICAgICAgICAgIGNvbG9yICNmZmZmZmYKICAgICAgICAgICAgICAgIGJhY2tncm91bmQgIzAwMDBmYwogICAgICAgICAgICB9CiAgICAgICAgICAgIGVsZW1lbnQgIkRhdGFiYXNlIiB7CiAgICAgICAgICAgICAgICBzaGFwZSBjeWxpbmRlcgogICAgICAgICAgICB9CiAgICAgICAgfQogICAgfQoKICAgIGNvbmZpZ3VyYXRpb24gewogICAgICAgIHNjb3BlIHNvZnR3YXJlc3lzdGVtCiAgICB9Cn0="
+  },
+  "views" : {
+    "configuration" : {
+      "branding" : { },
+      "lastSavedView" : "Maselniczka",
+      "metadataSymbols" : "SquareBrackets",
+      "styles" : {
+        "elements" : [ {
+          "background" : "#0000fc",
+          "color" : "#ffffff",
+          "shape" : "WebBrowser",
+          "tag" : "UI"
+        }, {
+          "shape" : "Pipe",
+          "tag" : "Queue"
+        }, {
+          "background" : "#0000fc",
+          "color" : "#ffffff",
+          "shape" : "Box",
+          "tag" : "Service"
+        }, {
+          "shape" : "Cylinder",
+          "tag" : "Database"
+        } ]
+      },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "dimensions" : {
+        "height" : 1505,
+        "width" : 4230
+      },
+      "elements" : [ {
+        "id" : "2",
+        "x" : 1290,
+        "y" : 430
+      }, {
+        "id" : "3",
+        "x" : 2790,
+        "y" : 205
+      }, {
+        "id" : "4",
+        "x" : 2040,
+        "y" : 205
+      }, {
+        "id" : "5",
+        "x" : 2040,
+        "y" : 805
+      }, {
+        "id" : "6",
+        "x" : 3540,
+        "y" : 205
+      }, {
+        "id" : "7",
+        "x" : 240,
+        "y" : 430
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "Maselniczka",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "10",
+        "vertices" : [ {
+          "x" : 1933,
+          "y" : 611
+        } ]
+      }, {
+        "id" : "11",
+        "vertices" : [ {
+          "x" : 1846,
+          "y" : 323
+        } ]
+      }, {
+        "id" : "12",
+        "vertices" : [ {
+          "x" : 2640,
+          "y" : 505
+        } ]
+      }, {
+        "id" : "13",
+        "vertices" : [ {
+          "x" : 2640,
+          "y" : 205
+        } ]
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "8"
+      }, {
+        "id" : "9"
+      } ],
+      "softwareSystemId" : "1"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "generatedKey" : true,
+      "key" : "SystemContext-001",
+      "order" : 1,
+      "softwareSystemId" : "1"
+    } ]
+  }
+}

@@ -11,6 +11,8 @@ Glovo but only butter.
 
 [![Restaurant-Service workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/restaurant-service)
 
+![C2 diagram](./doc/architecture/diagrams/workspace/images/c2.png)
+
 ---
 
 ## Setup

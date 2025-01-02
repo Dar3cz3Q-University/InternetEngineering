@@ -140,7 +140,7 @@ services:
     ports:
       - '${STRUCTURIZR_PORT}:8080'
     volumes:
-      - ./structurizr:/usr/local/structurizr
+      - ./../doc/architecture/diagrams:/usr/local/structurizr
     environment:
       STRUCTURIZR_WORKSPACE_PATH: workspace
 
