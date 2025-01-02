@@ -43,7 +43,7 @@ namespace Core.Api.Common.Mapping
             // Update
             //
 
-            
+
 
             //
             // Get

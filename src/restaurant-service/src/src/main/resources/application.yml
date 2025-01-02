@@ -15,9 +15,23 @@ spring:
       database: maselniczka
       username: ${MONGO_DB_USER:root}
       password: ${MONGO_DB_PASS:root}
+      authentication-database: admin
 
 mqtt:
   host: ${MQTT_HOST:localhost}
   port: ${MQTT_PORT:1883}
   user: ${MQTT_USER:guest}
   pass: ${MQTT_PASS:guest}
+
+management:
+  endpoint:
+    health:
+      show-components: always
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include:
+            - readinessState
+            - diskSpace
+            - ping

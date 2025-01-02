@@ -5,6 +5,6 @@ using MediatR;
 
 namespace Core.Application.Restaurants.Commands.DeleteRestaurant
 {
-    public record DeleteRestaurantCommand (
+    public record DeleteRestaurantCommand(
         RestaurantId RestaurantId) : IRequest<ErrorOr<Unit>>, IRequireRestaurantValidation;
 }
