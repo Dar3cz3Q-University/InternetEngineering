@@ -4,30 +4,31 @@ using Core.Domain.RestaurantAggregate;
 using ErrorOr;
 using MediatR;
 
-namespace Core.Application.Restaurants.Queries.GetRestaurantById
+namespace Core.Application.Restaurants.Queries.GetRestaurant
 {
-    public class GetRestaurantByIdQueryHandler :
-        IRequestHandler<GetRestaurantByIdQuery, ErrorOr<Restaurant>>
+    public class GetRestaurantQueryHandler :
+        IRequestHandler<GetRestaurantQuery, ErrorOr<Restaurant>>
     {
         private readonly IRestaurantRepository _restaurantRepository;
 
-        public GetRestaurantByIdQueryHandler(
+        public GetRestaurantQueryHandler(
             IRestaurantRepository restaurantRepository)
         {
             _restaurantRepository = restaurantRepository;
         }
 
+        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Restaurant>> Handle(
-            GetRestaurantByIdQuery request,
+            GetRestaurantQuery request,
             CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
-            var restaurant = _restaurantRepository.Get(request.Id);
+            var restaurant = _restaurantRepository.GetById(request.RestaurantId);
 
             if (restaurant is null)
             {
-                return Errors.Restaurant.NotFound(request.Id);
+                return Errors.Restaurant.NotFound(request.RestaurantId);
             }
 
             return restaurant;

@@ -1,16 +1,13 @@
-﻿namespace Core.Contracts.Restaurant.Request
+﻿using Core.Contracts.Common.Request;
+
+namespace Core.Contracts.Restaurant.Request
 {
     public record CreateRestaurantRequest(
         string Name,
-        CreateAddressRequest Location,
+        AddressRequest Location,
         string Description,
         CreateContactInfoRequest ContactInfo,
         CreateOpeningHoursRequest OpeningHours);
-
-    public record CreateAddressRequest(
-        string Street,
-        string City,
-        string PostalCode);
 
     public record CreateContactInfoRequest(
         string PhoneNumber,

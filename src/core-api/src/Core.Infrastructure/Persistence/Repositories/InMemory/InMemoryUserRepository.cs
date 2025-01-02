@@ -1,19 +1,26 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
 using Core.Domain.UserAggregate;
+using Core.Domain.UserAggregate.ValueObjects;
 
 namespace Core.Infrastructure.Persistence.Repositories.InMemory
 {
     public class InMemoryUserRepository : IUserRepository
     {
         private static readonly List<User> _users = [];
-        public void Add(User user)
+
+        public User? GetById(UserId id)
         {
-            _users.Add(user);
+            return _users.SingleOrDefault(u => u.Id == id);
         }
 
-        public User? GetUserByEmail(string email)
+        public User? GetByEmail(string email)
         {
             return _users.SingleOrDefault(u => u.Email == email);
+        }
+        public User Add(User user)
+        {
+            _users.Add(user);
+            return user;
         }
     }
 }

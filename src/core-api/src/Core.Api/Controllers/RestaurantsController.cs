@@ -1,5 +1,7 @@
 ﻿using Core.Application.Restaurants.Commands.CreateRestaurant;
-using Core.Application.Restaurants.Queries.GetRestaurantById;
+using Core.Application.Restaurants.Commands.DeleteRestaurant;
+using Core.Application.Restaurants.Commands.UpdateRestaurant;
+using Core.Application.Restaurants.Queries.GetRestaurant;
 using Core.Application.Restaurants.Queries.GetRestaurants;
 using Core.Contracts.Restaurant.Request;
 using Core.Contracts.Restaurant.Response;
@@ -36,7 +38,7 @@ namespace Core.Api.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            var query = _mapper.Map<GetRestaurantByIdQuery>(id);
+            var query = _mapper.Map<GetRestaurantQuery>(id);
 
             var restaurant = await _mediator.Send(query);
 
@@ -57,16 +59,30 @@ namespace Core.Api.Controllers
                 e => Problem(e));
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Edit()
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update(
+            Guid id,
+            UpdateRestaurantRequest request)
         {
-            throw new NotImplementedException();
+            var command = _mapper.Map<UpdateRestaurantCommand>((id, request));
+
+            var updateRestaurant = await _mediator.Send(command);
+
+            return updateRestaurant.Match(
+                r => Ok(_mapper.Map<RestaurantResponse>(r)),
+                e => Problem(e));
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var command = _mapper.Map<DeleteRestaurantCommand>(id);
+
+            var response = await _mediator.Send(command);
+
+            return response.Match(
+                _ => NoContent(),
+                e => Problem(e));
         }
     }
 }

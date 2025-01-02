@@ -16,4 +16,4 @@ RUN dotnet restore "./Core.Api/Core.Api.csproj"
 
 COPY src .
 
-CMD ["dotnet", "watch", "run", "--no-restore", "--project", "./Core.Api/Core.Api.csproj"]
+CMD ["dotnet", "watch", "run", "--project", "./Core.Api/Core.Api.csproj"]

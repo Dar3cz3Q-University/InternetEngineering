@@ -25,7 +25,7 @@ namespace Core.Application.Authentication.Queries.Login
         {
             await Task.CompletedTask;
 
-            if (_userRepository.GetUserByEmail(query.Email) is not User user)
+            if (_userRepository.GetByEmail(query.Email) is not User user)
             {
                 return Errors.Authentication.InvalidCredentials;
             }

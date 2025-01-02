@@ -9,7 +9,9 @@ using System.Text;
 
 namespace Core.Infrastructure.Authentication
 {
-    public class JwtTokenGenerator(IDateTimeProvider dateTimeProvider, IOptions<JwtSettings> jwtOptions) : IJwtTokenGenerator
+    public class JwtTokenGenerator(
+        IDateTimeProvider dateTimeProvider,
+        IOptions<JwtSettings> jwtOptions) : IJwtTokenGenerator
     {
         private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
         private readonly JwtSettings _jwtSettings = jwtOptions.Value;

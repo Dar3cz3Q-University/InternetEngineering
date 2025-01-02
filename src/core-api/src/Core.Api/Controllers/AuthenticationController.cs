@@ -33,8 +33,8 @@ namespace Core.Api.Controllers
             ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);
 
             return authResult.Match(
-                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
-                errors => Problem(errors)
+                r => Ok(_mapper.Map<AuthenticationResponse>(r)),
+                e => Problem(e)
             );
         }
 
@@ -51,8 +51,8 @@ namespace Core.Api.Controllers
             }
 
             return authResult.Match(
-                authResult => Ok(_mapper.Map<AuthenticationResponse>(authResult)),
-                errors => Problem(errors)
+                r => Ok(_mapper.Map<AuthenticationResponse>(r)),
+                e => Problem(e)
             );
         }
     }

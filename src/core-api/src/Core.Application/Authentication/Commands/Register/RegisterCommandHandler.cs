@@ -25,7 +25,7 @@ namespace Core.Application.Authentication.Commands.Register
         {
             await Task.CompletedTask;
 
-            if (_userRepository.GetUserByEmail(command.Email) is not null)
+            if (_userRepository.GetByEmail(command.Email) is not null)
             {
                 return Errors.User.DuplicateEmail;
             }

@@ -1,4 +1,7 @@
-﻿using Core.Domain.MenuAggregate;
+﻿using Core.Application.Common.Commands;
+using Core.Application.Common.Interfaces.Validation;
+using Core.Domain.MenuAggregate;
+using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -7,8 +10,8 @@ namespace Core.Application.Menus.Commands.CreateMenu
     public record CreateMenuCommand(
         string Name,
         string Description,
-        string RestaurantId,
-        List<CreateMenuSectionComand> Sections) : IRequest<ErrorOr<Menu>>;
+        RestaurantId RestaurantId,
+        List<CreateMenuSectionComand> Sections) : IRequest<ErrorOr<Menu>>, IRequireRestaurantValidation;
 
     public record CreateMenuSectionComand(
         string Name,
@@ -20,8 +23,4 @@ namespace Core.Application.Menus.Commands.CreateMenu
         string Description,
         CreateMoneyCommand Price,
         bool IsAvailable);
-
-    public record CreateMoneyCommand(
-        decimal Amount,
-        string Currency);
 }

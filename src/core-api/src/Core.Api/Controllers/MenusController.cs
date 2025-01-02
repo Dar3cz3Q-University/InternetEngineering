@@ -1,4 +1,8 @@
 ﻿using Core.Application.Menus.Commands.CreateMenu;
+using Core.Application.Menus.Commands.DeleteMenu;
+using Core.Application.Menus.Commands.UpdateMenu;
+using Core.Application.Menus.Queries.GetMenu;
+using Core.Application.Menus.Queries.GetMenus;
 using Core.Contracts.Menu.Request;
 using Core.Contracts.Menu.Response;
 using MapsterMapper;
@@ -22,13 +26,25 @@ namespace Core.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
-            throw new NotImplementedException();
+            var query = new GetMenusQuery();
+
+            var menus = await _mediator.Send(query);
+
+            return menus.Match(
+                m => Ok(m.ConvertAll(m => _mapper.Map<MenuResponse>(m))),
+                e => Problem(e));
         }
 
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(Guid id)
         {
-            throw new NotImplementedException();
+            var query = _mapper.Map<GetMenuQuery>(id);
+
+            var menu = await _mediator.Send(query);
+
+            return menu.Match(
+                m => Ok(_mapper.Map<MenuResponse>(m)),
+                e => Problem(e));
         }
 
         [HttpPost]
@@ -43,16 +59,30 @@ namespace Core.Api.Controllers
                 e => Problem(e));
         }
 
-        [HttpPut]
-        public async Task<IActionResult> Edit()
+        [HttpPut("{id:guid}")]
+        public async Task<IActionResult> Update(
+            Guid id,
+            UpdateMenuRequest request)
         {
-            throw new NotImplementedException();
+            var command = _mapper.Map<UpdateMenuCommand>((id, request));
+
+            var updateMenu = await _mediator.Send(command);
+
+            return updateMenu.Match(
+                m => Ok(_mapper.Map<MenuResponse>(m)),
+                e => Problem(e));
         }
 
-        [HttpDelete]
-        public async Task<IActionResult> Delete()
+        [HttpDelete("{id:guid}")]
+        public async Task<IActionResult> Delete(Guid id)
         {
-            throw new NotImplementedException();
+            var command = _mapper.Map<DeleteMenuCommand>(id);
+
+            var response = await _mediator.Send(command);
+
+            return response.Match(
+                _ => NoContent(),
+                e => Problem(e));
         }
     }
 }

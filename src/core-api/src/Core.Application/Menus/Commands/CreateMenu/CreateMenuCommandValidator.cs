@@ -2,9 +2,9 @@
 
 namespace Core.Application.Menus.Commands.CreateMenu
 {
-    public class CreateMenuCommandHandlerValidator : AbstractValidator<CreateMenuCommand>
+    public class CreateMenuCommandValidator : AbstractValidator<CreateMenuCommand>
     {
-        public CreateMenuCommandHandlerValidator()
+        public CreateMenuCommandValidator()
         {
             // TODO: [Add validations #26]
             RuleFor(x => x.Name).NotEmpty();

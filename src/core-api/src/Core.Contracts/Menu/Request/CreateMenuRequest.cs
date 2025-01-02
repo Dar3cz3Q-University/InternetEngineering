@@ -1,9 +1,11 @@
-﻿namespace Core.Contracts.Menu.Request
+﻿using Core.Contracts.Common.Request;
+
+namespace Core.Contracts.Menu.Request
 {
     public record CreateMenuRequest(
         string Name,
         string Description,
-        string RestaurantId,
+        Guid RestaurantId,
         List<CreateMenuSectionRequest> Sections);
 
     public record CreateMenuSectionRequest(
@@ -14,9 +16,5 @@
     public record CreateMenuItemRequest(
         string Name,
         string Description,
-        CreateMoneyRequest Price);
-
-    public record CreateMoneyRequest(
-        decimal Amount,
-        string Currency);
+        MoneyRequest Price);
 }

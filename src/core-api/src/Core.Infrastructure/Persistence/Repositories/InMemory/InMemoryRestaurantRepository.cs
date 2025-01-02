@@ -7,24 +7,23 @@ namespace Core.Infrastructure.Persistence.Repositories.InMemory
     public class InMemoryRestaurantRepository : IRestaurantRepository
     {
         private static readonly List<Restaurant> _restaurants = [];
-
-        public Restaurant? Get(RestaurantId id)
+        public Restaurant? GetById(RestaurantId id)
         {
             return _restaurants.Find(r => r.Id == id);
         }
-        public List<Restaurant> GetAll()
-        {
-            return _restaurants;
-        }
-
-        public void Add(Restaurant restaurant)
+        public List<Restaurant> All() => _restaurants;
+        public Restaurant Add(Restaurant restaurant)
         {
             _restaurants.Add(restaurant);
+            return restaurant;
         }
-
+        public Restaurant Update(Restaurant restaurant)
+        {
+            throw new NotImplementedException();
+        }
         public void Delete(RestaurantId id)
         {
-            _restaurants.Remove(Get(id));
+            _restaurants.Remove(GetById(id));
         }
     }
 }

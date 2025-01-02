@@ -46,6 +46,7 @@ namespace Core.Infrastructure
             services.AddScoped<IUserRepository, InMemoryUserRepository>();
             services.AddScoped<IRestaurantRepository, InMemoryRestaurantRepository>();
             services.AddScoped<IMenuRepository, InMemoryMenuRepository>();
+            services.AddScoped<IOrderRepository, InMemoryOrderRepository>();
 
             return services;
         }

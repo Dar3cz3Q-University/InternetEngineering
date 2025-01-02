@@ -18,6 +18,7 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
             _restaurantRepository = restaurantRepository;
         }
 
+        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Restaurant>> Handle(
             CreateRestaurantCommand request,
             CancellationToken cancellationToken)
@@ -39,9 +40,7 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
                     request.OpeningHours.CloseTime)
                 );
 
-            _restaurantRepository.Add(restaurant);
-
-            return restaurant;
+            return _restaurantRepository.Add(restaurant);
         }
     }
 }

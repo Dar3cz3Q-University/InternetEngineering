@@ -16,13 +16,14 @@ namespace Core.Application.Restaurants.Queries.GetRestaurants
             _restaurantRepository = restaurantRepository;
         }
 
+        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<List<Restaurant>>> Handle(
             GetRestaurantsQuery request,
             CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
-            return _restaurantRepository.GetAll();
+            return _restaurantRepository.All();
         }
     }
 }

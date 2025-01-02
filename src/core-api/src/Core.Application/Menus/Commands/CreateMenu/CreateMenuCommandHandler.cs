@@ -2,7 +2,6 @@
 using Core.Domain.Common.ValueObjects;
 using Core.Domain.MenuAggregate;
 using Core.Domain.MenuAggregate.Entities;
-using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
 
@@ -12,20 +11,22 @@ namespace Core.Application.Menus.Commands.CreateMenu
         IRequestHandler<CreateMenuCommand, ErrorOr<Menu>>
     {
         private readonly IMenuRepository _menuRepository;
+        private readonly IOrderRepository _restaurantRepository;
 
         public CreateMenuCommandHandler(
-            IMenuRepository menuRepository)
+            IMenuRepository menuRepository,
+            IOrderRepository restaurantRepository)
         {
             _menuRepository = menuRepository;
+            _restaurantRepository = restaurantRepository;
         }
 
+        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Menu>> Handle(
             CreateMenuCommand request,
             CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
-
-            // TODO: Validation if parsing to Guid works and check if restaurant exists (maybe DomainEvents)
 
             var menu = Menu.Create(
                 request.Name,
@@ -39,11 +40,9 @@ namespace Core.Application.Menus.Commands.CreateMenu
                         Money.Create(
                             item.Price.Amount,
                             item.Price.Currency))))),
-                RestaurantId.Create(Guid.Parse(request.RestaurantId)));
+                request.RestaurantId);
 
-            _menuRepository.Add(menu);
-
-            return menu;
+            return _menuRepository.Add(menu);
         }
     }
 }
