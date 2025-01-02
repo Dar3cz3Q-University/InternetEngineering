@@ -1,6 +1,6 @@
-# GlovoMaslo - CoreAPI
+# GlovoMaslo - Restaurant Service
 
-[![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/core-api)
+[![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/restaurant-service)
 
 {description}
 
@@ -9,7 +9,7 @@
 ## Setup
 
 ### Requirements
-* [.NET 9.0](https://dotnet.microsoft.com/en-us/download/dotnet/9.0)
+* [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 ### Local development
 1. Go into application directory:
@@ -22,14 +22,14 @@
    ```
 3. Continue with [Global README.md](../../README.md)
 
-#### If you want to run only Core api:
+#### If you want to run only Restaurant service:
 1. Install dependencies:
    ```shell
-   dotnet restore "./Core.Api/Core.Api.csproj"
+   mvn dependency:go-offline -B
    ```
 2. Start application:
    ```shell
-   dotnet watch run --project "./Core.Api/Core.Api.csproj"
+   mvn spring-boot:run
    ```
 
 ---

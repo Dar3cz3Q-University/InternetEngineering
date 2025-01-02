@@ -24,7 +24,7 @@ services:
         - action: sync
           path: ./client-app/src
           target: /app
-          ignore: 
+          ignore:
             - node_modules/
         - action: rebuild
           path: ./client-app/src/package.json
@@ -50,8 +50,28 @@ services:
       - application-network
       - client-network
     depends_on:
+      - restaurant-service
       - postgres-db
       - redis
+      - rabbitmq
+
+  restaurant-service:
+    build:
+      context: ./restaurant-service
+      dockerfile: Dockerfile.dev
+    restart: unless-stopped
+    container_name: restaurant-service
+    ports:
+      - '${RESTAURANT_SERVICE_PORT}:8090'
+    volumes:
+      - ./restaurant-service/src:/app
+      - ~/.m2:/root/.m2
+    env_file:
+      - ./restaurant-service/.env
+    networks:
+      - application-network
+    depends_on:
+      - mongo-db
       - rabbitmq
 
   postgres-db:

@@ -1,0 +1,23 @@
+server:
+  port: ${APP_PORT:8090}
+  servlet:
+    context-path: /api/v1
+
+spring:
+  application:
+    name: Restaurant Mock Service
+  webflux:
+    base-path: /api/v1
+  data:
+    mongodb:
+      host: ${MONGO_DB_HOST:localhost}
+      port: ${MONGO_DB_PORT:27017}
+      database: maselniczka
+      username: ${MONGO_DB_USER:root}
+      password: ${MONGO_DB_PASS:root}
+
+mqtt:
+  host: ${MQTT_HOST:localhost}
+  port: ${MQTT_PORT:1883}
+  user: ${MQTT_USER:guest}
+  pass: ${MQTT_PASS:guest}

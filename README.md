@@ -7,7 +7,9 @@ Glovo but only butter.
 ## Applications workflows
 [![Client-App workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client-app.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client)
 
-[![Core-Api workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/server)
+[![Core-Api workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/core-api)
+
+[![Restaurant-Service workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/restaurant-service)
 
 ---
 
@@ -25,6 +27,7 @@ Glovo but only butter.
 2. Setup applications:
     * [Client-App](/src/client-app)
     * [Core-Api](/src/core-api)
+    * [Restaurant-Service](/src/restaurant-service)
 3. Start applications:
    ```shell
    docker compose up --watch

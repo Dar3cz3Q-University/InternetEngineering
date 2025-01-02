@@ -1,0 +1,10 @@
+FROM maven:3.9.5-eclipse-temurin-17
+
+WORKDIR /app
+
+COPY src/pom.xml .
+COPY src/src ./src
+
+RUN mvn dependency:go-offline -B
+
+CMD ["mvn", "spring-boot:run"]
