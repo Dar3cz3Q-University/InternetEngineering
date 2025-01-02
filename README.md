@@ -2,6 +2,8 @@
 
 Glovo but only butter.
 
+![C2 diagram](./doc/architecture/diagrams/workspace/images/c2.png)
+
 ---
 
 ## Applications workflows
@@ -10,8 +12,6 @@ Glovo but only butter.
 [![Core-Api workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/core-api)
 
 [![Restaurant-Service workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/restaurant-service)
-
-![C2 diagram](./doc/architecture/diagrams/workspace/images/c2.png)
 
 ---
 
