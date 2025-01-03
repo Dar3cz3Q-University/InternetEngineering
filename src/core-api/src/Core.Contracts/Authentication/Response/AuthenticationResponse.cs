@@ -1,4 +1,5 @@
 ﻿using Core.Contracts.Authentication.DTO;
+using Core.Contracts.Common.Response;
 
 namespace Core.Contracts.Authentication.Response
 {
@@ -9,6 +10,7 @@ namespace Core.Contracts.Authentication.Response
         string Email,
         string PhoneNumber,
         UserRoleDTO UserRole,
+        List<AddressResponse> Addresses,
         string Token,
         DateTime CreatedDateTime,
         DateTime UpdatedDateTime

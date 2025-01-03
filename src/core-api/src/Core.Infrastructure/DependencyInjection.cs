@@ -40,6 +40,8 @@ namespace Core.Infrastructure
 
             services.AddDbContext<MainDbContext>(options => options.UseNpgsql(connectionString));
 
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
+
             services.AddScoped<PublishDomainEventsInterceptor>();
             services.AddScoped<UpdateTimestampsInterceptor>();
 

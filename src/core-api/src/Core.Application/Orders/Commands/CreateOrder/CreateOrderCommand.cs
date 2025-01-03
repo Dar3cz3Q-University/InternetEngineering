@@ -1,5 +1,5 @@
-﻿using Core.Application.Common.Commands;
-using Core.Application.Common.Interfaces.Validation;
+﻿using Core.Application.Common.Interfaces.Validation;
+using Core.Domain.Common.ValueObjects;
 using Core.Domain.MenuAggregate.ValueObjects;
 using Core.Domain.OrderAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
@@ -12,6 +12,6 @@ namespace Core.Application.Orders.Commands.CreateOrder
     public record CreateOrderCommand(
         UserId UserId,
         RestaurantId RestaurantId,
-        CreateAddressCommand DeliveryAddress,
+        AddressId AddressId,
         List<MenuItemId> ItemsIds) : IRequest<ErrorOr<Order>>, IRequireUserValidation, IRequireRestaurantValidation;
 }

@@ -2,6 +2,12 @@
 {
     public record AddressRequest(
         string Street,
+        string BuildingNumber,
+        string? ApartmentNumber,
+        string PostalCode,
         string City,
-        string PostalCode);
+        string State,
+        string Country,
+        double? Latitude,
+        double? Longitude);
 }

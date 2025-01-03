@@ -1,5 +1,4 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
-using Core.Domain.Common.ValueObjects;
 using Core.Domain.OrderAggregate;
 using ErrorOr;
 using MediatR;
@@ -18,19 +17,16 @@ namespace Core.Application.Orders.Commands.CreateOrder
 
         // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Order>> Handle(
-            CreateOrderCommand request,
+            CreateOrderCommand command,
             CancellationToken cancellationToken)
         {
             await Task.CompletedTask;
 
             var order = Order.Create(
-                request.UserId,
-                request.RestaurantId,
-                Address.Create(
-                    request.DeliveryAddress.Street,
-                    request.DeliveryAddress.City,
-                    request.DeliveryAddress.PostalCode),
-                request.ItemsIds);
+                command.UserId,
+                command.RestaurantId,
+                command.AddressId,
+                command.ItemsIds);
 
             return _orderRepository.Add(order);
         }

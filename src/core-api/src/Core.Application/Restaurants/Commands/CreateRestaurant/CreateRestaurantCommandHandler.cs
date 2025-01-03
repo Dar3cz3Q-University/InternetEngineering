@@ -1,5 +1,5 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
-using Core.Domain.Common.ValueObjects;
+using Core.Application.Common.Interfaces.Services;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
@@ -11,34 +11,33 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
         IRequestHandler<CreateRestaurantCommand, ErrorOr<Restaurant>>
     {
         private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IAddressService _addressService;
 
         public CreateRestaurantCommandHandler(
-            IRestaurantRepository restaurantRepository)
+            IRestaurantRepository restaurantRepository,
+            IAddressService addressService)
         {
             _restaurantRepository = restaurantRepository;
+            _addressService = addressService;
         }
 
         // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Restaurant>> Handle(
-            CreateRestaurantCommand request,
+            CreateRestaurantCommand command,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var address = await _addressService.CreateAddressAsync(command.Location);
 
             var restaurant = Restaurant.Create(
-                request.Name,
-                Address.Create(
-                    request.Location.Street,
-                    request.Location.City,
-                    request.Location.PostalCode),
-                request.Description,
+                command.Name,
+                address,
+                command.Description,
                 ContactInfo.Create(
-                    request.ContactInfo.PhoneNumber,
-                    request.ContactInfo.Email),
+                    command.ContactInfo.PhoneNumber,
+                    command.ContactInfo.Email),
                 OpeningHours.Create(
-                    request.OpeningHours.OpenTime,
-                    request.OpeningHours.CloseTime)
-                );
+                    command.OpeningHours.OpenTime,
+                    command.OpeningHours.CloseTime));
 
             return _restaurantRepository.Add(restaurant);
         }

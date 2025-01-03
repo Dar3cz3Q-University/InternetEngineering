@@ -1,4 +1,5 @@
 ﻿using Core.Application.Authentication.Common;
+using Core.Application.Common.Commands;
 using Core.Domain.UserAggregate;
 using ErrorOr;
 using MediatR;
@@ -11,6 +12,7 @@ namespace Core.Application.Authentication.Commands.Register
         string Email,
         string PhoneNumber,
         string Password,
-        UserRole UserRole
+        UserRole UserRole,
+        CreateAddressCommand Address
     ) : IRequest<ErrorOr<AuthenticationResult>>;
 }

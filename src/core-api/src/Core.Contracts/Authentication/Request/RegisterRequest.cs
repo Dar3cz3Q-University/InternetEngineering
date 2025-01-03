@@ -1,4 +1,5 @@
 ﻿using Core.Contracts.Authentication.DTO;
+using Core.Contracts.Common.Request;
 
 namespace Core.Contracts.Authentication.Request
 {
@@ -8,6 +9,7 @@ namespace Core.Contracts.Authentication.Request
         string Email,
         string PhoneNumber,
         string Password,
-        UserRoleDTO UserRole
+        UserRoleDTO UserRole,
+        AddressRequest Address
     );
 }

@@ -12,7 +12,7 @@ namespace Core.Domain.OrderAggregate
         private readonly List<MenuItemId> _items = [];
         public UserId UserId { get; private set; }
         public RestaurantId RestaurantId { get; private set; }
-        public Address DeliveryAddress { get; private set; }
+        public AddressId DeliveryAddressId { get; private set; }
         public OrderStatus OrderStatus { get; private set; }
         public Money TotalPrice { get; private set; }
         public UserId? CourierId { get; private set; }
@@ -25,7 +25,7 @@ namespace Core.Domain.OrderAggregate
             OrderId id,
             UserId userId,
             RestaurantId restaurantId,
-            Address deliveryAddress,
+            AddressId deliveryAddressId,
             OrderStatus orderStatus,
             Money totalPrice,
             List<MenuItemId> items,
@@ -35,7 +35,7 @@ namespace Core.Domain.OrderAggregate
             Id = id;
             UserId = userId;
             RestaurantId = restaurantId;
-            DeliveryAddress = deliveryAddress;
+            DeliveryAddressId = deliveryAddressId;
             OrderStatus = orderStatus;
             TotalPrice = totalPrice;
             _items = items;
@@ -46,7 +46,7 @@ namespace Core.Domain.OrderAggregate
         public static Order Create(
             UserId userId,
             RestaurantId restaurantId,
-            Address deliveryAddress,
+            AddressId deliveryAddressId,
             List<MenuItemId> items)
         {
             var temp = Money.Create(
@@ -57,7 +57,7 @@ namespace Core.Domain.OrderAggregate
                 OrderId.CreateUnique(),
                 userId,
                 restaurantId,
-                deliveryAddress,
+                deliveryAddressId,
                 OrderStatus.Pending,
                 temp, // TODO: Calculate total price
                 items,

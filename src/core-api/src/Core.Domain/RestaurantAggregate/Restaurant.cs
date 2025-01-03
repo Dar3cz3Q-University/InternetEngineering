@@ -1,5 +1,5 @@
-﻿using Core.Domain.Common.Models;
-using Core.Domain.Common.ValueObjects;
+﻿using Core.Domain.Common.Entities;
+using Core.Domain.Common.Models;
 using Core.Domain.MenuAggregate.ValueObjects;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 
@@ -50,7 +50,7 @@ namespace Core.Domain.RestaurantAggregate
             ContactInfo contactInfo,
             OpeningHours openingHours)
         {
-            var restaurant = new Restaurant(
+            return new(
                 RestaurantId.CreateUnique(),
                 name,
                 location,
@@ -60,8 +60,6 @@ namespace Core.Domain.RestaurantAggregate
                 false,
                 DateTime.UtcNow,
                 DateTime.UtcNow);
-
-            return restaurant;
         }
 
 #pragma warning disable CS8618

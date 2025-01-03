@@ -1,6 +1,7 @@
 ﻿using Core.Application.Common.Commands;
 using Core.Contracts.Common.Request;
 using Core.Contracts.Common.Response;
+using Core.Domain.Common.Entities;
 using Core.Domain.Common.ValueObjects;
 using Mapster;
 
@@ -24,7 +25,8 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<AddressRequest, CreateAddressCommand>();
 
-            config.NewConfig<Address, AddressResponse>();
+            config.NewConfig<Address, AddressResponse>()
+                .Map(dest => dest.Id, src => src.Id.Value);
         }
     }
 }
