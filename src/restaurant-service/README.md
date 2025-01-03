@@ -12,15 +12,11 @@
 * [Java 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html)
 
 ### Local development
-1. Go into application directory:
-   ```shell
-   cd src
-   ```
-2. Create and fill environment file:
+1. Create and fill environment file:
    ```shell
    cp .env.dist .env
    ```
-3. Continue with [Global README.md](../../README.md)
+2. Continue with [Global README.md](../../README.md)
 
 #### If you want to run only Restaurant service:
 1. Install dependencies:

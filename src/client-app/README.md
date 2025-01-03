@@ -12,15 +12,11 @@
 * [Node](https://nodejs.org/en)
 
 ### Local development
-1. Go into application directory:
-   ```shell
-   cd src
-   ```
-2. Create and fill environment file:
+1. Create and fill environment file:
    ```shell
    cp .env.dist .env
    ```
-3. Continue with [Global README.md](../../README.md)
+2. Continue with [Global README.md](../../README.md)
 
 #### If you want to run only Client app:
 1. Install dependencies:
