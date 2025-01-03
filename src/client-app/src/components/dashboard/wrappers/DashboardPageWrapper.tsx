@@ -10,15 +10,15 @@ const DashboardPageWrapper: React.FC<DashboardPageWrapperProps> = ({
     main
 }) => {
     return (
-        <div className="min-w-screen min-h-screen flex flex-col items-center bg-background_dark text-black">
+        <div className="min-w-screen min-h-screen flex flex-col items-center bg-background_dark text-black overflow-x-hidden">
             <header className="w-full p-[24px]">
                 {header}
             </header>
-            <main className="w-full flex-1 flex flex-col items-center bg-background_light">
+            <main className="w-full flex-1 flex flex-col items-center bg-background_light rounded-t-3xl mb-[54px]">
                 {main}
             </main>
             <nav className="fixed bottom-0 w-full shadow-lg">
-                {/* <DashboardNavigation /> */}
+                <DashboardNavigation />
             </nav>
         </div>
     )

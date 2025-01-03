@@ -21,6 +21,10 @@ export default {
         black: "var(--color-black)",
         gray: "var(--color-gray)"
       },
+      backgroundImage: {
+        'sponsored-banner': "url(/images/sponsored-banner-background.jpg)",
+        'promotion-example': "url(/images/promotion-example.jpg)"
+      }
     },
   },
   plugins: [],
