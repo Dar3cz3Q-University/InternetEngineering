@@ -7,7 +7,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace Core.Infrastructure.Authentication
+namespace Core.Infrastructure.Authentication.Token
 {
     public class JwtTokenGenerator(
         IDateTimeProvider dateTimeProvider,

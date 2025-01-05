@@ -1,4 +1,4 @@
-﻿namespace Core.Infrastructure.Authentication
+﻿namespace Core.Infrastructure.Authentication.Token
 {
     public class JwtSettings
     {

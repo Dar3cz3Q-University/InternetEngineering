@@ -20,6 +20,8 @@ namespace Core.Domain.UserAggregate.ValueObjects
             yield return Value;
         }
 
+#pragma warning disable CS8618
         protected UserId() { }
+#pragma warning restore CS8618
     }
 }

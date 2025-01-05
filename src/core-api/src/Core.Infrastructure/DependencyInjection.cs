@@ -1,7 +1,8 @@
 ﻿using Core.Application.Common.Interfaces.Authentication;
 using Core.Application.Common.Interfaces.Persistance;
 using Core.Application.Common.Interfaces.Services;
-using Core.Infrastructure.Authentication;
+using Core.Infrastructure.Authentication.Password;
+using Core.Infrastructure.Authentication.Token;
 using Core.Infrastructure.Config;
 using Core.Infrastructure.Persistence;
 using Core.Infrastructure.Persistence.Interceptors;
@@ -64,8 +65,13 @@ namespace Core.Infrastructure
             configuration.Bind(JwtSettings.SECTION_NAME, jwtSettings);
 
             services.AddSingleton(Options.Create(jwtSettings));
-
             services.AddSingleton<IJwtTokenGenerator, JwtTokenGenerator>();
+
+            var passwordHashingOptions = new PasswordHashingOptions();
+            configuration.Bind(PasswordHashingOptions.SECTION_NAME, passwordHashingOptions);
+
+            services.AddSingleton(Options.Create(passwordHashingOptions));
+            services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
             services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options => options.TokenValidationParameters = new TokenValidationParameters()

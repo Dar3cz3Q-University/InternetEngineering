@@ -3,7 +3,6 @@ using Core.Application;
 using Core.Infrastructure;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Mvc.Authorization;
 
 var builder = WebApplication.CreateBuilder(args);
 {
@@ -13,9 +12,15 @@ var builder = WebApplication.CreateBuilder(args);
         options.ListenAnyIP(5042);
     });
 
-    builder.Services.AddPresentation(builder.Configuration);
-    builder.Services.AddApplication();
-    builder.Services.AddInfrastructure(builder.Configuration);
+    builder.Configuration
+        .AddJsonFile("appsettings.json")
+        .AddJsonFile("appsettings.Development.json")
+        .AddEnvironmentVariables();
+
+    builder.Services
+        .AddPresentation(builder.Configuration)
+        .AddApplication()
+        .AddInfrastructure(builder.Configuration);
 }
 
 var app = builder.Build();

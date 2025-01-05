@@ -12,18 +12,23 @@ namespace Core.Application.Authentication.Commands.Register
     public class RegisterCommandHandler :
         IRequestHandler<RegisterCommand, ErrorOr<AuthenticationDTO>>
     {
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
         private readonly IAddressService _addressService;
 
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IPasswordHasher _passwordHasher;
+
         public RegisterCommandHandler(
-            IJwtTokenGenerator jwtTokenGenerator,
             IUserRepository userRepository,
-            IAddressService addressService)
+            IAddressService addressService,
+            IJwtTokenGenerator jwtTokenGenerator,
+            IPasswordHasher passwordHasher)
         {
-            _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
             _addressService = addressService;
+
+            _jwtTokenGenerator = jwtTokenGenerator;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<ErrorOr<AuthenticationDTO>> Handle(
@@ -45,7 +50,7 @@ namespace Core.Application.Authentication.Commands.Register
                 command.LastName,
                 command.Email,
                 command.PhoneNumber,
-                command.Password,
+                _passwordHasher.HashPassword(command.Password),
                 command.UserRole,
                 address);
 

@@ -28,7 +28,7 @@ namespace Core.Infrastructure.Persistence.Configurations
                 .IsRequired();
 
             builder.Property(u => u.Password)
-                .HasMaxLength(255)
+                .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(u => u.Role)

@@ -1,6 +1,7 @@
 ﻿using Core.Application.Authentication.Common;
 using Core.Application.Common.Interfaces.Authentication;
 using Core.Application.Common.Interfaces.Persistance;
+using Core.Application.Common.Interfaces.Services;
 using Core.Domain.Common.Errors;
 using ErrorOr;
 using MediatR;
@@ -10,14 +11,20 @@ namespace Core.Application.Authentication.Queries.Login
     public class LoginQueryHandler :
         IRequestHandler<LoginQuery, ErrorOr<AuthenticationDTO>>
     {
-        private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
 
+        private readonly IJwtTokenGenerator _jwtTokenGenerator;
+        private readonly IPasswordHasher _passwordHasher;
+
         public LoginQueryHandler(
-            IJwtTokenGenerator jwtTokenGenerator, IUserRepository userRepository)
+            IUserRepository userRepository,
+            IJwtTokenGenerator jwtTokenGenerator,
+            IPasswordHasher passwordHasher)
         {
-            _jwtTokenGenerator = jwtTokenGenerator;
             _userRepository = userRepository;
+
+            _jwtTokenGenerator = jwtTokenGenerator;
+            _passwordHasher = passwordHasher;
         }
 
         public async Task<ErrorOr<AuthenticationDTO>> Handle(
@@ -34,7 +41,7 @@ namespace Core.Application.Authentication.Queries.Login
 
             var user = userResult.Value;
 
-            if (user.Password != query.Password)
+            if (!_passwordHasher.VerifyPassword(user.Password, query.Password))
             {
                 return Errors.Authentication.InvalidCredentials;
             }
