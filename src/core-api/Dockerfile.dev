@@ -16,4 +16,12 @@ RUN dotnet restore "./Core.Api/Core.Api.csproj"
 
 COPY src .
 
-CMD ["dotnet", "watch", "run", "--project", "./Core.Api/Core.Api.csproj"]
+RUN dotnet tool install --global dotnet-ef
+ENV PATH="$PATH:/root/.dotnet/tools"
+
+WORKDIR /
+
+COPY ["entrypoint.sh", "./"]
+RUN chmod +x ./entrypoint.sh
+
+ENTRYPOINT ["./entrypoint.sh"]

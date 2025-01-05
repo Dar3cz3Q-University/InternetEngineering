@@ -16,16 +16,14 @@ namespace Core.Application.Menus.Queries.GetMenu
             _menuRepository = menuRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Menu>> Handle(
             GetMenuQuery request,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var menu = await _menuRepository.GetByIdAsync(request.MenuId);
 
-            var menu = _menuRepository.GetById(request.MenuId);
-
-            if (menu is null)
+            // TODO: Check for more specific error
+            if (menu.IsError)
             {
                 return Errors.Menu.NotFound(request.MenuId);
             }

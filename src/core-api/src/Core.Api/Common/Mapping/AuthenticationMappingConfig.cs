@@ -15,7 +15,7 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<LoginRequest, LoginQuery>();
 
-            config.NewConfig<AuthenticationResult, AuthenticationResponse>()
+            config.NewConfig<AuthenticationDTO, AuthenticationResponse>()
                 .Map(dest => dest.Id, src => src.User.Id.Value)
                 .Map(dest => dest, src => src.User);
         }

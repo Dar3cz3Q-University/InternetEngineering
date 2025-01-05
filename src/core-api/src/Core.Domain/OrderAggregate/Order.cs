@@ -7,16 +7,16 @@ using Core.Domain.UserAggregate.ValueObjects;
 
 namespace Core.Domain.OrderAggregate
 {
-    public sealed class Order : AggregateRoot<OrderId>, IHasTimestamps
+    public class Order : AggregateRoot<OrderId>, IHasTimestamps
     {
-        private readonly List<MenuItemId> _items = [];
-        public UserId UserId { get; private set; }
-        public RestaurantId RestaurantId { get; private set; }
-        public AddressId DeliveryAddressId { get; private set; }
+        private readonly List<MenuItemId> _itemsIds = [];
+        public virtual UserId UserId { get; private set; }
+        public virtual RestaurantId RestaurantId { get; private set; }
+        public virtual AddressId DeliveryAddressId { get; private set; }
         public OrderStatus OrderStatus { get; private set; }
         public Money TotalPrice { get; private set; }
-        public UserId? CourierId { get; private set; }
-        public IReadOnlyList<MenuItemId> Items => _items.AsReadOnly();
+        public virtual UserId? CourierId { get; private set; }
+        public virtual ICollection<MenuItemId> ItemsIds => _itemsIds.AsReadOnly();
         public DateTime? DeliveryTime { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
@@ -38,7 +38,7 @@ namespace Core.Domain.OrderAggregate
             DeliveryAddressId = deliveryAddressId;
             OrderStatus = orderStatus;
             TotalPrice = totalPrice;
-            _items = items;
+            _itemsIds = items;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
         }
@@ -66,7 +66,7 @@ namespace Core.Domain.OrderAggregate
         }
 
 #pragma warning disable CS8618
-        private Order() { }
+        protected Order() { }
 #pragma warning restore CS8618
     }
 }

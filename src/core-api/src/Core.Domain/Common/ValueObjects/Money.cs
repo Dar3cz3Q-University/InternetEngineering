@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Common.ValueObjects
 {
-    public sealed class Money : ValueObject
+    public class Money : ValueObject
     {
         public decimal Amount { get; }
         public string Currency { get; }
@@ -27,5 +27,9 @@ namespace Core.Domain.Common.ValueObjects
             yield return Amount;
             yield return Currency;
         }
+
+#pragma warning disable CS8618
+        protected Money() { }
+#pragma warning restore CS8618
     }
 }

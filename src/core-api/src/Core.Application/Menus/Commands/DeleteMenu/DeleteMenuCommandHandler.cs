@@ -5,7 +5,7 @@ using MediatR;
 namespace Core.Application.Menus.Commands.DeleteMenu
 {
     public class DeleteMenuCommandHandler :
-        IRequestHandler<DeleteMenuCommand, ErrorOr<Unit>>
+        IRequestHandler<DeleteMenuCommand, ErrorOr<Deleted>>
     {
         private readonly IMenuRepository _menuRepository;
 
@@ -14,14 +14,19 @@ namespace Core.Application.Menus.Commands.DeleteMenu
             _menuRepository = menuRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
-        public async Task<ErrorOr<Unit>> Handle(DeleteMenuCommand request, CancellationToken cancellationToken)
+        public async Task<ErrorOr<Deleted>> Handle(
+            DeleteMenuCommand request,
+            CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var result = await _menuRepository.DeleteByIdAsync(request.MenuId);
 
-            _menuRepository.Delete(request.MenuId);
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to remove menu from database.");
+            }
 
-            return Unit.Value;
+            return Result.Deleted;
         }
     }
 }

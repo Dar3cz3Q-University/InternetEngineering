@@ -6,12 +6,8 @@ namespace Core.Contracts.Restaurant.Request
         string Name,
         AddressRequest Location,
         string Description,
-        CreateContactInfoRequest ContactInfo,
+        ContactInfoRequest ContactInfo,
         CreateOpeningHoursRequest OpeningHours);
-
-    public record CreateContactInfoRequest(
-        string PhoneNumber,
-        string Email);
 
     public record CreateOpeningHoursRequest(
         DateTime OpenTime,

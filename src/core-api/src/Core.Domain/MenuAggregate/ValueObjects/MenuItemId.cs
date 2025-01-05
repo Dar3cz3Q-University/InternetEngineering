@@ -2,7 +2,7 @@
 
 namespace Core.Domain.MenuAggregate.ValueObjects
 {
-    public sealed class MenuItemId : ValueObject
+    public class MenuItemId : ValueObject
     {
         public Guid Value { get; private set; }
 
@@ -19,5 +19,9 @@ namespace Core.Domain.MenuAggregate.ValueObjects
         {
             yield return Value;
         }
+
+#pragma warning disable CS8618
+        protected MenuItemId() { }
+#pragma warning restore CS8618
     }
 }

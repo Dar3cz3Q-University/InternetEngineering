@@ -5,7 +5,8 @@ using Core.Infrastructure.Authentication;
 using Core.Infrastructure.Config;
 using Core.Infrastructure.Persistence;
 using Core.Infrastructure.Persistence.Interceptors;
-using Core.Infrastructure.Persistence.Repositories.InMemory;
+using Core.Infrastructure.Persistence.Repositories;
+using Core.Infrastructure.Persistence.Services;
 using Core.Infrastructure.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
@@ -38,17 +39,19 @@ namespace Core.Infrastructure
         {
             var connectionString = ConnectionStringBuilder.Build(configuration);
 
-            services.AddDbContext<MainDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<MainDbContext>(options =>
+                options.UseLazyLoadingProxies().UseNpgsql(connectionString));
 
             services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             services.AddScoped<PublishDomainEventsInterceptor>();
             services.AddScoped<UpdateTimestampsInterceptor>();
 
-            services.AddScoped<IUserRepository, InMemoryUserRepository>();
-            services.AddScoped<IRestaurantRepository, InMemoryRestaurantRepository>();
-            services.AddScoped<IMenuRepository, InMemoryMenuRepository>();
-            services.AddScoped<IOrderRepository, InMemoryOrderRepository>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IRestaurantRepository, RestaurantRepository>();
+            services.AddScoped<IMenuRepository, MenuRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
 
             return services;
         }

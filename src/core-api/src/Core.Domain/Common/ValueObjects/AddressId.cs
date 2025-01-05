@@ -2,7 +2,7 @@
 
 namespace Core.Domain.Common.ValueObjects
 {
-    public sealed class AddressId : ValueObject
+    public class AddressId : ValueObject
     {
         public Guid Value { get; private set; }
 
@@ -19,5 +19,9 @@ namespace Core.Domain.Common.ValueObjects
         {
             yield return Value;
         }
+
+#pragma warning disable CS8618
+        protected AddressId() { }
+#pragma warning restore CS8618
     }
 }

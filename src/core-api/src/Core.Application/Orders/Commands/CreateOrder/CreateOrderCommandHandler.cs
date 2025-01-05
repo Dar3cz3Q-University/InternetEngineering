@@ -15,20 +15,25 @@ namespace Core.Application.Orders.Commands.CreateOrder
             _orderRepository = orderRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Order>> Handle(
             CreateOrderCommand command,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-
             var order = Order.Create(
                 command.UserId,
                 command.RestaurantId,
                 command.AddressId,
                 command.ItemsIds);
 
-            return _orderRepository.Add(order);
+            var result = await _orderRepository.AddAsync(order);
+
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to add order to database.");
+            }
+
+            return order;
         }
     }
 }

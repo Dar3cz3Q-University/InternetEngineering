@@ -2,7 +2,7 @@
 
 namespace Core.Domain.OrderAggregate.ValueObjects
 {
-    public sealed class OrderId : ValueObject
+    public class OrderId : ValueObject
     {
         public Guid Value { get; private set; }
 
@@ -19,5 +19,9 @@ namespace Core.Domain.OrderAggregate.ValueObjects
         {
             yield return Value;
         }
+
+#pragma warning disable CS8618
+        protected OrderId() { }
+#pragma warning restore CS8618
     }
 }

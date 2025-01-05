@@ -30,7 +30,7 @@ namespace Core.Api.Controllers
         {
             var command = _mapper.Map<RegisterCommand>(request);
 
-            ErrorOr<AuthenticationResult> authResult = await _mediator.Send(command);
+            ErrorOr<AuthenticationDTO> authResult = await _mediator.Send(command);
 
             return authResult.Match(
                 r => Ok(_mapper.Map<AuthenticationResponse>(r)),
@@ -43,7 +43,7 @@ namespace Core.Api.Controllers
         {
             var query = _mapper.Map<LoginQuery>(request);
 
-            ErrorOr<AuthenticationResult> authResult = await _mediator.Send(query);
+            ErrorOr<AuthenticationDTO> authResult = await _mediator.Send(query);
 
             if (authResult.IsError && authResult.FirstError == Errors.Authentication.InvalidCredentials)
             {

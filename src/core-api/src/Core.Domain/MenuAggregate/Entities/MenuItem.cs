@@ -4,7 +4,7 @@ using Core.Domain.MenuAggregate.ValueObjects;
 
 namespace Core.Domain.MenuAggregate.Entities
 {
-    public sealed class MenuItem : Entity<MenuItemId>, IHasTimestamps
+    public class MenuItem : Entity<MenuItemId>, IHasTimestamps
     {
         public string Name { get; private set; }
         public string Description { get; private set; }
@@ -46,7 +46,7 @@ namespace Core.Domain.MenuAggregate.Entities
         }
 
 #pragma warning disable CS8618
-        private MenuItem() { }
+        protected MenuItem() { }
 #pragma warning restore CS8618
     }
 }

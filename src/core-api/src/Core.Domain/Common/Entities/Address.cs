@@ -3,7 +3,7 @@ using Core.Domain.Common.ValueObjects;
 
 namespace Core.Domain.Common.Entities
 {
-    public sealed class Address : Entity<AddressId>
+    public class Address : Entity<AddressId>
     {
         public string Street { get; private set; }
         public string BuildingNumber { get; private set; }
@@ -64,7 +64,7 @@ namespace Core.Domain.Common.Entities
         }
 
 #pragma warning disable CS8618
-        private Address() { }
+        protected Address() { }
 #pragma warning restore CS8618
     }
 }

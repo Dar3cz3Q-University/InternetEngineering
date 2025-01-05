@@ -14,5 +14,5 @@ namespace Core.Application.Authentication.Commands.Register
         string Password,
         UserRole UserRole,
         CreateAddressCommand Address
-    ) : IRequest<ErrorOr<AuthenticationResult>>;
+    ) : IRequest<ErrorOr<AuthenticationDTO>>;
 }

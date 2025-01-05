@@ -4,7 +4,6 @@
         string Id,
         string Name,
         string Description,
-        string RestaurantId,
         List<MenuSectionResponse> Sections,
         DateTime CreatedDateTime,
         DateTime UpdatedDateTime);

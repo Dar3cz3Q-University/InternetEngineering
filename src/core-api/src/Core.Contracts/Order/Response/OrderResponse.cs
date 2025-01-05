@@ -11,7 +11,9 @@ namespace Core.Contracts.Order.Response
         MoneyResponse TotalPrice,
         OrderStatusDTO OrderStatus,
         Courier Courier,
-        List<MenuItemResponse> Items);
+        List<MenuItemResponse> Items,
+        DateTime CreatedDateTime,
+        DateTime UpdatedDateTime);
 
     public record Courier(
         string Name);

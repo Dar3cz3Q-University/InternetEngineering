@@ -3,12 +3,12 @@ using Core.Domain.MenuAggregate.ValueObjects;
 
 namespace Core.Domain.MenuAggregate.Entities
 {
-    public sealed class MenuSection : Entity<MenuSectionId>, IHasTimestamps
+    public class MenuSection : Entity<MenuSectionId>, IHasTimestamps
     {
         private readonly List<MenuItem> _items = [];
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public IReadOnlyList<MenuItem> Items => _items.AsReadOnly();
+        public virtual ICollection<MenuItem> Items => _items.AsReadOnly();
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
 
@@ -42,7 +42,7 @@ namespace Core.Domain.MenuAggregate.Entities
         }
 
 #pragma warning disable CS8618
-        private MenuSection() { }
+        protected MenuSection() { }
 #pragma warning restore CS8618
     }
 }

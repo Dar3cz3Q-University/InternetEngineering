@@ -6,16 +6,16 @@ using MediatR;
 
 namespace Core.Application.Common.Behaviors
 {
-    public class ValidateOrderExistenceBehavior<TRequest, TResponse> :
+    public class UserExistenceBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
             where TRequest : IRequest<TResponse>
             where TResponse : IErrorOr
     {
-        private readonly IOrderRepository _orderRepository;
+        private readonly IUserRepository _userRepository;
 
-        public ValidateOrderExistenceBehavior(IOrderRepository orderRepository)
+        public UserExistenceBehavior(IUserRepository userRepository)
         {
-            _orderRepository = orderRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<TResponse> Handle(
@@ -23,13 +23,14 @@ namespace Core.Application.Common.Behaviors
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            if (request is IRequireOrderValidation orderRequest)
+            if (request is IRequireUserValidation userRequest)
             {
-                var order = _orderRepository.GetById(orderRequest.OrderId);
+                var userResult = await _userRepository.GetByIdAsync(userRequest.UserId);
 
-                if (order is null)
+                // TODO: Check for more specific error
+                if (userResult.IsError)
                 {
-                    return (dynamic)Errors.Order.NotFound(orderRequest.OrderId);
+                    return (dynamic)Errors.User.NotFound(userRequest.UserId);
                 }
             }
 

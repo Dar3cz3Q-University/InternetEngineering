@@ -6,16 +6,16 @@ using MediatR;
 
 namespace Core.Application.Common.Behaviors
 {
-    public class ValidateRestaurantExistenceBehavior<TRequest, TResponse> :
+    public class AddressExistenceBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
             where TRequest : IRequest<TResponse>
             where TResponse : IErrorOr
     {
-        private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IAddressRepository _addressRepository;
 
-        public ValidateRestaurantExistenceBehavior(IRestaurantRepository restaurantRepository)
+        public AddressExistenceBehavior(IAddressRepository addressRepository)
         {
-            _restaurantRepository = restaurantRepository;
+            _addressRepository = addressRepository;
         }
 
         public async Task<TResponse> Handle(
@@ -23,13 +23,14 @@ namespace Core.Application.Common.Behaviors
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            if (request is IRequireRestaurantValidation restaurantRequest)
+            if (request is IRequireAddressValidation addressRequest)
             {
-                var restaurant = _restaurantRepository.GetById(restaurantRequest.RestaurantId);
+                var address = await _addressRepository.GetByIdAsync(addressRequest.AddressId);
 
-                if (restaurant is null)
+                // TODO: Check for more specific error
+                if (address.IsError)
                 {
-                    return (dynamic)Errors.Restaurant.NotFound(restaurantRequest.RestaurantId);
+                    return (dynamic)Errors.Address.NotFound(addressRequest.AddressId);
                 }
             }
 

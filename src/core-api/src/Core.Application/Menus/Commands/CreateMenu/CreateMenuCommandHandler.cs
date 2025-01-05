@@ -11,23 +11,17 @@ namespace Core.Application.Menus.Commands.CreateMenu
         IRequestHandler<CreateMenuCommand, ErrorOr<Menu>>
     {
         private readonly IMenuRepository _menuRepository;
-        private readonly IOrderRepository _restaurantRepository;
 
         public CreateMenuCommandHandler(
-            IMenuRepository menuRepository,
-            IOrderRepository restaurantRepository)
+            IMenuRepository menuRepository)
         {
             _menuRepository = menuRepository;
-            _restaurantRepository = restaurantRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Menu>> Handle(
             CreateMenuCommand request,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-
             var menu = Menu.Create(
                 request.Name,
                 request.Description,
@@ -42,7 +36,15 @@ namespace Core.Application.Menus.Commands.CreateMenu
                             item.Price.Currency))))),
                 request.RestaurantId);
 
-            return _menuRepository.Add(menu);
+            var result = await _menuRepository.AddAsync(menu);
+
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to add menu to database.");
+            }
+
+            return menu;
         }
     }
 }

@@ -20,8 +20,7 @@ namespace Core.Api.Common.Mapping
             //
 
             config.NewConfig<Menu, MenuResponse>()
-                .Map(dest => dest.Id, src => src.Id.Value)
-                .Map(dest => dest.RestaurantId, src => src.RestaurantId.Value);
+                .Map(dest => dest.Id, src => src.Id.Value);
 
             config.NewConfig<MenuSection, MenuSectionResponse>()
                 .Map(dest => dest.Id, src => src.Id.Value);

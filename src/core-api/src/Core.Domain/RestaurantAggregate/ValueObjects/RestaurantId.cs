@@ -2,7 +2,7 @@
 
 namespace Core.Domain.RestaurantAggregate.ValueObjects
 {
-    public sealed class RestaurantId : ValueObject
+    public class RestaurantId : ValueObject
     {
         public Guid Value { get; private set; }
 
@@ -19,5 +19,7 @@ namespace Core.Domain.RestaurantAggregate.ValueObjects
         {
             yield return Value;
         }
+
+        protected RestaurantId() { }
     }
 }

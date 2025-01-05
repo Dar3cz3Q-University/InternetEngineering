@@ -10,7 +10,7 @@ using MediatR;
 namespace Core.Application.Authentication.Commands.Register
 {
     public class RegisterCommandHandler :
-        IRequestHandler<RegisterCommand, ErrorOr<AuthenticationResult>>
+        IRequestHandler<RegisterCommand, ErrorOr<AuthenticationDTO>>
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
@@ -26,13 +26,14 @@ namespace Core.Application.Authentication.Commands.Register
             _addressService = addressService;
         }
 
-        public async Task<ErrorOr<AuthenticationResult>> Handle(
+        public async Task<ErrorOr<AuthenticationDTO>> Handle(
             RegisterCommand command,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var userResult = await _userRepository.GetByEmailAsync(command.Email);
 
-            if (_userRepository.GetByEmail(command.Email) is not null)
+            // TODO: Check for more specific error
+            if (!userResult.IsError)
             {
                 return Errors.User.DuplicateEmail;
             }
@@ -48,11 +49,17 @@ namespace Core.Application.Authentication.Commands.Register
                 command.UserRole,
                 address);
 
-            _userRepository.Add(user);
+            var result = await _userRepository.AddAsync(user);
+
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to add user to database.");
+            }
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
-            return new AuthenticationResult(user, token);
+            return new AuthenticationDTO(user, token);
         }
     }
 }

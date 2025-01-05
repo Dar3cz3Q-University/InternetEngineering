@@ -1,5 +1,9 @@
-﻿using Core.Domain.Common.Models;
+﻿using Core.Domain.Common.Entities;
+using Core.Domain.Common.Models;
+using Core.Domain.MenuAggregate;
+using Core.Domain.OrderAggregate;
 using Core.Domain.RestaurantAggregate;
+using Core.Domain.UserAggregate;
 using Core.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +20,11 @@ namespace Core.Infrastructure.Persistence
             _publishDomainEventsInterceptor = publishDomainEventsInterceptor;
         }
 
+        public DbSet<User> Users { get; set; } = null!;
+        public DbSet<Address> Addresses { get; set; } = null!;
         public DbSet<Restaurant> Restaurants { get; set; } = null!;
+        public DbSet<Menu> Menus { get; set; } = null!;
+        public DbSet<Order> Orders { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

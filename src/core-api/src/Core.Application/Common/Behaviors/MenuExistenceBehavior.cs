@@ -6,16 +6,16 @@ using MediatR;
 
 namespace Core.Application.Common.Behaviors
 {
-    public class ValidateUserExistenceBehavior<TRequest, TResponse> :
+    public class MenuExistenceBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
             where TRequest : IRequest<TResponse>
             where TResponse : IErrorOr
     {
-        private readonly IUserRepository _userRepository;
+        private readonly IMenuRepository _menuRepository;
 
-        public ValidateUserExistenceBehavior(IUserRepository userRepository)
+        public MenuExistenceBehavior(IMenuRepository menuRepository)
         {
-            _userRepository = userRepository;
+            _menuRepository = menuRepository;
         }
 
         public async Task<TResponse> Handle(
@@ -23,13 +23,14 @@ namespace Core.Application.Common.Behaviors
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            if (request is IRequireUserValidation userRequest)
+            if (request is IRequireMenuValidation menuRequest)
             {
-                var user = _userRepository.GetById(userRequest.UserId);
+                var menu = await _menuRepository.GetByIdAsync(menuRequest.MenuId);
 
-                if (user is null)
+                // TODO: Check for more specific error
+                if (menu.IsError)
                 {
-                    return (dynamic)Errors.User.NotFound(userRequest.UserId);
+                    return (dynamic)Errors.Menu.NotFound(menuRequest.MenuId);
                 }
             }
 

@@ -2,14 +2,13 @@
 using Core.Application.Common.Interfaces.Authentication;
 using Core.Application.Common.Interfaces.Persistance;
 using Core.Domain.Common.Errors;
-using Core.Domain.UserAggregate;
 using ErrorOr;
 using MediatR;
 
 namespace Core.Application.Authentication.Queries.Login
 {
     public class LoginQueryHandler :
-        IRequestHandler<LoginQuery, ErrorOr<AuthenticationResult>>
+        IRequestHandler<LoginQuery, ErrorOr<AuthenticationDTO>>
     {
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IUserRepository _userRepository;
@@ -21,14 +20,19 @@ namespace Core.Application.Authentication.Queries.Login
             _userRepository = userRepository;
         }
 
-        public async Task<ErrorOr<AuthenticationResult>> Handle(LoginQuery query, CancellationToken cancellationToken)
+        public async Task<ErrorOr<AuthenticationDTO>> Handle(
+            LoginQuery query,
+            CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var userResult = await _userRepository.GetByEmailAsync(query.Email);
 
-            if (_userRepository.GetByEmail(query.Email) is not User user)
+            // TODO: Check for more specific error
+            if (userResult.IsError)
             {
                 return Errors.Authentication.InvalidCredentials;
             }
+
+            var user = userResult.Value;
 
             if (user.Password != query.Password)
             {
@@ -37,7 +41,7 @@ namespace Core.Application.Authentication.Queries.Login
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 
-            return new AuthenticationResult(user, token);
+            return new AuthenticationDTO(user, token);
         }
     }
 }

@@ -1,7 +1,8 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
+using Core.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore.Storage;
 
-namespace Core.Infrastructure.Persistence
+namespace Core.Infrastructure.Persistence.Services
 {
     public class UnitOfWork : IUnitOfWork
     {

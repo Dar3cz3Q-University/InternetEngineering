@@ -17,11 +17,11 @@ namespace Core.Application
             services.AddScoped<IAddressService, AddressService>();
 
             services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateUserExistenceBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateRestaurantExistenceBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateMenuExistenceBehavior<,>));
-            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateOrderExistenceBehavior<,>));
-            //services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidateAddressExistenceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(UserExistenceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RestaurantExistenceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(MenuExistenceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(OrderExistenceBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(AddressExistenceBehavior<,>));
 
             services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 

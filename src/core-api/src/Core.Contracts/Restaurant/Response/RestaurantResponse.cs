@@ -7,16 +7,12 @@ namespace Core.Contracts.Restaurant.Response
         string Name,
         AddressResponse Location,
         string Description,
-        ContactInfo ContactInfo,
+        ContactInfoResponse ContactInfo,
         OpeningHours OpeningHours,
         string MenuId,
         bool IsOpen,
         DateTime CreatedDateTime,
         DateTime UpdatedDateTime);
-
-    public record ContactInfo(
-        string PhoneNumber,
-        string Email);
 
     public record OpeningHours(
         DateTime OpenTime,

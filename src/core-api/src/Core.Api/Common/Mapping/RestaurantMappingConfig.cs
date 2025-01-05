@@ -28,8 +28,6 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<CreateRestaurantRequest, CreateRestaurantCommand>();
 
-            config.NewConfig<CreateContactInfoRequest, CreateContactInfoCommand>();
-
             config.NewConfig<CreateOpeningHoursRequest, CreateOpeningHoursCommand>();
 
             //

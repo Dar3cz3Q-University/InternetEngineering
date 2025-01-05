@@ -6,16 +6,16 @@ using MediatR;
 
 namespace Core.Application.Common.Behaviors
 {
-    public class ValidateAddressExistenceBehavior<TRequest, TResponse> :
+    public class OrderExistenceBehavior<TRequest, TResponse> :
         IPipelineBehavior<TRequest, TResponse>
             where TRequest : IRequest<TResponse>
             where TResponse : IErrorOr
     {
-        private readonly IAddressRepository _addressRepository;
+        private readonly IOrderRepository _orderRepository;
 
-        public ValidateAddressExistenceBehavior(IAddressRepository addressRepository)
+        public OrderExistenceBehavior(IOrderRepository orderRepository)
         {
-            _addressRepository = addressRepository;
+            _orderRepository = orderRepository;
         }
 
         public async Task<TResponse> Handle(
@@ -23,13 +23,14 @@ namespace Core.Application.Common.Behaviors
             RequestHandlerDelegate<TResponse> next,
             CancellationToken cancellationToken)
         {
-            if (request is IRequireAddressValidation addressRequest)
+            if (request is IRequireOrderValidation orderRequest)
             {
-                var address = _addressRepository.GetById(addressRequest.AddressId);
+                var order = await _orderRepository.GetByIdAsync(orderRequest.OrderId);
 
-                if (address is null)
+                // TODO: Check for more specific error
+                if (order.IsError)
                 {
-                    return (dynamic)Errors.Address.NotFound(addressRequest.AddressId);
+                    return (dynamic)Errors.Order.NotFound(orderRequest.OrderId);
                 }
             }
 

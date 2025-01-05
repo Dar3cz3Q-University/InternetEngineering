@@ -13,18 +13,25 @@ namespace Core.Application.Menus.Events
             _restaurantRepository = restaurantRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
-        public Task Handle(
+        public async Task Handle(
             MenuCreated notification,
             CancellationToken cancellationToken)
         {
-            var restaurant = _restaurantRepository.GetById(notification.Menu.RestaurantId);
+            var restaurantResult = await _restaurantRepository.GetByIdAsync(notification.RestaurantId);
 
-            restaurant!.AssignMenuId(notification.Menu.Id);
+            var restaurant = restaurantResult.Value;
 
-            _restaurantRepository.Update(restaurant);
+            restaurant!.AssignMenuId(notification.MenuId);
 
-            return Task.CompletedTask;
+            var result = await _restaurantRepository.UpdateAsync(restaurant);
+
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to update restaurant in database.");
+            }
+
+            return;
         }
     }
 }

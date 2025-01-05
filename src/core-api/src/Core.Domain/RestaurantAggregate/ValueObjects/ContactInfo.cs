@@ -2,7 +2,7 @@
 
 namespace Core.Domain.RestaurantAggregate.ValueObjects
 {
-    public sealed class ContactInfo : ValueObject
+    public class ContactInfo : ValueObject
     {
         public string PhoneNumber { get; }
         public string Email { get; }
@@ -27,5 +27,9 @@ namespace Core.Domain.RestaurantAggregate.ValueObjects
             yield return PhoneNumber;
             yield return Email;
         }
+
+#pragma warning disable CS8618
+        protected ContactInfo() { }
+#pragma warning restore CS8618
     }
 }

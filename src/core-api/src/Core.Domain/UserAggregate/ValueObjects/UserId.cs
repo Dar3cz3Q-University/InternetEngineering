@@ -2,7 +2,7 @@
 
 namespace Core.Domain.UserAggregate.ValueObjects
 {
-    public sealed class UserId : ValueObject
+    public class UserId : ValueObject
     {
         public Guid Value { get; private set; }
 
@@ -19,5 +19,7 @@ namespace Core.Domain.UserAggregate.ValueObjects
         {
             yield return Value;
         }
+
+        protected UserId() { }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Core.Domain.RestaurantAggregate.ValueObjects
 {
-    public sealed class OpeningHours : ValueObject
+    public class OpeningHours : ValueObject
     {
         public DateTime OpenTime { get; }
         public DateTime CloseTime { get; }
@@ -27,5 +27,9 @@ namespace Core.Domain.RestaurantAggregate.ValueObjects
             yield return OpenTime;
             yield return CloseTime;
         }
+
+#pragma warning disable CS8618
+        protected OpeningHours() { }
+#pragma warning restore CS8618
     }
 }

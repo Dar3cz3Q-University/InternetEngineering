@@ -4,7 +4,7 @@ using Core.Domain.UserAggregate.ValueObjects;
 
 namespace Core.Domain.UserAggregate
 {
-    public sealed class User : AggregateRoot<UserId>, IHasTimestamps
+    public class User : AggregateRoot<UserId>, IHasTimestamps
     {
         private readonly List<Address> _addresses = [];
         public string FirstName { get; private set; }
@@ -13,7 +13,7 @@ namespace Core.Domain.UserAggregate
         public string PhoneNumber { get; private set; }
         public string Password { get; private set; }
         public UserRole Role { get; private set; }
-        public IReadOnlyList<Address> Addresses => _addresses.AsReadOnly();
+        public virtual ICollection<Address> Addresses => _addresses.AsReadOnly();
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
 
@@ -63,7 +63,7 @@ namespace Core.Domain.UserAggregate
         }
 
 #pragma warning disable CS8618
-        private User() { }
+        protected User() { }
 #pragma warning restore CS8618
     }
 }

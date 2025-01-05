@@ -8,13 +8,9 @@ namespace Core.Contracts.Restaurant.Request
         AddressRequest Location,
         string Description,
         Guid MenuId,
-        UpdateContactInfoRequest ContactInfo,
+        ContactInfoRequest ContactInfo,
         UpdateOpeningHoursRequest OpeningHours,
         bool IsOpen);
-
-    public record UpdateContactInfoRequest(
-        string PhoneNumber,
-        string Email);
 
     public record UpdateOpeningHoursRequest(
         DateTime OpenTime,

@@ -27,6 +27,15 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<Address, AddressResponse>()
                 .Map(dest => dest.Id, src => src.Id.Value);
+
+            config.NewConfig<AddressId, AddressId>()
+                .MapWith(src => src);
+
+            //
+            // ContactInfo
+            //
+
+            config.NewConfig<ContactInfoRequest, CreateContactInfoCommand>();
         }
     }
 }

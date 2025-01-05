@@ -6,13 +6,12 @@ using Core.Domain.RestaurantAggregate.ValueObjects;
 
 namespace Core.Domain.MenuAggregate
 {
-    public sealed class Menu : AggregateRoot<MenuId>, IHasTimestamps
+    public class Menu : AggregateRoot<MenuId>, IHasTimestamps
     {
         private readonly List<MenuSection> _sections = [];
         public string Name { get; private set; }
         public string Description { get; private set; }
-        public IReadOnlyList<MenuSection> Sections => _sections.AsReadOnly();
-        public RestaurantId RestaurantId { get; private set; }
+        public virtual ICollection<MenuSection> Sections => _sections.AsReadOnly();
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
 
@@ -21,14 +20,12 @@ namespace Core.Domain.MenuAggregate
             string name,
             string description,
             List<MenuSection> sections,
-            RestaurantId restaurantId,
             DateTime createdDateTime,
             DateTime updatedDateTime) : base(id)
         {
             Name = name;
             Description = description;
             _sections = sections;
-            RestaurantId = restaurantId;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
         }
@@ -44,17 +41,16 @@ namespace Core.Domain.MenuAggregate
                 name,
                 description,
                 sections,
-                restaurantId,
                 DateTime.UtcNow,
                 DateTime.UtcNow);
 
-            menu.AddDomainEvent(new MenuCreated(menu));
+            menu.AddDomainEvent(new MenuCreated(menu.Id, restaurantId));
 
             return menu;
         }
 
 #pragma warning disable CS8618
-        private Menu() { }
+        protected Menu() { }
 #pragma warning restore CS8618
     }
 }

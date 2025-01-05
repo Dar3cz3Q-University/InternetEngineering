@@ -3,6 +3,7 @@ using Core.Application.Orders.Commands.DeleteOrder;
 using Core.Application.Orders.Queries.GetOrder;
 using Core.Contracts.Order.Request;
 using Core.Contracts.Order.Response;
+using Core.Domain.Common.ValueObjects;
 using Core.Domain.MenuAggregate.ValueObjects;
 using Core.Domain.OrderAggregate;
 using Core.Domain.OrderAggregate.ValueObjects;
@@ -31,7 +32,8 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<CreateOrderRequest, CreateOrderCommand>()
                 .Map(dest => dest.UserId, src => UserId.Create(src.UserId))
-                .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.RestaurantId));
+                .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.RestaurantId))
+                .Map(dest => dest.AddressId, src => AddressId.Create(src.DeliveryAddressId));
 
             config.NewConfig<List<Guid>, List<MenuItemId>>()
                 .MapWith(src => src.ConvertAll(i => MenuItemId.Create(i)));

@@ -10,23 +10,24 @@ namespace Core.Application.Orders.Queries.GetOrder
         IRequestHandler<GetOrderQuery, ErrorOr<Order>>
     {
         private readonly IOrderRepository _orderRepository;
+        private readonly IAddressRepository _addressRepository;
 
         public GetOrderQueryHandler(
-            IOrderRepository orderRepository)
+            IOrderRepository orderRepository,
+            IAddressRepository addressRepository)
         {
             _orderRepository = orderRepository;
+            _addressRepository = addressRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Order>> Handle(
             GetOrderQuery request,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var order = await _orderRepository.GetByIdAsync(request.OrderId);
 
-            var order = _orderRepository.GetById(request.OrderId);
-
-            if (order is null)
+            // TODO: Check for more specific error
+            if (order.IsError)
             {
                 return Errors.Order.NotFound(request.OrderId);
             }

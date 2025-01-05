@@ -5,7 +5,7 @@ using MediatR;
 namespace Core.Application.Orders.Commands.DeleteOrder
 {
     internal class DeleteOrderCommandHandler :
-        IRequestHandler<DeleteOrderCommand, ErrorOr<Unit>>
+        IRequestHandler<DeleteOrderCommand, ErrorOr<Deleted>>
     {
         private readonly IOrderRepository _orderRepository;
 
@@ -14,16 +14,19 @@ namespace Core.Application.Orders.Commands.DeleteOrder
             _orderRepository = orderRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
-        public async Task<ErrorOr<Unit>> Handle(
+        public async Task<ErrorOr<Deleted>> Handle(
             DeleteOrderCommand request,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var result = await _orderRepository.DeleteByIdAsync(request.OrderId);
 
-            _orderRepository.Delete(request.OrderId);
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to remove order from database.");
+            }
 
-            return Unit.Value;
+            return Result.Deleted;
         }
     }
 }

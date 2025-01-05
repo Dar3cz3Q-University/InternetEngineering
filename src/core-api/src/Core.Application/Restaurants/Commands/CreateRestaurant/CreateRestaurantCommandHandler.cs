@@ -21,7 +21,6 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
             _addressService = addressService;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<Restaurant>> Handle(
             CreateRestaurantCommand command,
             CancellationToken cancellationToken)
@@ -39,7 +38,14 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
                     command.OpeningHours.OpenTime,
                     command.OpeningHours.CloseTime));
 
-            return _restaurantRepository.Add(restaurant);
+            var result = await _restaurantRepository.AddAsync(restaurant);
+
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to add restaurant to database.");
+            }
+
+            return restaurant;
         }
     }
 }

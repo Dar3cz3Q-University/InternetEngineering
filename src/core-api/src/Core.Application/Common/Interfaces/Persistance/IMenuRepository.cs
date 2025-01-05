@@ -1,15 +1,15 @@
 ﻿using Core.Domain.MenuAggregate;
 using Core.Domain.MenuAggregate.ValueObjects;
+using ErrorOr;
 
 namespace Core.Application.Common.Interfaces.Persistance
 {
-    // TODO: [Create async repository functions #27]
     public interface IMenuRepository
     {
-        Menu? GetById(MenuId id);
-        List<Menu> All();
-        Menu Add(Menu menu);
-        Menu Update(Menu menu);
-        void Delete(MenuId id);
+        Task<ErrorOr<Created>> AddAsync(Menu menu);
+        Task<ErrorOr<Deleted>> DeleteByIdAsync(MenuId id);
+        Task<ErrorOr<Menu>> GetByIdAsync(MenuId id);
+        Task<ErrorOr<List<Menu>>> GetAllAsync();
+        Task<ErrorOr<Updated>> UpdateAsync(Menu menu);
     }
 }

@@ -5,7 +5,7 @@ using MediatR;
 namespace Core.Application.Restaurants.Commands.DeleteRestaurant
 {
     internal class DeleteRestaurantCommandHandler :
-        IRequestHandler<DeleteRestaurantCommand, ErrorOr<Unit>>
+        IRequestHandler<DeleteRestaurantCommand, ErrorOr<Deleted>>
     {
         private readonly IRestaurantRepository _restaurantRepository;
 
@@ -15,16 +15,19 @@ namespace Core.Application.Restaurants.Commands.DeleteRestaurant
             _restaurantRepository = restaurantRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
-        public async Task<ErrorOr<Unit>> Handle(
+        public async Task<ErrorOr<Deleted>> Handle(
             DeleteRestaurantCommand request,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
+            var result = await _restaurantRepository.DeleteByIdAsync(request.RestaurantId);
 
-            _restaurantRepository.Delete(request.RestaurantId);
+            // TODO: Check for more specific error
+            if (result.IsError)
+            {
+                throw new ApplicationException("Failed to remove restaurant from database.");
+            }
 
-            return Unit.Value;
+            return Result.Deleted;
         }
     }
 }

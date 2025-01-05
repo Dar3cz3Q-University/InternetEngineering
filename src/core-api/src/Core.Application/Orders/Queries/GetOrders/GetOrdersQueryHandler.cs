@@ -16,14 +16,11 @@ namespace Core.Application.Orders.Queries.GetOrders
             _orderRepository = orderRepository;
         }
 
-        // TODO: [Change handlers to use async functions from repository #28]
         public async Task<ErrorOr<List<Order>>> Handle(
             GetOrdersQuery request,
             CancellationToken cancellationToken)
         {
-            await Task.CompletedTask;
-
-            return _orderRepository.All();
+            return await _orderRepository.GetAllAsync();
         }
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Core.Application.Authentication.Common
 {
-    public record AuthenticationResult(
+    public record AuthenticationDTO(
         User User,
         string Token
     );

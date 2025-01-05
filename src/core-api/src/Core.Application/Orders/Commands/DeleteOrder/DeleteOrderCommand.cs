@@ -6,5 +6,5 @@ using MediatR;
 namespace Core.Application.Orders.Commands.DeleteOrder
 {
     public record DeleteOrderCommand(
-        OrderId OrderId) : IRequest<ErrorOr<Unit>>, IRequireOrderValidation;
+        OrderId OrderId) : IRequest<ErrorOr<Deleted>>, IRequireOrderValidation;
 }

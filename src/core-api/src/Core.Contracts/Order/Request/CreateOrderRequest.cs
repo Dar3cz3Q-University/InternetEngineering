@@ -5,6 +5,6 @@ namespace Core.Contracts.Order.Request
     public record CreateOrderRequest(
         Guid UserId,
         Guid RestaurantId,
-        Guid DeliveryAddress,
+        Guid DeliveryAddressId,
         List<Guid> ItemsIds);
 }
