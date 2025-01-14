@@ -11,12 +11,4 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
         string Description,
         CreateContactInfoCommand ContactInfo,
         CreateOpeningHoursCommand OpeningHours) : IRequest<ErrorOr<Restaurant>>;
-
-    public record CreateContactInfoCommand(
-        string PhoneNumber,
-        string Email);
-
-    public record CreateOpeningHoursCommand(
-        DateTime OpenTime,
-        DateTime CloseTime);
 }

@@ -1,5 +1,5 @@
-﻿using Core.Domain.MenuAggregate.ValueObjects;
-using Core.Domain.RestaurantAggregate;
+﻿using Core.Domain.RestaurantAggregate;
+using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
@@ -58,17 +58,16 @@ namespace Core.Infrastructure.Persistence.Configurations
             builder.Property(r => r.IsOpen)
                 .IsRequired();
 
-            builder.Property(r => r.MenuId)
-                .HasConversion(
-                    id => id!.Value,
-                    value => value == Guid.Empty ? null : MenuId.Create(value))
-                .IsRequired(false);
-
             builder.Property(r => r.CreatedDateTime)
                 .IsRequired();
 
             builder.Property(r => r.UpdatedDateTime)
                 .IsRequired();
+
+            builder.HasOne(r => r.Menu)
+               .WithOne()
+               .HasForeignKey<Menu>("MenuId")
+               .OnDelete(DeleteBehavior.Cascade);
 
             builder.HasOne(r => r.Location)
                 .WithOne()

@@ -1,6 +1,5 @@
 ﻿using Core.Application.Common.Interfaces.Validation;
 using Core.Domain.Common.ValueObjects;
-using Core.Domain.MenuAggregate.ValueObjects;
 using Core.Domain.OrderAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Core.Domain.UserAggregate.ValueObjects;

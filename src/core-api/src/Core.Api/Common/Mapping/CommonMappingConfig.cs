@@ -36,6 +36,12 @@ namespace Core.Api.Common.Mapping
             //
 
             config.NewConfig<ContactInfoRequest, CreateContactInfoCommand>();
+
+            //
+            // OpeningHours
+            //
+
+            config.NewConfig<OpeningHoursRequest, CreateOpeningHoursCommand>();
         }
     }
 }

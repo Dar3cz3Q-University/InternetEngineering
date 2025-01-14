@@ -1,6 +1,6 @@
 ﻿using Core.Domain.Common.Entities;
 using Core.Domain.Common.Models;
-using Core.Domain.MenuAggregate.ValueObjects;
+using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 
 namespace Core.Domain.RestaurantAggregate
@@ -13,14 +13,9 @@ namespace Core.Domain.RestaurantAggregate
         public ContactInfo ContactInfo { get; private set; }
         public OpeningHours OpeningHours { get; private set; }
         public bool IsOpen { get; private set; }
-        public virtual MenuId? MenuId { get; private set; }
+        public virtual Menu Menu { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
-
-        public void AssignMenuId(MenuId menuId)
-        {
-            MenuId = menuId;
-        }
 
         private Restaurant(
             RestaurantId id,
@@ -30,6 +25,7 @@ namespace Core.Domain.RestaurantAggregate
             ContactInfo contactInfo,
             OpeningHours openingHours,
             bool isOpen,
+            Menu menu,
             DateTime createdDateTime,
             DateTime updatedDateTime) : base(id)
         {
@@ -39,6 +35,7 @@ namespace Core.Domain.RestaurantAggregate
             ContactInfo = contactInfo;
             OpeningHours = openingHours;
             IsOpen = isOpen;
+            Menu = menu;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
         }
@@ -58,6 +55,7 @@ namespace Core.Domain.RestaurantAggregate
                 contactInfo,
                 openingHours,
                 false,
+                Menu.Create(),
                 DateTime.UtcNow,
                 DateTime.UtcNow);
         }
@@ -65,5 +63,15 @@ namespace Core.Domain.RestaurantAggregate
 #pragma warning disable CS8618
         protected Restaurant() { }
 #pragma warning restore CS8618
+
+        public void AddMenuSection(MenuSection menuSection)
+        {
+            Menu.AddSection(menuSection);
+        }
+
+        public void AddMenuItem(MenuSectionId sectionId, MenuItem item)
+        {
+            Menu.AddItem(sectionId, item);
+        }
     }
 }

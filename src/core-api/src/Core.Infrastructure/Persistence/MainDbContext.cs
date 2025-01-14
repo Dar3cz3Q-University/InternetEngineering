@@ -1,8 +1,8 @@
 ﻿using Core.Domain.Common.Entities;
 using Core.Domain.Common.Models;
-using Core.Domain.MenuAggregate;
 using Core.Domain.OrderAggregate;
 using Core.Domain.RestaurantAggregate;
+using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.UserAggregate;
 using Core.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;

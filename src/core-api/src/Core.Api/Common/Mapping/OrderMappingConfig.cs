@@ -4,7 +4,6 @@ using Core.Application.Orders.Queries.GetOrder;
 using Core.Contracts.Order.Request;
 using Core.Contracts.Order.Response;
 using Core.Domain.Common.ValueObjects;
-using Core.Domain.MenuAggregate.ValueObjects;
 using Core.Domain.OrderAggregate;
 using Core.Domain.OrderAggregate.ValueObjects;
 using Core.Domain.RestaurantAggregate.ValueObjects;

@@ -1,11 +1,8 @@
-﻿using Core.Application.Menus.Commands.CreateMenu;
-using Core.Application.Menus.Commands.DeleteMenu;
-using Core.Application.Menus.Queries.GetMenu;
+﻿using Core.Application.Menu.Commands.CreateMenuItem;
+using Core.Application.Menu.Commands.CreateMenuSection;
 using Core.Contracts.Menu.Request;
 using Core.Contracts.Menu.Response;
-using Core.Domain.MenuAggregate;
-using Core.Domain.MenuAggregate.Entities;
-using Core.Domain.MenuAggregate.ValueObjects;
+using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Mapster;
 
@@ -32,19 +29,20 @@ namespace Core.Api.Common.Mapping
             // Create
             //
 
-            config.NewConfig<CreateMenuRequest, CreateMenuCommand>()
-                .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.RestaurantId));
+            config.NewConfig<(Guid, CreateMenuSectionRequest), CreateMenuSectionCommand>()
+                .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.Item1))
+                .Map(dest => dest, src => src.Item2);
 
-            config.NewConfig<CreateMenuSectionRequest, CreateMenuSectionComand>();
-
-            config.NewConfig<CreateMenuItemRequest, CreateMenuItemCommand>();
+            config.NewConfig<(Guid, Guid, CreateMenuItemRequest), CreateMenuItemCommand>()
+                .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.Item1))
+                .Map(dest => dest.MenuSectionId, src => MenuSectionId.Create(src.Item2))
+                .Map(dest => dest, src => src.Item3);
 
             //
             // Delete
             //
 
-            config.NewConfig<Guid, DeleteMenuCommand>()
-                .Map(dest => dest.MenuId, src => MenuId.Create(src));
+
 
             //
             // Update
@@ -56,14 +54,16 @@ namespace Core.Api.Common.Mapping
             // Get
             //
 
-            config.NewConfig<Guid, GetMenuQuery>()
-                .Map(dest => dest.MenuId, src => MenuId.Create(src));
+
 
             //
             // Utils
             //
 
             config.NewConfig<MenuId, MenuId>()
+                .MapWith(src => src);
+
+            config.NewConfig<MenuSectionId, MenuSectionId>()
                 .MapWith(src => src);
         }
     }

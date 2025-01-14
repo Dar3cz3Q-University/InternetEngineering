@@ -1,4 +1,4 @@
-﻿using Core.Domain.MenuAggregate.ValueObjects;
+﻿using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 
 namespace Core.Domain.Common.Errors

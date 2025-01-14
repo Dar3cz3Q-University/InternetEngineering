@@ -23,9 +23,7 @@ namespace Core.Application.Restaurants.Commands.DeleteRestaurant
 
             // TODO: Check for more specific error
             if (result.IsError)
-            {
                 throw new ApplicationException("Failed to remove restaurant from database.");
-            }
 
             return Result.Deleted;
         }

@@ -41,9 +41,7 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
             var result = await _restaurantRepository.AddAsync(restaurant);
 
             if (result.IsError)
-            {
                 throw new ApplicationException("Failed to add restaurant to database.");
-            }
 
             return restaurant;
         }

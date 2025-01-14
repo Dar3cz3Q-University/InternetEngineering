@@ -1,4 +1,4 @@
-﻿using Core.Domain.MenuAggregate.ValueObjects;
+﻿using Core.Domain.RestaurantAggregate.ValueObjects;
 
 namespace Core.Application.Common.Interfaces.Validation
 {

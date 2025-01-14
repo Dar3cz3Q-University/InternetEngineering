@@ -1,13 +1,17 @@
 ﻿using Core.Contracts.Common.Response;
+using Core.Contracts.Menu.Response;
 
 namespace Core.Contracts.Restaurant.Response
 {
-    public record RestaurantResponse(
+    public record RestaurantResponseWithDetails(
         string Id,
         string Name,
         AddressResponse Location,
         string Description,
         ContactInfoResponse ContactInfo,
         OpeningHours OpeningHours,
-        bool IsOpen);
+        MenuResponse Menu,
+        bool IsOpen,
+        DateTime CreatedDateTime,
+        DateTime UpdatedDateTime);
 }

@@ -1,8 +1,8 @@
 ﻿using Core.Domain.Common.Entities;
 using Core.Domain.Common.ValueObjects;
-using Core.Domain.MenuAggregate.Entities;
 using Core.Domain.OrderAggregate;
 using Core.Domain.OrderAggregate.ValueObjects;
+using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Core.Domain.UserAggregate.ValueObjects;
 

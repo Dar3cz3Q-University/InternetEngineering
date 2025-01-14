@@ -7,9 +7,5 @@ namespace Core.Contracts.Restaurant.Request
         AddressRequest Location,
         string Description,
         ContactInfoRequest ContactInfo,
-        CreateOpeningHoursRequest OpeningHours);
-
-    public record CreateOpeningHoursRequest(
-        DateTime OpenTime,
-        DateTime CloseTime);
+        OpeningHoursRequest OpeningHours);
 }

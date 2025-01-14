@@ -1,5 +1,5 @@
-﻿using Core.Domain.MenuAggregate;
-using Core.Domain.MenuAggregate.ValueObjects;
+﻿using Core.Domain.RestaurantAggregate.Entities;
+using Core.Domain.RestaurantAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -18,14 +18,6 @@ namespace Core.Infrastructure.Persistence.Configurations
                     id => id.Value,
                     value => MenuId.Create(value))
                 .ValueGeneratedNever();
-
-            builder.Property(m => m.Name)
-                .HasMaxLength(50)
-                .IsRequired();
-
-            builder.Property(m => m.Description)
-                .HasMaxLength(50)
-                .IsRequired();
 
             builder.OwnsMany(
                 m => m.Sections,

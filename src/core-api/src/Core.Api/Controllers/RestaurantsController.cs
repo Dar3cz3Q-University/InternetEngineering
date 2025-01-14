@@ -43,7 +43,7 @@ namespace Core.Api.Controllers
             var restaurant = await _mediator.Send(query);
 
             return restaurant.Match(
-                r => Ok(_mapper.Map<RestaurantResponse>(r)),
+                r => Ok(_mapper.Map<RestaurantResponseWithDetails>(r)),
                 e => Problem(e));
         }
 
@@ -55,7 +55,7 @@ namespace Core.Api.Controllers
             var createRestaurant = await _mediator.Send(command);
 
             return createRestaurant.Match(
-                r => Ok(_mapper.Map<RestaurantResponse>(r)),
+                r => Ok(_mapper.Map<RestaurantResponseWithDetails>(r)),
                 e => Problem(e));
         }
 
@@ -69,7 +69,7 @@ namespace Core.Api.Controllers
             var updateRestaurant = await _mediator.Send(command);
 
             return updateRestaurant.Match(
-                r => Ok(_mapper.Map<RestaurantResponse>(r)),
+                r => Ok(_mapper.Map<RestaurantResponseWithDetails>(r)),
                 e => Problem(e));
         }
 

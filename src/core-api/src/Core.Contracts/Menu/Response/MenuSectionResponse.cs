@@ -1,8 +1,10 @@
 ﻿namespace Core.Contracts.Menu.Response
 {
-    public record MenuResponse(
+    public record MenuSectionResponse(
         string Id,
-        List<MenuSectionResponse> Sections,
+        string Name,
+        string Description,
+        List<MenuItemResponse> Items,
         DateTime CreatedDateTime,
         DateTime UpdatedDateTime);
 }

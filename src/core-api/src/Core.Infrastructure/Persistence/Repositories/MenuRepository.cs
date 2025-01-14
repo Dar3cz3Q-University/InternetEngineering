@@ -1,7 +1,7 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
 using Core.Domain.Common.Errors;
-using Core.Domain.MenuAggregate;
-using Core.Domain.MenuAggregate.ValueObjects;
+using Core.Domain.RestaurantAggregate.Entities;
+using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 

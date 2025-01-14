@@ -18,17 +18,17 @@ namespace Core.Api.Common.Mapping
             // Response
             //
 
+            config.NewConfig<Restaurant, RestaurantResponseWithDetails>()
+                .Map(dest => dest.Id, src => src.Id.Value);
+
             config.NewConfig<Restaurant, RestaurantResponse>()
-                .Map(dest => dest.Id, src => src.Id.Value)
-                .Map(dest => dest.MenuId, src => src.MenuId.Value);
+                .Map(dest => dest.Id, src => src.Id.Value);
 
             //
             // Create
             //
 
             config.NewConfig<CreateRestaurantRequest, CreateRestaurantCommand>();
-
-            config.NewConfig<CreateOpeningHoursRequest, CreateOpeningHoursCommand>();
 
             //
             // Delete
@@ -41,7 +41,7 @@ namespace Core.Api.Common.Mapping
             // Update
             //
 
-
+            config.NewConfig<UpdateRestaurantRequest, UpdateRestaurantCommand>();
 
             //
             // Get

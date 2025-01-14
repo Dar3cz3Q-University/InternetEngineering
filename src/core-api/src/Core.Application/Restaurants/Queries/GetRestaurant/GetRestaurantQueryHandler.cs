@@ -25,9 +25,7 @@ namespace Core.Application.Restaurants.Queries.GetRestaurant
 
             // TODO: Check for more specific error
             if (restaurant.IsError)
-            {
                 return Errors.Restaurant.NotFound(request.RestaurantId);
-            }
 
             return restaurant;
         }
