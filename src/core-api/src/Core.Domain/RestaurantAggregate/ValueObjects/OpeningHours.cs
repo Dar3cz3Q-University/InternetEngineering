@@ -4,20 +4,20 @@ namespace Core.Domain.RestaurantAggregate.ValueObjects
 {
     public class OpeningHours : ValueObject
     {
-        public DateTime OpenTime { get; }
-        public DateTime CloseTime { get; }
+        public TimeOnly OpenTime { get; }
+        public TimeOnly CloseTime { get; }
 
         private OpeningHours(
-            DateTime openTime,
-            DateTime closeTime)
+            TimeOnly openTime,
+            TimeOnly closeTime)
         {
             OpenTime = openTime;
             CloseTime = closeTime;
         }
 
         public static OpeningHours Create(
-            DateTime openTime,
-            DateTime closeTime)
+            TimeOnly openTime,
+            TimeOnly closeTime)
         {
             return new(openTime, closeTime);
         }

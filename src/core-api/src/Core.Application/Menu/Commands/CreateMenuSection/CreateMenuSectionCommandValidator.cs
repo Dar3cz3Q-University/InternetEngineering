@@ -7,9 +7,13 @@ namespace Core.Application.Menu.Commands.CreateMenuSection
     {
         public CreateMenuSectionCommandValidator()
         {
-            // TODO: [Add validations #26]
-            RuleFor(x => x.Name).NotEmpty();
-            RuleFor(x => x.Description).NotEmpty();
+            RuleFor(x => x.Name)
+                .NotEmpty()
+                .MaximumLength(50);
+
+            RuleFor(x => x.Description)
+                .NotEmpty()
+                .MaximumLength(1000);
         }
     }
 }

@@ -7,8 +7,8 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
 {
     public record CreateRestaurantCommand(
         string Name,
-        CreateAddressCommand Location,
         string Description,
+        CreateAddressCommand Location,
         CreateContactInfoCommand ContactInfo,
         CreateOpeningHoursCommand OpeningHours) : IRequest<ErrorOr<Restaurant>>;
 }
