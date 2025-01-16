@@ -46,11 +46,13 @@ namespace Core.Application.Authentication.Commands.Register
             var address = await _addressService.CreateAddressAsync(command.Address);
 
             var user = User.CreateUnique(
+                "",
                 command.FirstName,
                 command.LastName,
                 command.Email,
                 command.PhoneNumber,
                 _passwordHasher.HashPassword(command.Password),
+                0,
                 command.UserRole,
                 address);
 

@@ -19,9 +19,16 @@ namespace Core.Infrastructure.Persistence.Configurations
                     value => RestaurantId.Create(value))
                 .ValueGeneratedNever();
 
+            builder.Property(r => r.ImageUrl);
+
             builder.Property(r => r.Name)
                 .HasMaxLength(200)
                 .IsRequired();
+
+            builder.HasOne(r => r.Location)
+                .WithOne()
+                .HasForeignKey<Restaurant>("AddressId")
+                .OnDelete(DeleteBehavior.Cascade);
 
             builder.Property(r => r.Description)
                 .HasMaxLength(1000)
@@ -58,21 +65,22 @@ namespace Core.Infrastructure.Persistence.Configurations
             builder.Property(r => r.IsOpen)
                 .IsRequired();
 
-            builder.Property(r => r.CreatedDateTime)
-                .IsRequired();
-
-            builder.Property(r => r.UpdatedDateTime)
-                .IsRequired();
-
             builder.HasOne(r => r.Menu)
                .WithOne()
                .HasForeignKey<Menu>("MenuId")
                .OnDelete(DeleteBehavior.Cascade);
 
-            builder.HasOne(r => r.Location)
-                .WithOne()
-                .HasForeignKey<Restaurant>("AddressId")
-                .OnDelete(DeleteBehavior.Cascade);
+            builder.Property(r => r.AverageRate)
+                .IsRequired();
+
+            builder.Property(r => r.RatesCount)
+                .IsRequired();
+
+            builder.Property(r => r.CreatedDateTime)
+                .IsRequired();
+
+            builder.Property(r => r.UpdatedDateTime)
+                .IsRequired();
         }
     }
 }

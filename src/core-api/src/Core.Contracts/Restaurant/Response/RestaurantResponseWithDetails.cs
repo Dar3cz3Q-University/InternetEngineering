@@ -6,12 +6,14 @@ namespace Core.Contracts.Restaurant.Response
     public record RestaurantResponseWithDetails(
         string Id,
         string Name,
-        AddressResponse Location,
         string Description,
+        string ImageUrl,
+        double? Distance,
+        double AverageRate,
+        double RateCount,
+        bool IsActive,
+        AddressResponse Location,
         ContactInfoResponse ContactInfo,
         OpeningHours OpeningHours,
-        MenuResponse Menu,
-        bool IsOpen,
-        DateTime CreatedDateTime,
-        DateTime UpdatedDateTime);
+        MenuResponse Menu);
 }

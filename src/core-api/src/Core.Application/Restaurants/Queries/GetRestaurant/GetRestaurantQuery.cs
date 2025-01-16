@@ -1,4 +1,4 @@
-﻿using Core.Domain.RestaurantAggregate;
+﻿using Core.Application.Restaurants.Common;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
@@ -6,5 +6,7 @@ using MediatR;
 namespace Core.Application.Restaurants.Queries.GetRestaurant
 {
     public record GetRestaurantQuery(
-        RestaurantId RestaurantId) : IRequest<ErrorOr<Restaurant>>;
+        RestaurantId RestaurantId,
+        double? Latitude,
+        double? Longitude) : IRequest<ErrorOr<RestaurantDTO>>;
 }

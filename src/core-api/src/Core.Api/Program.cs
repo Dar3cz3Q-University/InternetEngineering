@@ -1,3 +1,4 @@
+
 using Core.Api;
 using Core.Application;
 using Core.Infrastructure;
@@ -19,7 +20,7 @@ var builder = WebApplication.CreateBuilder(args);
 
     builder.Services
         .AddPresentation(builder.Configuration)
-        .AddApplication()
+        .AddApplication(builder.Configuration)
         .AddInfrastructure(builder.Configuration);
 }
 
@@ -44,6 +45,8 @@ var app = builder.Build();
     app.UseAuthentication();
     app.UseAuthorization();
     app.MapControllers();
+
+    app.UseStaticFiles();
 
     app.Run();
 }

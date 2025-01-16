@@ -2,8 +2,12 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0
 
 WORKDIR /app
 
+EXPOSE 80
+EXPOSE 443
 EXPOSE 5042
 EXPOSE 7038
+
+RUN mkdir -p /app/Core.Api/wwwroot/uploads
 
 COPY ["src/Directory.Build.props", "./"]
 COPY ["src/Core.Api/Core.Api.csproj", "./Core.Api/"]

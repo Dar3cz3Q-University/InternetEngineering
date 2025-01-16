@@ -6,7 +6,7 @@ namespace Core.Application.Orders.Commands.UpdateOrder
     {
         public UpdateOrderCommandValidator()
         {
-        
+
         }
     }
 }

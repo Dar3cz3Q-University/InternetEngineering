@@ -66,5 +66,29 @@ namespace Core.Domain.Common.Entities
 #pragma warning disable CS8618
         protected Address() { }
 #pragma warning restore CS8618
+
+        public double CalculateDistance(double lat, double lon)
+        {
+            const double EarthRadiusKm = 6371.0;
+
+            double dLat = DegreesToRadians(Latitude - lat);
+            double dLon = DegreesToRadians(Longitude - lon);
+
+            double lat1Rad = DegreesToRadians(lat);
+            double lat2Rad = DegreesToRadians(Latitude);
+
+            double a = Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                       Math.Cos(lat1Rad) * Math.Cos(lat2Rad) *
+                       Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            return EarthRadiusKm * c;
+        }
+
+        private static double DegreesToRadians(double degrees)
+        {
+            return degrees * Math.PI / 180.0;
+        }
     }
 }

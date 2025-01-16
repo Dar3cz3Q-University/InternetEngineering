@@ -1,13 +1,13 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
+using Core.Application.Restaurants.Common;
 using Core.Domain.Common.Errors;
-using Core.Domain.RestaurantAggregate;
 using ErrorOr;
 using MediatR;
 
 namespace Core.Application.Restaurants.Queries.GetRestaurant
 {
     public class GetRestaurantQueryHandler :
-        IRequestHandler<GetRestaurantQuery, ErrorOr<Restaurant>>
+        IRequestHandler<GetRestaurantQuery, ErrorOr<RestaurantDTO>>
     {
         private readonly IRestaurantRepository _restaurantRepository;
 
@@ -17,17 +17,26 @@ namespace Core.Application.Restaurants.Queries.GetRestaurant
             _restaurantRepository = restaurantRepository;
         }
 
-        public async Task<ErrorOr<Restaurant>> Handle(
+        public async Task<ErrorOr<RestaurantDTO>> Handle(
             GetRestaurantQuery request,
             CancellationToken cancellationToken)
         {
-            var restaurant = await _restaurantRepository.GetByIdAsync(request.RestaurantId);
+            var restaurantResult = await _restaurantRepository.GetByIdAsync(request.RestaurantId);
 
             // TODO: Check for more specific error
-            if (restaurant.IsError)
+            if (restaurantResult.IsError)
                 return Errors.Restaurant.NotFound(request.RestaurantId);
 
-            return restaurant;
+            var restaurant = restaurantResult.Value;
+
+            if (request.Latitude is null || request.Longitude is null)
+                return new RestaurantDTO(restaurant, null);
+
+            var distance = restaurant.Location.CalculateDistance(
+                (double)request.Latitude,
+                (double)request.Longitude);
+
+            return new RestaurantDTO(restaurant, distance);
         }
     }
 }

@@ -24,9 +24,11 @@ namespace Core.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll(
+            [FromQuery] double? latitude,
+            [FromQuery] double? longitude)
         {
-            var query = new GetRestaurantsQuery();
+            var query = _mapper.Map<GetRestaurantsQuery>((latitude, longitude));
 
             var restaurants = await _mediator.Send(query);
 
@@ -36,9 +38,12 @@ namespace Core.Api.Controllers
         }
 
         [HttpGet("{id:guid}")]
-        public async Task<IActionResult> Get(Guid id)
+        public async Task<IActionResult> Get(
+            Guid id,
+            [FromQuery] double? latitude,
+            [FromQuery] double? longitude)
         {
-            var query = _mapper.Map<GetRestaurantQuery>(id);
+            var query = _mapper.Map<GetRestaurantQuery>((id, latitude, longitude));
 
             var restaurant = await _mediator.Send(query);
 
@@ -48,7 +53,7 @@ namespace Core.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create(CreateRestaurantRequest request)
+        public async Task<IActionResult> Create([FromForm] CreateRestaurantRequest request)
         {
             var command = _mapper.Map<CreateRestaurantCommand>(request);
 

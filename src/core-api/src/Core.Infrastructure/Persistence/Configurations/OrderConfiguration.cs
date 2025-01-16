@@ -64,15 +64,6 @@ namespace Core.Infrastructure.Persistence.Configurations
                     id => id.Value,
                     value => value == Guid.Empty ? null : UserId.Create(value));
 
-            builder.Property(o => o.DeliveryTime)
-                .IsRequired(false);
-
-            builder.Property(o => o.CreatedDateTime)
-                .IsRequired();
-
-            builder.Property(o => o.UpdatedDateTime)
-                .IsRequired();
-
             builder.OwnsMany(
                 o => o.ItemsIds,
                 itemBuilder =>
@@ -84,6 +75,14 @@ namespace Core.Infrastructure.Persistence.Configurations
                         .HasColumnName("MenuItemId")
                         .IsRequired();
                 });
+
+            builder.Property(o => o.DeliveryTime);
+
+            builder.Property(o => o.CreatedDateTime)
+                .IsRequired();
+
+            builder.Property(o => o.UpdatedDateTime)
+                .IsRequired();
         }
     }
 }

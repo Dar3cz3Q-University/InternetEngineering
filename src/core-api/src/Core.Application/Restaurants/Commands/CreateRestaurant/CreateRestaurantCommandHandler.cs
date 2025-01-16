@@ -1,9 +1,11 @@
-﻿using Core.Application.Common.Interfaces.Persistance;
+﻿using Core.Application.Common.Config;
+using Core.Application.Common.Interfaces.Persistance;
 using Core.Application.Common.Interfaces.Services;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Hosting;
 
 namespace Core.Application.Restaurants.Commands.CreateRestaurant
 {
@@ -13,30 +15,37 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
         private readonly IRestaurantRepository _restaurantRepository;
         private readonly IAddressService _addressService;
 
+        private readonly IImageSaver _saver;
+
         public CreateRestaurantCommandHandler(
             IRestaurantRepository restaurantRepository,
-            IAddressService addressService)
+            IAddressService addressService,
+            IImageSaver saver)
         {
             _restaurantRepository = restaurantRepository;
             _addressService = addressService;
+            _saver = saver;
         }
 
         public async Task<ErrorOr<Restaurant>> Handle(
-            CreateRestaurantCommand command,
+            CreateRestaurantCommand request,
             CancellationToken cancellationToken)
         {
-            var address = await _addressService.CreateAddressAsync(command.Location);
+            var imageUrl = await _saver.Save(request.Image, StaticFilesSettings.RESTAURANTS, cancellationToken);
+
+            var address = await _addressService.CreateAddressAsync(request.Location);
 
             var restaurant = Restaurant.Create(
-                command.Name,
+                request.Name,
+                imageUrl,
                 address,
-                command.Description,
+                request.Description,
                 ContactInfo.Create(
-                    command.ContactInfo.PhoneNumber,
-                    command.ContactInfo.Email),
+                    request.ContactInfo.PhoneNumber,
+                    request.ContactInfo.Email),
                 OpeningHours.Create(
-                    command.OpeningHours.OpenTime,
-                    command.OpeningHours.CloseTime));
+                    request.OpeningHours.OpenTime,
+                    request.OpeningHours.CloseTime));
 
             var result = await _restaurantRepository.AddAsync(restaurant);
 

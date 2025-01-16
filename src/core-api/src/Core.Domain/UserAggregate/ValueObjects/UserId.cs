@@ -20,6 +20,11 @@ namespace Core.Domain.UserAggregate.ValueObjects
             yield return Value;
         }
 
+        public override string ToString()
+        {
+            return Value.ToString();
+        }
+
 #pragma warning disable CS8618
         protected UserId() { }
 #pragma warning restore CS8618

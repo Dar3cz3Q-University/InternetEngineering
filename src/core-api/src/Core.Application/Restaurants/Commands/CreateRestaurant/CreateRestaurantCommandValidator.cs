@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Application.Restaurants.Commands.CreateRestaurant
 {
@@ -14,13 +15,14 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
                 .NotEmpty()
                 .MaximumLength(1000);
 
-            RuleFor(x => x.ContactInfo.PhoneNumber)
-                .NotEmpty()
-                .Matches(@"^\d{9}$").WithMessage("Phone number must be 9 digits.");
+            RuleFor(x => x.Image)
+                .NotNull()
+                .Must(BeAValidFile).WithMessage("Unsupported file format. Accepted are only JPG, JPEG, PNG.")
+                .Must(BeWithinSizeLimit).WithMessage("File is too big. Max size is 10 MB.");
 
-            RuleFor(x => x.ContactInfo.Email)
-                .NotEmpty()
-                .EmailAddress();
+            //
+            // Location
+            //
 
             RuleFor(x => x.Location.Street)
                 .NotEmpty();
@@ -49,11 +51,43 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
             RuleFor(x => x.Location.Longitude)
                 .InclusiveBetween(-180, 180);
 
+            //
+            // ContactInfo
+            //
+
+            RuleFor(x => x.ContactInfo.PhoneNumber)
+                .NotEmpty()
+                .Matches(@"^\d{9}$").WithMessage("Phone number must be 9 digits.");
+
+            RuleFor(x => x.ContactInfo.Email)
+                .NotEmpty()
+                .EmailAddress();
+
+            //
+            // OpeningHours
+            //
+
             RuleFor(x => x.OpeningHours.OpenTime)
                 .NotEmpty();
 
             RuleFor(x => x.OpeningHours.CloseTime)
                 .NotEmpty();
+        }
+
+        private static bool BeAValidFile(IFormFile file)
+        {
+            if (file == null) return false;
+
+            var allowedContentTypes = new[] { "image/jpeg", "image/png" };
+            return allowedContentTypes.Contains(file.ContentType);
+        }
+
+        private static bool BeWithinSizeLimit(IFormFile file)
+        {
+            if (file == null) return false;
+
+            const long maxSizeInBytes = 10 * 1024 * 1024;
+            return file.Length <= maxSizeInBytes;
         }
     }
 }

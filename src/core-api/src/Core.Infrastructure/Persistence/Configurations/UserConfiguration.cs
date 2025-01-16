@@ -19,22 +19,14 @@ namespace Core.Infrastructure.Persistence.Configurations
                     value => UserId.Create(value))
                 .ValueGeneratedNever();
 
+            builder.Property(u => u.ImageUrl);
+
             builder.Property(u => u.FirstName)
                 .HasMaxLength(100)
                 .IsRequired();
 
             builder.Property(u => u.LastName)
                 .HasMaxLength(100)
-                .IsRequired();
-
-            builder.Property(u => u.Password)
-                .HasMaxLength(100)
-                .IsRequired();
-
-            builder.Property(u => u.Role)
-                .HasConversion(
-                    role => role.ToString(),
-                    value => Enum.Parse<UserRole>(value))
                 .IsRequired();
 
             builder.Property(u => u.Email)
@@ -45,16 +37,29 @@ namespace Core.Infrastructure.Persistence.Configurations
                 .HasMaxLength(20)
                 .IsRequired();
 
-            builder.Property(u => u.CreatedDateTime)
+            builder.Property(u => u.Password)
+                .HasMaxLength(100)
                 .IsRequired();
 
-            builder.Property(u => u.UpdatedDateTime)
+            builder.Property(u => u.MaxSearchDistance)
+                .IsRequired();
+
+            builder.Property(u => u.Role)
+                .HasConversion(
+                    role => role.ToString(),
+                    value => Enum.Parse<UserRole>(value))
                 .IsRequired();
 
             builder.HasMany(u => u.Addresses)
                 .WithOne()
                 .HasForeignKey("UserId")
                 .OnDelete(DeleteBehavior.Cascade);
+
+            builder.Property(u => u.CreatedDateTime)
+                .IsRequired();
+
+            builder.Property(u => u.UpdatedDateTime)
+                .IsRequired();
         }
     }
 }

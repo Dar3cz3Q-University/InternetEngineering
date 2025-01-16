@@ -6,7 +6,7 @@ namespace Core.Application.Restaurants.Commands.UpdateRestaurant
     {
         public UpdateRestaurantCommandValidator()
         {
-        
+
         }
     }
 }
