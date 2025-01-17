@@ -38,7 +38,7 @@ namespace Core.Application.Restaurants.Queries.GetRestaurants
 
             var user = await _userRepository.GetByIdAsync(id);
 
-            var maxDistance = 5.0; // TODO: Get it from user preferences
+            var maxDistance = user.Value.MaxSearchDistance;
 
             var nearbyRestaurants = restaurants.Value
                 .Select(r => new

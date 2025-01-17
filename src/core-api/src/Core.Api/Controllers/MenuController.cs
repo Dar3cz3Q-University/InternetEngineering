@@ -4,6 +4,7 @@ using Core.Contracts.Menu.Request;
 using Core.Contracts.Menu.Response;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Api.Controllers
@@ -20,6 +21,7 @@ namespace Core.Api.Controllers
             _mapper = mapper;
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("sections")]
         public async Task<IActionResult> Create(
             Guid restaurantId,
@@ -34,6 +36,7 @@ namespace Core.Api.Controllers
                 e => Problem(e));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost("sections/{sectionId:guid}/items")]
         public async Task<IActionResult> Create(
             Guid restaurantId,

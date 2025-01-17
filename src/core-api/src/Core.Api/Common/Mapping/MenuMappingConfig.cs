@@ -63,6 +63,9 @@ namespace Core.Api.Common.Mapping
             config.NewConfig<MenuId, MenuId>()
                 .MapWith(src => src);
 
+            config.NewConfig<MenuItemId, MenuItemId>()
+                .MapWith(src => src);
+
             config.NewConfig<MenuSectionId, MenuSectionId>()
                 .MapWith(src => src);
         }

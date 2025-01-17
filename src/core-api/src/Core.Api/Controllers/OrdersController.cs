@@ -1,12 +1,13 @@
 ﻿using Core.Application.Orders.Commands.CreateOrder;
 using Core.Application.Orders.Commands.DeleteOrder;
-using Core.Application.Orders.Commands.UpdateOrder;
 using Core.Application.Orders.Queries.GetOrder;
 using Core.Application.Orders.Queries.GetOrders;
 using Core.Contracts.Order.Request;
 using Core.Contracts.Order.Response;
+using Core.Domain.Common.Errors;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Api.Controllers
@@ -40,10 +41,15 @@ namespace Core.Api.Controllers
         {
             var query = _mapper.Map<GetOrderQuery>(id);
 
-            var order = await _mediator.Send(query);
+            var orderResult = await _mediator.Send(query);
 
-            return order.Match(
-                o => Ok(_mapper.Map<OrderResponse>(o)),
+            if (orderResult.IsError && orderResult.FirstError == Errors.Authentication.InsufficientPermissions)
+            {
+                return Problem(statusCode: StatusCodes.Status403Forbidden, title: orderResult.FirstError.Description);
+            }
+
+            return orderResult.Match(
+                o => Ok(_mapper.Map<OrderResponseWithDetails>(o)),
                 e => Problem(e));
         }
 
@@ -59,20 +65,14 @@ namespace Core.Api.Controllers
                 e => Problem(e));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update(
-            Guid id,
-            UpdateOrderRequest request)
+        public async Task<IActionResult> Update()
         {
-            var command = _mapper.Map<UpdateOrderCommand>((id, request));
-
-            var updateOrder = await _mediator.Send(command);
-
-            return updateOrder.Match(
-                o => Ok(_mapper.Map<OrderResponse>(o)),
-                e => Problem(e));
+            throw new NotImplementedException();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

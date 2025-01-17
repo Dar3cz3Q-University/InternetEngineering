@@ -65,14 +65,26 @@ namespace Core.Infrastructure.Persistence.Configurations
                     value => value == Guid.Empty ? null : UserId.Create(value));
 
             builder.OwnsMany(
-                o => o.ItemsIds,
+                o => o.OrderedItems,
                 itemBuilder =>
                 {
                     itemBuilder.ToTable("OrderItems");
                     itemBuilder.WithOwner().HasForeignKey("OrderId");
 
-                    itemBuilder.Property(i => i.Value)
-                        .HasColumnName("MenuItemId")
+                    itemBuilder.Property(o => o.Id)
+                        .HasConversion(
+                            id => id.Value,
+                            value => OrderedItemId.Create(value))
+                        .ValueGeneratedNever();
+
+                    itemBuilder.Property(i => i.ItemId)
+                        .HasConversion(
+                            id => id.Value,
+                            value => MenuItemId.Create(value))
+                        .ValueGeneratedNever()
+                        .HasColumnName("MenuItemId");
+
+                    itemBuilder.Property(i => i.Quantity)
                         .IsRequired();
                 });
 

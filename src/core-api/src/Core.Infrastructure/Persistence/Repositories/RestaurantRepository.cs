@@ -58,6 +58,13 @@ namespace Core.Infrastructure.Persistence.Repositories
             return restaurant;
         }
 
+        public async Task<ErrorOr<List<Restaurant>>> GetByIdsAsync(List<RestaurantId> ids)
+        {
+            return await _dbContext.Restaurants
+                .Where(r => ids.Contains(r.Id))
+                .ToListAsync();
+        }
+
         public async Task<ErrorOr<Updated>> UpdateAsync(Restaurant restaurant)
         {
             ArgumentNullException.ThrowIfNull(restaurant);

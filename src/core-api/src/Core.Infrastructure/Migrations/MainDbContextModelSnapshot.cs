@@ -244,6 +244,29 @@ namespace Core.Infrastructure.Migrations
 
             modelBuilder.Entity("Core.Domain.OrderAggregate.Order", b =>
                 {
+                    b.OwnsMany("Core.Domain.OrderAggregate.Entities.OrderedItem", "OrderedItems", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("ItemId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("MenuItemId");
+
+                            b1.Property<long>("Quantity")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("OrderId", "Id");
+
+                            b1.ToTable("OrderItems", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
                     b.OwnsOne("Core.Domain.Common.ValueObjects.Money", "TotalPrice", b1 =>
                         {
                             b1.Property<Guid>("OrderId")
@@ -266,30 +289,7 @@ namespace Core.Infrastructure.Migrations
                                 .HasForeignKey("OrderId");
                         });
 
-                    b.OwnsMany("Core.Domain.RestaurantAggregate.ValueObjects.MenuItemId", "ItemsIds", b1 =>
-                        {
-                            b1.Property<Guid>("OrderId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uuid")
-                                .HasColumnName("MenuItemId");
-
-                            b1.HasKey("OrderId", "Id");
-
-                            b1.ToTable("OrderItems", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderId");
-                        });
-
-                    b.Navigation("ItemsIds");
+                    b.Navigation("OrderedItems");
 
                     b.Navigation("TotalPrice")
                         .IsRequired();

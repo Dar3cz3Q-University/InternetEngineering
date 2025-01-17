@@ -1,12 +1,12 @@
 ﻿using Core.Application.Restaurants.Commands.CreateRestaurant;
 using Core.Application.Restaurants.Commands.DeleteRestaurant;
-using Core.Application.Restaurants.Commands.UpdateRestaurant;
 using Core.Application.Restaurants.Queries.GetRestaurant;
 using Core.Application.Restaurants.Queries.GetRestaurants;
 using Core.Contracts.Restaurant.Request;
 using Core.Contracts.Restaurant.Response;
 using MapsterMapper;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Core.Api.Controllers
@@ -52,6 +52,7 @@ namespace Core.Api.Controllers
                 e => Problem(e));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> Create([FromForm] CreateRestaurantRequest request)
         {
@@ -64,20 +65,14 @@ namespace Core.Api.Controllers
                 e => Problem(e));
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpPut("{id:guid}")]
-        public async Task<IActionResult> Update(
-            Guid id,
-            UpdateRestaurantRequest request)
+        public async Task<IActionResult> Update()
         {
-            var command = _mapper.Map<UpdateRestaurantCommand>((id, request));
-
-            var updateRestaurant = await _mediator.Send(command);
-
-            return updateRestaurant.Match(
-                r => Ok(_mapper.Map<RestaurantResponseWithDetails>(r)),
-                e => Problem(e));
+            throw new NotImplementedException();
         }
 
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{id:guid}")]
         public async Task<IActionResult> Delete(Guid id)
         {

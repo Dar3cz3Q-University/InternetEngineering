@@ -9,6 +9,7 @@ namespace Core.Application.Common.Interfaces.Persistance
         Task<ErrorOr<Created>> AddAsync(Restaurant restaurant);
         Task<ErrorOr<Deleted>> DeleteByIdAsync(RestaurantId id);
         Task<ErrorOr<Restaurant>> GetByIdAsync(RestaurantId id);
+        Task<ErrorOr<List<Restaurant>>> GetByIdsAsync(List<RestaurantId> ids);
         Task<ErrorOr<List<Restaurant>>> GetAllAsync();
         Task<ErrorOr<Updated>> UpdateAsync(Restaurant restaurant);
     }

@@ -53,5 +53,17 @@ namespace Core.Domain.RestaurantAggregate.Entities
 
             // TODO: Throw error if section not found
         }
+
+        public List<MenuItem> GetItems(List<MenuItemId> itemsIds)
+        {
+            var items = new List<MenuItem>();
+
+            foreach (var section in Sections)
+            {
+                items.AddRange(section.Items.Where(i => itemsIds.Contains(i.Id)));
+            }
+
+            return items;
+        }
     }
 }

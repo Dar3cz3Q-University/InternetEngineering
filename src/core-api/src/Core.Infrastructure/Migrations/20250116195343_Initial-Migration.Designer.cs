@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20250105185536_Password-Length")]
-    partial class PasswordLength
+    [Migration("20250116195343_Initial-Migration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -83,32 +83,6 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Addresses", (string)null);
                 });
 
-            modelBuilder.Entity("Core.Domain.MenuAggregate.Menu", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreatedDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.Property<DateTime>("UpdatedDateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Menus", (string)null);
-                });
-
             modelBuilder.Entity("Core.Domain.OrderAggregate.Order", b =>
                 {
                     b.Property<Guid>("Id")
@@ -144,6 +118,28 @@ namespace Core.Infrastructure.Migrations
                     b.ToTable("Orders", (string)null);
                 });
 
+            modelBuilder.Entity("Core.Domain.RestaurantAggregate.Entities.Menu", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid?>("MenuId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MenuId")
+                        .IsUnique();
+
+                    b.ToTable("Menus", (string)null);
+                });
+
             modelBuilder.Entity("Core.Domain.RestaurantAggregate.Restaurant", b =>
                 {
                     b.Property<Guid>("Id")
@@ -151,6 +147,9 @@ namespace Core.Infrastructure.Migrations
 
                     b.Property<Guid?>("AddressId")
                         .HasColumnType("uuid");
+
+                    b.Property<double>("AverageRate")
+                        .HasColumnType("double precision");
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("timestamp with time zone");
@@ -160,16 +159,20 @@ namespace Core.Infrastructure.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<bool>("IsOpen")
                         .HasColumnType("boolean");
-
-                    b.Property<Guid?>("MenuId")
-                        .HasColumnType("uuid");
 
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<long>("RatesCount")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("UpdatedDateTime")
                         .HasColumnType("timestamp with time zone");
@@ -200,10 +203,17 @@ namespace Core.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
+
+                    b.Property<double>("MaxSearchDistance")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Password")
                         .IsRequired()
@@ -235,9 +245,67 @@ namespace Core.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("Core.Domain.MenuAggregate.Menu", b =>
+            modelBuilder.Entity("Core.Domain.OrderAggregate.Order", b =>
                 {
-                    b.OwnsMany("Core.Domain.MenuAggregate.Entities.MenuSection", "Sections", b1 =>
+                    b.OwnsMany("Core.Domain.OrderAggregate.Entities.OrderedItem", "OrderedItems", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("Id")
+                                .HasColumnType("uuid");
+
+                            b1.Property<Guid>("ItemId")
+                                .HasColumnType("uuid")
+                                .HasColumnName("MenuItemId");
+
+                            b1.Property<long>("Quantity")
+                                .HasColumnType("bigint");
+
+                            b1.HasKey("OrderId", "Id");
+
+                            b1.ToTable("OrderItems", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.OwnsOne("Core.Domain.Common.ValueObjects.Money", "TotalPrice", b1 =>
+                        {
+                            b1.Property<Guid>("OrderId")
+                                .HasColumnType("uuid");
+
+                            b1.Property<decimal>("Amount")
+                                .HasColumnType("numeric")
+                                .HasColumnName("TotalPrice_Amount");
+
+                            b1.Property<string>("Currency")
+                                .IsRequired()
+                                .HasColumnType("text")
+                                .HasColumnName("TotalPrice_Currency");
+
+                            b1.HasKey("OrderId");
+
+                            b1.ToTable("Orders");
+
+                            b1.WithOwner()
+                                .HasForeignKey("OrderId");
+                        });
+
+                    b.Navigation("OrderedItems");
+
+                    b.Navigation("TotalPrice")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Domain.RestaurantAggregate.Entities.Menu", b =>
+                {
+                    b.HasOne("Core.Domain.RestaurantAggregate.Restaurant", null)
+                        .WithOne("Menu")
+                        .HasForeignKey("Core.Domain.RestaurantAggregate.Entities.Menu", "MenuId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.OwnsMany("Core.Domain.RestaurantAggregate.Entities.MenuSection", "Sections", b1 =>
                         {
                             b1.Property<Guid>("Id")
                                 .HasColumnType("uuid");
@@ -270,7 +338,7 @@ namespace Core.Infrastructure.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("MenuId");
 
-                            b1.OwnsMany("Core.Domain.MenuAggregate.Entities.MenuItem", "Items", b2 =>
+                            b1.OwnsMany("Core.Domain.RestaurantAggregate.Entities.MenuItem", "Items", b2 =>
                                 {
                                     b2.Property<Guid>("Id")
                                         .HasColumnType("uuid");
@@ -338,59 +406,6 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Sections");
                 });
 
-            modelBuilder.Entity("Core.Domain.OrderAggregate.Order", b =>
-                {
-                    b.OwnsMany("Core.Domain.MenuAggregate.ValueObjects.MenuItemId", "ItemsIds", b1 =>
-                        {
-                            b1.Property<Guid>("OrderId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<int>("Id")
-                                .ValueGeneratedOnAdd()
-                                .HasColumnType("integer");
-
-                            NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b1.Property<int>("Id"));
-
-                            b1.Property<Guid>("Value")
-                                .HasColumnType("uuid")
-                                .HasColumnName("MenuItemId");
-
-                            b1.HasKey("OrderId", "Id");
-
-                            b1.ToTable("OrderItems", (string)null);
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderId");
-                        });
-
-                    b.OwnsOne("Core.Domain.Common.ValueObjects.Money", "TotalPrice", b1 =>
-                        {
-                            b1.Property<Guid>("OrderId")
-                                .HasColumnType("uuid");
-
-                            b1.Property<decimal>("Amount")
-                                .HasColumnType("numeric")
-                                .HasColumnName("TotalPrice_Amount");
-
-                            b1.Property<string>("Currency")
-                                .IsRequired()
-                                .HasColumnType("text")
-                                .HasColumnName("TotalPrice_Currency");
-
-                            b1.HasKey("OrderId");
-
-                            b1.ToTable("Orders");
-
-                            b1.WithOwner()
-                                .HasForeignKey("OrderId");
-                        });
-
-                    b.Navigation("ItemsIds");
-
-                    b.Navigation("TotalPrice")
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Core.Domain.RestaurantAggregate.Restaurant", b =>
                 {
                     b.HasOne("Core.Domain.Common.Entities.Address", "Location")
@@ -428,12 +443,12 @@ namespace Core.Infrastructure.Migrations
                             b1.Property<Guid>("RestaurantId")
                                 .HasColumnType("uuid");
 
-                            b1.Property<DateTime>("CloseTime")
-                                .HasColumnType("timestamp with time zone")
+                            b1.Property<TimeOnly>("CloseTime")
+                                .HasColumnType("time without time zone")
                                 .HasColumnName("OpeningHours_CloseTime");
 
-                            b1.Property<DateTime>("OpenTime")
-                                .HasColumnType("timestamp with time zone")
+                            b1.Property<TimeOnly>("OpenTime")
+                                .HasColumnType("time without time zone")
                                 .HasColumnName("OpeningHours_OpenTime");
 
                             b1.HasKey("RestaurantId");
@@ -450,6 +465,12 @@ namespace Core.Infrastructure.Migrations
                     b.Navigation("Location");
 
                     b.Navigation("OpeningHours")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Core.Domain.RestaurantAggregate.Restaurant", b =>
+                {
+                    b.Navigation("Menu")
                         .IsRequired();
                 });
 

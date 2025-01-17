@@ -6,11 +6,11 @@ namespace Core.Application.Orders.Commands.CreateOrder
     {
         public CreateOrderCommandValidator()
         {
-            // TODO: [Add validations #26]
-            RuleFor(x => x.UserId).NotEmpty();
             RuleFor(x => x.RestaurantId).NotEmpty();
             RuleFor(x => x.AddressId).NotEmpty();
-            RuleFor(x => x.ItemsIds).NotEmpty();
+            RuleForEach(x => x.ItemsIds)
+                .NotEmpty()
+                .Must(item => item.Quantity > 0);
         }
     }
 }

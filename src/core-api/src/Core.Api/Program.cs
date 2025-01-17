@@ -39,6 +39,14 @@ var app = builder.Build();
     {
         app.UseSwagger();
         app.UseSwaggerUI();
+
+        app.Use(async (context, next) =>
+        {
+            if (context.Request.Path.StartsWithSegments("/swagger"))
+                context.SetEndpoint(null);
+
+            await next();
+        });
     }
 
     app.UseHttpsRedirection();

@@ -2,6 +2,7 @@
 using Core.Domain.Common.Errors;
 using Core.Domain.OrderAggregate;
 using Core.Domain.OrderAggregate.ValueObjects;
+using Core.Domain.UserAggregate.ValueObjects;
 using ErrorOr;
 using Microsoft.EntityFrameworkCore;
 
@@ -55,6 +56,13 @@ namespace Core.Infrastructure.Persistence.Repositories
             }
 
             return order;
+        }
+
+        public async Task<ErrorOr<List<Order>>> GetForUserIdAsync(UserId id)
+        {
+            var orders = await _dbContext.Orders.Where(o => o.UserId == id).ToListAsync();
+
+            return orders;
         }
 
         public async Task<ErrorOr<Updated>> UpdateAsync(Order order)

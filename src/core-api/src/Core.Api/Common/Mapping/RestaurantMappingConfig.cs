@@ -1,6 +1,5 @@
 ﻿using Core.Application.Restaurants.Commands.CreateRestaurant;
 using Core.Application.Restaurants.Commands.DeleteRestaurant;
-using Core.Application.Restaurants.Commands.UpdateRestaurant;
 using Core.Application.Restaurants.Common;
 using Core.Application.Restaurants.Queries.GetRestaurant;
 using Core.Application.Restaurants.Queries.GetRestaurants;
@@ -55,7 +54,7 @@ namespace Core.Api.Common.Mapping
             // Update
             //
 
-            config.NewConfig<UpdateRestaurantRequest, UpdateRestaurantCommand>();
+
 
             //
             // Get

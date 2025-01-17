@@ -5,7 +5,6 @@ using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
-using Microsoft.AspNetCore.Hosting;
 
 namespace Core.Application.Restaurants.Commands.CreateRestaurant
 {

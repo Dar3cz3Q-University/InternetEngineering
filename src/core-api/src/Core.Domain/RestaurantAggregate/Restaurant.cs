@@ -92,5 +92,10 @@ namespace Core.Domain.RestaurantAggregate
             AverageRate = (AverageRate + rate) / (RatesCount == 0 ? 1 : 2);
             RatesCount++;
         }
+
+        public List<MenuItem> GetItems(List<MenuItemId> itemIds)
+        {
+            return Menu.GetItems(itemIds);
+        }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Core.Domain.Common.Models;
 using Core.Domain.Common.ValueObjects;
+using Core.Domain.OrderAggregate.Entities;
 using Core.Domain.OrderAggregate.ValueObjects;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Core.Domain.UserAggregate.ValueObjects;
@@ -8,14 +9,14 @@ namespace Core.Domain.OrderAggregate
 {
     public class Order : AggregateRoot<OrderId>, IHasTimestamps
     {
-        private readonly List<MenuItemId> _itemsIds = [];
+        private readonly List<OrderedItem> _orderedItems = [];
         public virtual UserId UserId { get; private set; }
         public virtual RestaurantId RestaurantId { get; private set; }
         public virtual AddressId DeliveryAddressId { get; private set; }
         public OrderStatus OrderStatus { get; private set; }
         public Money TotalPrice { get; private set; }
         public virtual UserId? CourierId { get; private set; }
-        public virtual ICollection<MenuItemId> ItemsIds => _itemsIds.AsReadOnly();
+        public virtual ICollection<OrderedItem> OrderedItems => _orderedItems.AsReadOnly();
         public DateTime? DeliveryTime { get; private set; }
         public DateTime CreatedDateTime { get; private set; }
         public DateTime UpdatedDateTime { get; private set; }
@@ -27,7 +28,7 @@ namespace Core.Domain.OrderAggregate
             AddressId deliveryAddressId,
             OrderStatus orderStatus,
             Money totalPrice,
-            List<MenuItemId> items,
+            List<OrderedItem> items,
             DateTime createdDateTime,
             DateTime updatedDateTime)
         {
@@ -37,7 +38,7 @@ namespace Core.Domain.OrderAggregate
             DeliveryAddressId = deliveryAddressId;
             OrderStatus = orderStatus;
             TotalPrice = totalPrice;
-            _itemsIds = items;
+            _orderedItems = items;
             CreatedDateTime = createdDateTime;
             UpdatedDateTime = updatedDateTime;
         }
@@ -46,19 +47,16 @@ namespace Core.Domain.OrderAggregate
             UserId userId,
             RestaurantId restaurantId,
             AddressId deliveryAddressId,
-            List<MenuItemId> items)
+            Money totalPrice,
+            List<OrderedItem> items)
         {
-            var temp = Money.Create(
-                15.26m,
-                "PLN");
-
             return new(
                 OrderId.CreateUnique(),
                 userId,
                 restaurantId,
                 deliveryAddressId,
                 OrderStatus.Pending,
-                temp, // TODO: Calculate total price
+                totalPrice,
                 items,
                 DateTime.UtcNow,
                 DateTime.UtcNow);
