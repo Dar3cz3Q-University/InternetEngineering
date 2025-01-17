@@ -11,13 +11,26 @@ namespace Core.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<RegisterRequest, RegisterCommand>();
-
-            config.NewConfig<LoginRequest, LoginQuery>();
+            //
+            // Response
+            //
 
             config.NewConfig<AuthenticationDTO, AuthenticationResponse>()
                 .Map(dest => dest.Id, src => src.User.Id.Value)
+                .Map(dest => dest.ImageUrl, src => $"http://192.168.0.5:8080/{src.User.ImageUrl}")
                 .Map(dest => dest, src => src.User);
+
+            //
+            // Register
+            //
+
+            config.NewConfig<RegisterRequest, RegisterCommand>();
+
+            //
+            // Login
+            //
+
+            config.NewConfig<LoginRequest, LoginQuery>();
         }
     }
 }

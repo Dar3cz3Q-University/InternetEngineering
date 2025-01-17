@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Application.Authentication.Commands.Register
 {
@@ -32,7 +33,17 @@ namespace Core.Application.Authentication.Commands.Register
 
             RuleFor(x => x.UserRole)
                 .NotEmpty()
+                .NotEqual(Domain.UserAggregate.UserRole.Admin)
                 .IsInEnum();
+
+            RuleFor(x => x.AvatarImage)
+               .NotNull()
+               .Must(BeAValidFile).WithMessage("Unsupported file format. Accepted are only JPG, JPEG, PNG.")
+               .Must(BeWithinSizeLimit).WithMessage("File is too big. Max size is 10 MB.");
+
+            //
+            // Location
+            //
 
             RuleFor(x => x.Address.Street)
                 .NotEmpty();
@@ -60,6 +71,26 @@ namespace Core.Application.Authentication.Commands.Register
 
             RuleFor(x => x.Address.Longitude)
                 .InclusiveBetween(-180, 180);
+
+            RuleFor(x => x.MaxSearchDistance)
+                .NotEmpty()
+                .GreaterThan(0);
+        }
+
+        private static bool BeAValidFile(IFormFile file)
+        {
+            if (file == null) return false;
+
+            var allowedContentTypes = new[] { "image/jpeg", "image/png" };
+            return allowedContentTypes.Contains(file.ContentType);
+        }
+
+        private static bool BeWithinSizeLimit(IFormFile file)
+        {
+            if (file == null) return false;
+
+            const long maxSizeInBytes = 10 * 1024 * 1024;
+            return file.Length <= maxSizeInBytes;
         }
     }
 }

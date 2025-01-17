@@ -1,4 +1,6 @@
-﻿using Core.Domain.UserAggregate.ValueObjects;
+﻿using Core.Contracts.Authentication.Response;
+using Core.Domain.UserAggregate;
+using Core.Domain.UserAggregate.ValueObjects;
 using Mapster;
 
 namespace Core.Api.Common.Mapping

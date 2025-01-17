@@ -12,7 +12,6 @@ namespace Core.Application.Authentication.Queries.Login
         IRequestHandler<LoginQuery, ErrorOr<AuthenticationDTO>>
     {
         private readonly IUserRepository _userRepository;
-
         private readonly IJwtTokenGenerator _jwtTokenGenerator;
         private readonly IPasswordHasher _passwordHasher;
 
@@ -22,7 +21,6 @@ namespace Core.Application.Authentication.Queries.Login
             IPasswordHasher passwordHasher)
         {
             _userRepository = userRepository;
-
             _jwtTokenGenerator = jwtTokenGenerator;
             _passwordHasher = passwordHasher;
         }
@@ -35,16 +33,12 @@ namespace Core.Application.Authentication.Queries.Login
 
             // TODO: Check for more specific error
             if (userResult.IsError)
-            {
                 return Errors.Authentication.InvalidCredentials;
-            }
 
             var user = userResult.Value;
 
             if (!_passwordHasher.VerifyPassword(user.Password, query.Password))
-            {
                 return Errors.Authentication.InvalidCredentials;
-            }
 
             var token = _jwtTokenGenerator.GenerateToken(user);
 

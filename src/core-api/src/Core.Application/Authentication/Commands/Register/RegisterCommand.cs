@@ -3,6 +3,7 @@ using Core.Application.Common.Commands;
 using Core.Domain.UserAggregate;
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Application.Authentication.Commands.Register
 {
@@ -13,6 +14,7 @@ namespace Core.Application.Authentication.Commands.Register
         string PhoneNumber,
         string Password,
         UserRole UserRole,
-        CreateAddressCommand Address
-    ) : IRequest<ErrorOr<AuthenticationDTO>>;
+        IFormFile AvatarImage,
+        CreateAddressCommand Address,
+        double MaxSearchDistance) : IRequest<ErrorOr<AuthenticationDTO>>;
 }

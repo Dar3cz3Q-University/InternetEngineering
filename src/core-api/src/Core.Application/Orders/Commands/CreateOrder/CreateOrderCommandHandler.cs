@@ -17,7 +17,6 @@ namespace Core.Application.Orders.Commands.CreateOrder
     {
         private readonly IOrderRepository _orderRepository;
         private readonly IRestaurantRepository _restaurantRepository;
-
         private readonly IUserContextService _ctxService;
 
         public CreateOrderCommandHandler(

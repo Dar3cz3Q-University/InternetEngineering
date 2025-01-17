@@ -26,7 +26,7 @@ namespace Core.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterRequest request)
+        public async Task<IActionResult> Register([FromForm] RegisterRequest request)
         {
             var command = _mapper.Map<RegisterCommand>(request);
 

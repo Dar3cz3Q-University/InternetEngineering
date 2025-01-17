@@ -1,5 +1,6 @@
 ﻿using Core.Contracts.Authentication.DTO;
 using Core.Contracts.Common.Request;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Contracts.Authentication.Request
 {
@@ -10,6 +11,7 @@ namespace Core.Contracts.Authentication.Request
         string PhoneNumber,
         string Password,
         UserRoleDTO UserRole,
-        AddressRequest Address
-    );
+        IFormFile AvatarImage,
+        AddressRequest Address,
+        double MaxSearchDistance);
 }

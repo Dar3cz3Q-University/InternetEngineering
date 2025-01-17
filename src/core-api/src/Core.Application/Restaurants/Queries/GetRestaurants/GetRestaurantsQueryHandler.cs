@@ -12,7 +12,6 @@ namespace Core.Application.Restaurants.Queries.GetRestaurants
     {
         private readonly IRestaurantRepository _restaurantRepository;
         private readonly IUserRepository _userRepository;
-
         private readonly IUserContextService _ctxService;
 
         public GetRestaurantsQueryHandler(
