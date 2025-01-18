@@ -16,11 +16,15 @@ namespace Core.Domain.RestaurantAggregate.Entities
             MenuSectionId id,
             string name,
             string description,
-            List<MenuItem> items) : base(id)
+            List<MenuItem> items,
+            DateTime createdDateTime,
+            DateTime updatedDateTime) : base(id)
         {
             Name = name;
             Description = description;
             _items = items;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static MenuSection Create(
@@ -31,7 +35,9 @@ namespace Core.Domain.RestaurantAggregate.Entities
                 MenuSectionId.CreateUnique(),
                 name,
                 description,
-                []);
+                [],
+                DateTime.UtcNow,
+                DateTime.UtcNow);
         }
 
 #pragma warning disable CS8618

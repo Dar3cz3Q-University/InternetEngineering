@@ -1,9 +1,12 @@
 ﻿using Core.Application.Common.Interfaces.Authentication;
+using Core.Application.Common.Interfaces.Messaging;
 using Core.Application.Common.Interfaces.Persistance;
 using Core.Application.Common.Interfaces.Services;
+using Core.Application.Services;
 using Core.Infrastructure.Authentication.Password;
 using Core.Infrastructure.Authentication.Token;
 using Core.Infrastructure.Config;
+using Core.Infrastructure.Messaging;
 using Core.Infrastructure.Persistence;
 using Core.Infrastructure.Persistence.Interceptors;
 using Core.Infrastructure.Persistence.Repositories;
@@ -30,6 +33,8 @@ namespace Core.Infrastructure
             services.AddPersistance(configuration);
 
             services.AddSingleton<IDateTimeProvider, DateTimeProvider>();
+
+            services.AddMessaging(configuration);
 
             return services;
         }
@@ -91,6 +96,22 @@ namespace Core.Infrastructure
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddMessaging(
+            this IServiceCollection services,
+            IConfigurationManager configuration)
+        {
+            var mqttSettings = new MqttSettings();
+            configuration.Bind(MqttSettings.SECTION_NAME, mqttSettings);
+
+            services.AddSingleton(Options.Create(mqttSettings));
+
+            services.AddSingleton<IMqttPublisher, MqttPublisher>();
+
+            services.AddHostedService(sp => new MqttSubscriber(mqttSettings, sp));
 
             return services;
         }

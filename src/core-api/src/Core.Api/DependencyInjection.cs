@@ -7,7 +7,9 @@ namespace Core.Api
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddPresentation(this IServiceCollection services, IConfigurationManager configuration)
+        public static IServiceCollection AddPresentation(
+            this IServiceCollection services,
+            IConfigurationManager configuration)
         {
             services.AddControllers();
             services.AddEndpointsApiExplorer();

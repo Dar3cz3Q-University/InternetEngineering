@@ -91,6 +91,9 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<OrderId, OrderId>()
                 .MapWith(src => src);
+
+            config.NewConfig<OrderedItemId, OrderedItemId>()
+                .MapWith(src => src);
         }
 
         private static bool IsActive(OrderStatus orderStatus)

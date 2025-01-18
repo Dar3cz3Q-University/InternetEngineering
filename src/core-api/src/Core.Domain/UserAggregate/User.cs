@@ -29,7 +29,9 @@ namespace Core.Domain.UserAggregate
             string password,
             double maxSearchDistance,
             UserRole role,
-            Address address) : base(userId)
+            Address address,
+            DateTime createdDateTime,
+            DateTime updatedDateTime) : base(userId)
         {
             ImageUrl = imageUrl;
             FirstName = firstName;
@@ -40,6 +42,8 @@ namespace Core.Domain.UserAggregate
             MaxSearchDistance = maxSearchDistance;
             Role = role;
             _addresses.Add(address);
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static User CreateUnique(
@@ -63,7 +67,9 @@ namespace Core.Domain.UserAggregate
                 password,
                 maxSearchDistance,
                 role,
-                address);
+                address,
+                DateTime.UtcNow,
+                DateTime.UtcNow);
         }
 
 #pragma warning disable CS8618

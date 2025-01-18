@@ -13,10 +13,14 @@ namespace Core.Domain.CategoryAggregate
         private Category(
             CategoryId id,
             string name,
-            string imageUrl) : base(id)
+            string imageUrl,
+            DateTime createdDateTime,
+            DateTime updatedDateTime) : base(id)
         {
             Name = name;
             ImageUrl = imageUrl;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static Category Create(
@@ -26,7 +30,9 @@ namespace Core.Domain.CategoryAggregate
             return new(
                 CategoryId.CreateUnique(),
                 name,
-                imageUrl);
+                imageUrl,
+                DateTime.UtcNow,
+                DateTime.UtcNow);
         }
 
 #pragma warning disable CS8618

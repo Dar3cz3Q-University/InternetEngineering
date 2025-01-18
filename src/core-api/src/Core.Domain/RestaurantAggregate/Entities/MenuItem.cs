@@ -20,13 +20,17 @@ namespace Core.Domain.RestaurantAggregate.Entities
             string imageUrl,
             string description,
             Money price,
-            bool isAvailable) : base(id)
+            bool isAvailable,
+            DateTime createdDateTime,
+            DateTime updatedDateTime) : base(id)
         {
             Name = name;
             ImageUrl = imageUrl;
             Description = description;
             Price = price;
             IsAvailable = isAvailable;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static MenuItem Create(
@@ -41,7 +45,9 @@ namespace Core.Domain.RestaurantAggregate.Entities
                 imageUrl,
                 description,
                 price,
-                true);
+                true,
+                DateTime.UtcNow,
+                DateTime.UtcNow);
         }
 
 #pragma warning disable CS8618

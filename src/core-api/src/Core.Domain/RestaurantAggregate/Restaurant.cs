@@ -35,7 +35,9 @@ namespace Core.Domain.RestaurantAggregate
             Menu menu,
             double averageRate,
             uint ratesCount,
-            List<CategoryId> categories) : base(id)
+            List<CategoryId> categories,
+            DateTime createdDateTime,
+            DateTime updatedDateTime) : base(id)
         {
             Name = name;
             ImageUrl = imageUrl;
@@ -48,6 +50,8 @@ namespace Core.Domain.RestaurantAggregate
             AverageRate = averageRate;
             RatesCount = ratesCount;
             _categories = categories;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static Restaurant Create(
@@ -71,7 +75,9 @@ namespace Core.Domain.RestaurantAggregate
                 Menu.Create(),
                 0.0,
                 0,
-                categories);
+                categories,
+                DateTime.UtcNow,
+                DateTime.UtcNow);
         }
 
 #pragma warning disable CS8618

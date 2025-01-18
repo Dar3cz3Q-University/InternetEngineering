@@ -27,7 +27,9 @@ namespace Core.Domain.Common.Entities
             string state,
             string country,
             double latitude,
-            double longitude)
+            double longitude,
+            DateTime createdDateTime,
+            DateTime updatedDateTime)
         {
             Id = id;
             Street = street;
@@ -39,6 +41,8 @@ namespace Core.Domain.Common.Entities
             Country = country;
             Latitude = latitude;
             Longitude = longitude;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static Address Create(
@@ -62,7 +66,9 @@ namespace Core.Domain.Common.Entities
                 state,
                 country,
                 latitude,
-                longitude);
+                longitude,
+                DateTime.UtcNow,
+                DateTime.UtcNow);
         }
 
 #pragma warning disable CS8618

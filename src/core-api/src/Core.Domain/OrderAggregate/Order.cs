@@ -1,6 +1,7 @@
 ﻿using Core.Domain.Common.Models;
 using Core.Domain.Common.ValueObjects;
 using Core.Domain.OrderAggregate.Entities;
+using Core.Domain.OrderAggregate.Events;
 using Core.Domain.OrderAggregate.ValueObjects;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Core.Domain.UserAggregate.ValueObjects;
@@ -28,7 +29,9 @@ namespace Core.Domain.OrderAggregate
             AddressId deliveryAddressId,
             OrderStatus orderStatus,
             Money totalPrice,
-            List<OrderedItem> items)
+            List<OrderedItem> items,
+            DateTime createdDateTime,
+            DateTime updatedDateTime)
         {
             Id = id;
             UserId = userId;
@@ -37,6 +40,8 @@ namespace Core.Domain.OrderAggregate
             OrderStatus = orderStatus;
             TotalPrice = totalPrice;
             _orderedItems = items;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static Order Create(
@@ -46,18 +51,34 @@ namespace Core.Domain.OrderAggregate
             Money totalPrice,
             List<OrderedItem> items)
         {
-            return new(
+            var order = new Order(
                 OrderId.CreateUnique(),
                 userId,
                 restaurantId,
                 deliveryAddressId,
                 OrderStatus.Pending,
                 totalPrice,
-                items);
+                items,
+                DateTime.UtcNow,
+                DateTime.UtcNow);
+
+            order.AddDomainEvent(new OrderCreated(order));
+
+            return order;
         }
 
 #pragma warning disable CS8618
         protected Order() { }
 #pragma warning restore CS8618
+
+        public void SetOrderStatus(OrderStatus orderStatus)
+        {
+            OrderStatus = orderStatus;
+        }
+
+        public void SetDeliveryDateTime(DateTime deliveryDateTime)
+        {
+            DeliveryTime = deliveryDateTime;
+        }
     }
 }

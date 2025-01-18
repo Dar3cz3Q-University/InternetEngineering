@@ -12,16 +12,22 @@ namespace Core.Domain.RestaurantAggregate.Entities
 
         private Menu(
             MenuId id,
-            List<MenuSection> sections) : base(id)
+            List<MenuSection> sections,
+            DateTime createdDateTime,
+            DateTime updatedDateTime) : base(id)
         {
             _sections = sections;
+            CreatedDateTime = createdDateTime;
+            UpdatedDateTime = updatedDateTime;
         }
 
         public static Menu Create()
         {
             var menu = new Menu(
                 MenuId.CreateUnique(),
-                []);
+                [],
+                DateTime.UtcNow,
+                DateTime.UtcNow);
 
             return menu;
         }
