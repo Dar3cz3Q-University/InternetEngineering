@@ -13,8 +13,8 @@ namespace Core.Contracts.Order.Response
         string CourierName,
         DateTime? EstimatedDeliveryDateTime,
         bool IsActive,
-        DateTime CreatedDateTime,
-        DateTime UpdatedDateTime);
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime);
 
     public record ItemReponse(
         string Id,

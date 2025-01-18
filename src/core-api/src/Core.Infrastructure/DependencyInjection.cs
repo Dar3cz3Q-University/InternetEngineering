@@ -53,6 +53,7 @@ namespace Core.Infrastructure
             services.AddScoped<IMenuRepository, MenuRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<ICategoryRepository, CategoryRepository>();
 
             return services;
         }

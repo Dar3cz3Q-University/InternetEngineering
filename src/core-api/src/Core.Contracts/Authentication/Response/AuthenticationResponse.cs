@@ -14,7 +14,7 @@ namespace Core.Contracts.Authentication.Response
         List<AddressResponse> Addresses,
         double MaxSearchDistance,
         string Token,
-        DateTime CreatedDateTime,
-        DateTime UpdatedDateTime
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime
     );
 }

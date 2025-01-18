@@ -7,27 +7,21 @@ namespace Core.Domain.RestaurantAggregate.Entities
     {
         private readonly List<MenuSection> _sections = [];
         public virtual ICollection<MenuSection> Sections => _sections.AsReadOnly();
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private Menu(
             MenuId id,
-            List<MenuSection> sections,
-            DateTime createdDateTime,
-            DateTime updatedDateTime) : base(id)
+            List<MenuSection> sections) : base(id)
         {
             _sections = sections;
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
         }
 
         public static Menu Create()
         {
             var menu = new Menu(
                 MenuId.CreateUnique(),
-                [],
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                []);
 
             return menu;
         }

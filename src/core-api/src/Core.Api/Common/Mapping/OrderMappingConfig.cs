@@ -2,8 +2,11 @@
 using Core.Application.Orders.Commands.DeleteOrder;
 using Core.Application.Orders.Common;
 using Core.Application.Orders.Queries.GetOrder;
+using Core.Application.Restaurants.Queries.GetRestaurants;
 using Core.Contracts.Order.Request;
 using Core.Contracts.Order.Response;
+using Core.Contracts.Restaurant.Request;
+using Core.Domain.CategoryAggregate.ValueObjects;
 using Core.Domain.Common.ValueObjects;
 using Core.Domain.OrderAggregate;
 using Core.Domain.OrderAggregate.ValueObjects;
@@ -23,6 +26,7 @@ namespace Core.Api.Common.Mapping
             config.NewConfig<OrderDTO, OrderResponse>()
                 .Map(dest => dest.Id, src => src.Order.Id.Value)
                 .Map(dest => dest.RestaurantName, src => src.Restaurant.Name)
+                .Map(dest => dest.ImageUrl, src => src.Restaurant.ImageUrl)
                 .Map(dest => dest.OrderStatus, src => ConvertToString(src.Order.OrderStatus))
                 .Map(dest => dest.IsActive, src => IsActive(src.Order.OrderStatus))
                 .Map(dest => dest.CreatedDateTime, src => src.Order.CreatedDateTime)

@@ -16,8 +16,8 @@ namespace Core.Domain.UserAggregate
         public double MaxSearchDistance { get; private set; }
         public UserRole Role { get; private set; }
         public virtual ICollection<Address> Addresses => _addresses.AsReadOnly();
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private User(
             UserId userId,
@@ -29,9 +29,7 @@ namespace Core.Domain.UserAggregate
             string password,
             double maxSearchDistance,
             UserRole role,
-            Address address,
-            DateTime createdDateTime,
-            DateTime updatedDateTime) : base(userId)
+            Address address) : base(userId)
         {
             ImageUrl = imageUrl;
             FirstName = firstName;
@@ -42,8 +40,6 @@ namespace Core.Domain.UserAggregate
             MaxSearchDistance = maxSearchDistance;
             Role = role;
             _addresses.Add(address);
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
         }
 
         public static User CreateUnique(
@@ -67,9 +63,7 @@ namespace Core.Domain.UserAggregate
                 password,
                 maxSearchDistance,
                 role,
-                address,
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                address);
         }
 
 #pragma warning disable CS8618

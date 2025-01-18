@@ -2,8 +2,8 @@
 {
     public interface IHasTimestamps
     {
-        DateTime CreatedDateTime { get; }
-        DateTime UpdatedDateTime { get; }
+        DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
     }
 
 }

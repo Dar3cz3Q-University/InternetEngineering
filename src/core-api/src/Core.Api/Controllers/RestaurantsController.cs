@@ -24,11 +24,9 @@ namespace Core.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll(
-            [FromQuery] double? latitude,
-            [FromQuery] double? longitude)
+        public async Task<IActionResult> GetAll([FromQuery] GetRestaurantsRequest request)
         {
-            var query = _mapper.Map<GetRestaurantsQuery>((latitude, longitude));
+            var query = _mapper.Map<GetRestaurantsQuery>(request);
 
             var restaurants = await _mediator.Send(query);
 

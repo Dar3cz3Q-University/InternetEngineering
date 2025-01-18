@@ -3,6 +3,6 @@
     public record MenuResponse(
         string Id,
         List<MenuSectionResponse> Sections,
-        DateTime CreatedDateTime,
-        DateTime UpdatedDateTime);
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime);
 }

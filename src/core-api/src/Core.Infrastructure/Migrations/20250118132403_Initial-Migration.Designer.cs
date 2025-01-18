@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Core.Infrastructure.Migrations
 {
     [DbContext(typeof(MainDbContext))]
-    [Migration("20250116195343_Initial-Migration")]
+    [Migration("20250118132403_Initial-Migration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -27,6 +27,30 @@ namespace Core.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Core.Domain.CategoryAggregate.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+                });
 
             modelBuilder.Entity("Core.Domain.Common.Entities.Address", b =>
                 {
@@ -52,6 +76,9 @@ namespace Core.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("double precision");
 
@@ -72,6 +99,9 @@ namespace Core.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
@@ -150,6 +180,10 @@ namespace Core.Infrastructure.Migrations
 
                     b.Property<double>("AverageRate")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("Categories")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("timestamp with time zone");

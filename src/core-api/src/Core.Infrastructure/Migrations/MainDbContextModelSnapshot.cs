@@ -25,6 +25,30 @@ namespace Core.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("Core.Domain.CategoryAggregate.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Categories", (string)null);
+                });
+
             modelBuilder.Entity("Core.Domain.Common.Entities.Address", b =>
                 {
                     b.Property<Guid>("Id")
@@ -49,6 +73,9 @@ namespace Core.Infrastructure.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<DateTime>("CreatedDateTime")
+                        .HasColumnType("timestamp with time zone");
+
                     b.Property<double>("Latitude")
                         .HasColumnType("double precision");
 
@@ -69,6 +96,9 @@ namespace Core.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
+
+                    b.Property<DateTime>("UpdatedDateTime")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uuid");
@@ -147,6 +177,10 @@ namespace Core.Infrastructure.Migrations
 
                     b.Property<double>("AverageRate")
                         .HasColumnType("double precision");
+
+                    b.Property<string>("Categories")
+                        .IsRequired()
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedDateTime")
                         .HasColumnType("timestamp with time zone");

@@ -28,7 +28,7 @@ namespace Core.Application.Restaurants.Queries.GetRestaurants
             GetRestaurantsQuery request,
             CancellationToken cancellationToken)
         {
-            var restaurants = await _restaurantRepository.GetAllAsync();
+            var restaurants = await _restaurantRepository.GetAllFilteredByCategoryAsync(request.CategoriesIds);
 
             if (request.Latitude is null || request.Longitude is null)
                 return restaurants.Value.ConvertAll(r => new RestaurantDTO(r, null));

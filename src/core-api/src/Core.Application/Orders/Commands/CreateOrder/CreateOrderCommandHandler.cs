@@ -30,12 +30,12 @@ namespace Core.Application.Orders.Commands.CreateOrder
         }
 
         public async Task<ErrorOr<OrderDTO>> Handle(
-            CreateOrderCommand command,
+            CreateOrderCommand request,
             CancellationToken cancellationToken)
         {
             UserId id = _ctxService.GetUserId();
 
-            var restaurantResult = await _restaurantRepository.GetByIdAsync(command.RestaurantId);
+            var restaurantResult = await _restaurantRepository.GetByIdAsync(request.RestaurantId);
 
 
             if (restaurantResult.IsError)
@@ -43,7 +43,7 @@ namespace Core.Application.Orders.Commands.CreateOrder
 
             var restaurant = restaurantResult.Value;
 
-            var itemIds = command.ItemsIds.ConvertAll(i => i.ItemId);
+            var itemIds = request.ItemsIds.ConvertAll(i => i.ItemId);
             var items = restaurant.GetItems(itemIds);
 
             if (itemIds.Count != items.Count)
@@ -52,15 +52,15 @@ namespace Core.Application.Orders.Commands.CreateOrder
             var itemsWithQuantity = items
                 .ConvertAll(item => (
                     MenuItem: item,
-                    Quantity: command.ItemsIds.First(i => i.ItemId == item.Id).Quantity
+                    Quantity: request.ItemsIds.First(i => i.ItemId == item.Id).Quantity
                 ));
 
             var order = Order.Create(
                 id,
-                command.RestaurantId,
-                command.AddressId,
+                request.RestaurantId,
+                request.AddressId,
                 CalculateOrderValue(itemsWithQuantity),
-                command.ItemsIds.ConvertAll(
+                request.ItemsIds.ConvertAll(
                     i => OrderedItem.Create(i.ItemId, i.Quantity)));
 
             var result = await _orderRepository.AddAsync(order);

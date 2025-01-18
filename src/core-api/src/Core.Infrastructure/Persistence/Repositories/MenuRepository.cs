@@ -31,9 +31,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var menu = await _dbContext.Menus.FindAsync(id);
 
             if (menu is null)
-            {
                 return Errors.Menu.NotFound(id);
-            }
 
             _dbContext.Menus.Remove(menu);
             await _dbContext.SaveChangesAsync();
@@ -51,9 +49,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var menu = await _dbContext.Menus.FindAsync(id);
 
             if (menu is null)
-            {
                 return Errors.Menu.NotFound(id);
-            }
 
             return menu;
         }

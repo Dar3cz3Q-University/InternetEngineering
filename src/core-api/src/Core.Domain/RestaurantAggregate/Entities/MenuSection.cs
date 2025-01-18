@@ -9,22 +9,18 @@ namespace Core.Domain.RestaurantAggregate.Entities
         public string Name { get; private set; }
         public string Description { get; private set; }
         public virtual ICollection<MenuItem> Items => _items.AsReadOnly();
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private MenuSection(
             MenuSectionId id,
             string name,
             string description,
-            List<MenuItem> items,
-            DateTime createdDateTime,
-            DateTime updatedDateTime) : base(id)
+            List<MenuItem> items) : base(id)
         {
             Name = name;
             Description = description;
             _items = items;
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
         }
 
         public static MenuSection Create(
@@ -35,9 +31,7 @@ namespace Core.Domain.RestaurantAggregate.Entities
                 MenuSectionId.CreateUnique(),
                 name,
                 description,
-                [],
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                []);
         }
 
 #pragma warning disable CS8618

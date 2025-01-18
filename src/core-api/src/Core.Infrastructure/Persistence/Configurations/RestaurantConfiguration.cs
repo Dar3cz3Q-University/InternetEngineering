@@ -1,7 +1,10 @@
-﻿using Core.Domain.RestaurantAggregate;
+﻿using Core.Domain.CategoryAggregate;
+using Core.Domain.CategoryAggregate.ValueObjects;
+using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Core.Infrastructure.Persistence.Configurations
@@ -75,6 +78,20 @@ namespace Core.Infrastructure.Persistence.Configurations
 
             builder.Property(r => r.RatesCount)
                 .IsRequired();
+
+            builder.Property(r => r.Categories)
+                  .HasConversion(
+                      ids => string.Join(',', ids.Select(id => id.Value)),
+                      ids => ids.Split(',', StringSplitOptions.RemoveEmptyEntries)
+                                .Select(id => CategoryId.Create(Guid.Parse(id)))
+                                .ToList()
+                  )
+                  .Metadata
+                  .SetValueComparer(new ValueComparer<ICollection<CategoryId>>(
+                        (c1, c2) => c1.SequenceEqual(c2),
+                        c => c.Aggregate(0, (a, v) => HashCode.Combine(a, v.GetHashCode())),
+                        c => c.ToList()
+                    ));
 
             builder.Property(r => r.CreatedDateTime)
                 .IsRequired();

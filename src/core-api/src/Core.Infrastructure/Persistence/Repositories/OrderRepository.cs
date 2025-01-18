@@ -31,9 +31,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var order = await _dbContext.Orders.FindAsync(id);
 
             if (order is null)
-            {
                 return Errors.Order.NotFound(id);
-            }
 
             _dbContext.Orders.Remove(order);
             await _dbContext.SaveChangesAsync();
@@ -51,9 +49,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var order = await _dbContext.Orders.FindAsync(id);
 
             if (order is null)
-            {
                 return Errors.Order.NotFound(id);
-            }
 
             return order;
         }

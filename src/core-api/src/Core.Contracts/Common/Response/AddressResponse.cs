@@ -10,5 +10,7 @@
         string State,
         string Country,
         double Latitude,
-        double Longitude);
+        double Longitude,
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime);
 }

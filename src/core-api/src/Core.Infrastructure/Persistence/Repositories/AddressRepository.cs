@@ -31,9 +31,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var address = await _dbContext.Addresses.FindAsync(id);
 
             if (address is null)
-            {
                 return Errors.Address.NotFound(id);
-            }
 
             _dbContext.Addresses.Remove(address);
             await _dbContext.SaveChangesAsync();
@@ -51,9 +49,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var address = await _dbContext.Addresses.FindAsync(id);
 
             if (address is null)
-            {
                 return Errors.Address.NotFound(id);
-            }
 
             return address;
         }

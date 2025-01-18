@@ -1,5 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
@@ -11,6 +11,21 @@ namespace Core.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Orders",
                 columns: table => new
@@ -87,6 +102,8 @@ namespace Core.Infrastructure.Migrations
                     Country = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
                     Latitude = table.Column<double>(type: "double precision", nullable: false),
                     Longitude = table.Column<double>(type: "double precision", nullable: false),
+                    CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UserId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
@@ -116,6 +133,7 @@ namespace Core.Infrastructure.Migrations
                     IsOpen = table.Column<bool>(type: "boolean", nullable: false),
                     AverageRate = table.Column<double>(type: "double precision", nullable: false),
                     RatesCount = table.Column<long>(type: "bigint", nullable: false),
+                    Categories = table.Column<string>(type: "text", nullable: false),
                     CreatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     UpdatedDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
@@ -228,6 +246,9 @@ namespace Core.Infrastructure.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "Categories");
+
             migrationBuilder.DropTable(
                 name: "MenuItems");
 

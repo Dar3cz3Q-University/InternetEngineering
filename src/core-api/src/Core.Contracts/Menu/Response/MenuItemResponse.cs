@@ -8,6 +8,6 @@ namespace Core.Contracts.Menu.Response
         string Description,
         MoneyResponse Price,
         bool IsAvailable,
-        DateTime CreatedDateTime,
-        DateTime UpdatedDateTime);
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime);
 }

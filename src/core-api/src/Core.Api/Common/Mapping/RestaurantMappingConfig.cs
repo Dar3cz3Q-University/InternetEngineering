@@ -5,6 +5,7 @@ using Core.Application.Restaurants.Queries.GetRestaurant;
 using Core.Application.Restaurants.Queries.GetRestaurants;
 using Core.Contracts.Restaurant.Request;
 using Core.Contracts.Restaurant.Response;
+using Core.Domain.CategoryAggregate.ValueObjects;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using Mapster;
@@ -41,6 +42,7 @@ namespace Core.Api.Common.Mapping
 
             config.ForType<CreateRestaurantRequest, CreateRestaurantCommand>()
                 .Map(dest => dest.Image, src => src.Image)
+                .Map(dest => dest.Categories, src => src.Categories.Adapt<List<CategoryId>>())
                 .PreserveReference(true);
 
             //
@@ -60,14 +62,13 @@ namespace Core.Api.Common.Mapping
             // Get
             //
 
-            config.NewConfig<(Guid, double?, double?), GetRestaurantQuery>()
+            config.NewConfig<(Guid, (double?, double?), List<Guid>), GetRestaurantQuery>()
                 .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.Item1))
                 .Map(dest => dest.Latitude, src => src.Item2)
                 .Map(dest => dest.Longitude, src => src.Item3);
 
-            config.NewConfig<(double?, double?), GetRestaurantsQuery>()
-                .Map(dest => dest.Latitude, src => src.Item1)
-                .Map(dest => dest.Longitude, src => src.Item2);
+            config.NewConfig<GetRestaurantsRequest, GetRestaurantsQuery>()
+                .Map(dest => dest.CategoriesIds, src => (src.Categories ?? new List<Guid>()).ConvertAll(CategoryId.Create));
 
             //
             // Utils

@@ -1,4 +1,5 @@
-﻿using Core.Domain.Common.Entities;
+﻿using Core.Domain.CategoryAggregate.ValueObjects;
+using Core.Domain.Common.Entities;
 using Core.Domain.Common.Models;
 using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
@@ -7,6 +8,7 @@ namespace Core.Domain.RestaurantAggregate
 {
     public class Restaurant : AggregateRoot<RestaurantId>, IHasTimestamps
     {
+        private readonly List<CategoryId> _categories = [];
         public string ImageUrl { get; private set; }
         public string Name { get; private set; }
         public virtual Address Location { get; private set; }
@@ -17,8 +19,9 @@ namespace Core.Domain.RestaurantAggregate
         public virtual Menu Menu { get; private set; }
         public double AverageRate { get; private set; }
         public uint RatesCount { get; private set; }
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
+        public virtual ICollection<CategoryId> Categories => _categories;
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private Restaurant(
             RestaurantId id,
@@ -32,8 +35,7 @@ namespace Core.Domain.RestaurantAggregate
             Menu menu,
             double averageRate,
             uint ratesCount,
-            DateTime createdDateTime,
-            DateTime updatedDateTime) : base(id)
+            List<CategoryId> categories) : base(id)
         {
             Name = name;
             ImageUrl = imageUrl;
@@ -45,8 +47,7 @@ namespace Core.Domain.RestaurantAggregate
             Menu = menu;
             AverageRate = averageRate;
             RatesCount = ratesCount;
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
+            _categories = categories;
         }
 
         public static Restaurant Create(
@@ -54,6 +55,7 @@ namespace Core.Domain.RestaurantAggregate
             string imageUrl,
             Address location,
             string description,
+            List<CategoryId> categories,
             ContactInfo contactInfo,
             OpeningHours openingHours)
         {
@@ -69,8 +71,7 @@ namespace Core.Domain.RestaurantAggregate
                 Menu.Create(),
                 0.0,
                 0,
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                categories);
         }
 
 #pragma warning disable CS8618

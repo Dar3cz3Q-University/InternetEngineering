@@ -18,8 +18,8 @@ namespace Core.Domain.OrderAggregate
         public virtual UserId? CourierId { get; private set; }
         public virtual ICollection<OrderedItem> OrderedItems => _orderedItems.AsReadOnly();
         public DateTime? DeliveryTime { get; private set; }
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private Order(
             OrderId id,
@@ -28,9 +28,7 @@ namespace Core.Domain.OrderAggregate
             AddressId deliveryAddressId,
             OrderStatus orderStatus,
             Money totalPrice,
-            List<OrderedItem> items,
-            DateTime createdDateTime,
-            DateTime updatedDateTime)
+            List<OrderedItem> items)
         {
             Id = id;
             UserId = userId;
@@ -39,8 +37,6 @@ namespace Core.Domain.OrderAggregate
             OrderStatus = orderStatus;
             TotalPrice = totalPrice;
             _orderedItems = items;
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
         }
 
         public static Order Create(
@@ -57,9 +53,7 @@ namespace Core.Domain.OrderAggregate
                 deliveryAddressId,
                 OrderStatus.Pending,
                 totalPrice,
-                items,
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                items);
         }
 
 #pragma warning disable CS8618

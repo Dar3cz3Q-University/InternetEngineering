@@ -9,5 +9,6 @@ namespace Core.Contracts.Restaurant.Request
         IFormFile Image,
         AddressRequest Location,
         ContactInfoRequest ContactInfo,
+        List<Guid> Categories,
         OpeningHoursRequest OpeningHours);
 }

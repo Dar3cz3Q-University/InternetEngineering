@@ -3,7 +3,7 @@ using Core.Domain.Common.ValueObjects;
 
 namespace Core.Domain.Common.Entities
 {
-    public class Address : Entity<AddressId>
+    public class Address : Entity<AddressId>, IHasTimestamps
     {
         public string Street { get; private set; }
         public string BuildingNumber { get; private set; }
@@ -14,6 +14,8 @@ namespace Core.Domain.Common.Entities
         public string Country { get; private set; }
         public double Latitude { get; private set; }
         public double Longitude { get; private set; }
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private Address(
             AddressId id,

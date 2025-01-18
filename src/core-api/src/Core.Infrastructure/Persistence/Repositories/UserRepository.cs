@@ -31,9 +31,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == email);
 
             if (user is null)
-            {
                 return Errors.User.NotFoundByEmail(email);
-            }
 
             return user;
         }
@@ -43,9 +41,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var user = await _dbContext.Users.FindAsync(id);
 
             if (user is null)
-            {
                 return Errors.User.NotFound(id);
-            }
 
             return user;
         }

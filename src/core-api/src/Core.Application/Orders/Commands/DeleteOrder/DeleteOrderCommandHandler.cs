@@ -22,9 +22,7 @@ namespace Core.Application.Orders.Commands.DeleteOrder
 
             // TODO: Check for more specific error
             if (result.IsError)
-            {
                 throw new ApplicationException("Failed to remove order from database.");
-            }
 
             return Result.Deleted;
         }

@@ -17,7 +17,6 @@ namespace Core.Application.Orders.Queries.GetOrder
         private readonly IRestaurantRepository _restaurantRepository;
         private readonly IAddressRepository _addressRepository;
         private readonly IUserRepository _userRepository;
-
         private readonly IUserContextService _ctxService;
 
         public GetOrderQueryHandler(

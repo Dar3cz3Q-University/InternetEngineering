@@ -1,4 +1,5 @@
 ﻿using Core.Application.Common.Interfaces.Persistance;
+using Core.Domain.CategoryAggregate.ValueObjects;
 using Core.Domain.Common.Errors;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
@@ -31,9 +32,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var restaurant = await _dbContext.Restaurants.FindAsync(id);
 
             if (restaurant is null)
-            {
                 return Errors.Restaurant.NotFound(id);
-            }
 
             _dbContext.Restaurants.Remove(restaurant);
             await _dbContext.SaveChangesAsync();
@@ -51,9 +50,7 @@ namespace Core.Infrastructure.Persistence.Repositories
             var restaurant = await _dbContext.Restaurants.FindAsync(id);
 
             if (restaurant is null)
-            {
                 return Errors.Restaurant.NotFound(id);
-            }
 
             return restaurant;
         }
@@ -63,6 +60,21 @@ namespace Core.Infrastructure.Persistence.Repositories
             return await _dbContext.Restaurants
                 .Where(r => ids.Contains(r.Id))
                 .ToListAsync();
+        }
+
+        public async Task<ErrorOr<List<Restaurant>>> GetAllFilteredByCategoryAsync(List<CategoryId> categoryIds)
+        {
+            // TODO: Move filtering to database
+            var restaurants = await _dbContext.Set<Restaurant>().ToListAsync();
+
+            if (categoryIds.Count != 0)
+            {
+                restaurants = restaurants
+                    .Where(r => r.Categories.Any(c => categoryIds.Contains(c)))
+                    .ToList();
+            }
+
+            return restaurants;
         }
 
         public async Task<ErrorOr<Updated>> UpdateAsync(Restaurant restaurant)

@@ -15,5 +15,7 @@ namespace Core.Contracts.Restaurant.Response
         AddressResponse Location,
         ContactInfoResponse ContactInfo,
         OpeningHours OpeningHours,
-        MenuResponse Menu);
+        MenuResponse Menu,
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime);
 }

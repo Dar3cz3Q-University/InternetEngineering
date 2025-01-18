@@ -5,6 +5,6 @@
         string Name,
         string Description,
         List<MenuItemResponse> Items,
-        DateTime CreatedDateTime,
-        DateTime UpdatedDateTime);
+        DateTime UpdatedDateTime,
+        DateTime CreatedDateTime);
 }

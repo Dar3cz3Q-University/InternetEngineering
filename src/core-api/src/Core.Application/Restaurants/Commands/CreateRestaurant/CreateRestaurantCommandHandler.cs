@@ -1,6 +1,7 @@
 ﻿using Core.Application.Common.Config;
 using Core.Application.Common.Interfaces.Persistance;
 using Core.Application.Common.Interfaces.Services;
+using Core.Application.Restaurants.Common;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
@@ -9,11 +10,10 @@ using MediatR;
 namespace Core.Application.Restaurants.Commands.CreateRestaurant
 {
     public class CreateRestaurantCommandHandler :
-        IRequestHandler<CreateRestaurantCommand, ErrorOr<Restaurant>>
+        IRequestHandler<CreateRestaurantCommand, ErrorOr<RestaurantDTO>>
     {
         private readonly IRestaurantRepository _restaurantRepository;
         private readonly IAddressService _addressService;
-
         private readonly IImageSaver _saver;
 
         public CreateRestaurantCommandHandler(
@@ -26,7 +26,7 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
             _saver = saver;
         }
 
-        public async Task<ErrorOr<Restaurant>> Handle(
+        public async Task<ErrorOr<RestaurantDTO>> Handle(
             CreateRestaurantCommand request,
             CancellationToken cancellationToken)
         {
@@ -39,6 +39,7 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
                 imageUrl,
                 address,
                 request.Description,
+                request.Categories,
                 ContactInfo.Create(
                     request.ContactInfo.PhoneNumber,
                     request.ContactInfo.Email),
@@ -51,7 +52,7 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
             if (result.IsError)
                 throw new ApplicationException("Failed to add restaurant to database.");
 
-            return restaurant;
+            return new RestaurantDTO(restaurant, null);
         }
     }
 }

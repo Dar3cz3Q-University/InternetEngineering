@@ -10,24 +10,20 @@ namespace Core.Domain.RestaurantAggregate.Entities
         public string Description { get; private set; }
         public Money Price { get; private set; }
         public bool IsAvailable { get; private set; }
-        public DateTime CreatedDateTime { get; private set; }
-        public DateTime UpdatedDateTime { get; private set; }
+        public DateTime CreatedDateTime { get; set; } // TODO: Make setter private
+        public DateTime UpdatedDateTime { get; set; } // TODO: Make setter private
 
         private MenuItem(
             MenuItemId id,
             string name,
             string description,
             Money price,
-            bool isAvailable,
-            DateTime createdDateTime,
-            DateTime updatedDateTime) : base(id)
+            bool isAvailable) : base(id)
         {
             Name = name;
             Description = description;
             Price = price;
             IsAvailable = isAvailable;
-            CreatedDateTime = createdDateTime;
-            UpdatedDateTime = updatedDateTime;
         }
 
         public static MenuItem Create(
@@ -40,9 +36,7 @@ namespace Core.Domain.RestaurantAggregate.Entities
                 name,
                 description,
                 price,
-                true,
-                DateTime.UtcNow,
-                DateTime.UtcNow);
+                true);
         }
 
 #pragma warning disable CS8618
