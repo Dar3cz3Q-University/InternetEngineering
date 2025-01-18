@@ -14,7 +14,7 @@ namespace Core.Application.Authentication.Commands.Register
         string PhoneNumber,
         string Password,
         UserRole UserRole,
-        IFormFile AvatarImage,
+        IFormFile Image,
         CreateAddressCommand Address,
         double MaxSearchDistance) : IRequest<ErrorOr<AuthenticationDTO>>;
 }

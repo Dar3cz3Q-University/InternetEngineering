@@ -45,7 +45,7 @@ namespace Core.Application.Authentication.Commands.Register
 
             var address = await _addressService.CreateAddressAsync(command.Address);
 
-            var imageUrl = await _saver.Save(command.AvatarImage, StaticFilesSettings.USERS, cancellationToken);
+            var imageUrl = await _saver.Save(command.Image, StaticFilesSettings.USERS, cancellationToken);
 
             var user = User.CreateUnique(
                 imageUrl,

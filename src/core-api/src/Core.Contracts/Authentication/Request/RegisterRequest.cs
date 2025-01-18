@@ -11,7 +11,7 @@ namespace Core.Contracts.Authentication.Request
         string PhoneNumber,
         string Password,
         UserRoleDTO UserRole,
-        IFormFile AvatarImage,
+        IFormFile Image,
         AddressRequest Address,
         double MaxSearchDistance);
 }

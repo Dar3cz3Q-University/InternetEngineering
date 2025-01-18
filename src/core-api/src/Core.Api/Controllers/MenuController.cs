@@ -41,7 +41,7 @@ namespace Core.Api.Controllers
         public async Task<IActionResult> Create(
             Guid restaurantId,
             Guid sectionId,
-            CreateMenuItemRequest request)
+            [FromForm] CreateMenuItemRequest request)
         {
             var command = _mapper.Map<CreateMenuItemCommand>((restaurantId, sectionId, request));
 

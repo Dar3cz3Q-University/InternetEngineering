@@ -38,10 +38,9 @@ namespace Core.Api.Controllers
         [HttpGet("{id:guid}")]
         public async Task<IActionResult> Get(
             Guid id,
-            [FromQuery] double? latitude,
-            [FromQuery] double? longitude)
+            [FromQuery] GetRestaurantRequest request)
         {
-            var query = _mapper.Map<GetRestaurantQuery>((id, latitude, longitude));
+            var query = _mapper.Map<GetRestaurantQuery>((id, request));
 
             var restaurant = await _mediator.Send(query);
 

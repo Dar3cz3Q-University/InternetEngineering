@@ -1,4 +1,6 @@
-﻿using Core.Application.Common.Interfaces.Persistance;
+﻿using Core.Application.Common.Config;
+using Core.Application.Common.Interfaces.Persistance;
+using Core.Application.Common.Interfaces.Services;
 using Core.Domain.Common.ValueObjects;
 using Core.Domain.RestaurantAggregate.Entities;
 using ErrorOr;
@@ -10,11 +12,14 @@ namespace Core.Application.Menu.Commands.CreateMenuItem
         : IRequestHandler<CreateMenuItemCommand, ErrorOr<MenuItem>>
     {
         private readonly IRestaurantRepository _restaurantRepository;
+        private readonly IImageSaver _imageSaver;
 
         public CreateMenuItemCommandHandler(
-            IRestaurantRepository restaurantRepository)
+            IRestaurantRepository restaurantRepository,
+            IImageSaver imageSaver)
         {
             _restaurantRepository = restaurantRepository;
+            _imageSaver = imageSaver;
         }
 
         public async Task<ErrorOr<MenuItem>> Handle(
@@ -26,10 +31,13 @@ namespace Core.Application.Menu.Commands.CreateMenuItem
             if (restaurantResult.IsError)
                 return restaurantResult.Errors;
 
+            var imageUrl = await _imageSaver.Save(request.Image, StaticFilesSettings.MENU_ITEMS, cancellationToken);
+
             var restaurant = restaurantResult.Value;
 
             var item = MenuItem.Create(
                 request.Name,
+                imageUrl,
                 request.Description,
                 Money.Create(
                     request.Price.Amount,

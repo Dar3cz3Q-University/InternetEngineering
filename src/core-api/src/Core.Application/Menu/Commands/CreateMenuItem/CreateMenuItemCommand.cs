@@ -3,6 +3,7 @@ using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 
 namespace Core.Application.Menu.Commands.CreateMenuItem
 {
@@ -10,6 +11,7 @@ namespace Core.Application.Menu.Commands.CreateMenuItem
         RestaurantId RestaurantId,
         MenuSectionId MenuSectionId,
         string Name,
+        IFormFile Image,
         string Description,
         CreateMoneyCommand Price) : IRequest<ErrorOr<MenuItem>>;
 }

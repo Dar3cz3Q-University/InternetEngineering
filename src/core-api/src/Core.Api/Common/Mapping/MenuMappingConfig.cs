@@ -23,7 +23,8 @@ namespace Core.Api.Common.Mapping
                 .Map(dest => dest.Id, src => src.Id.Value);
 
             config.NewConfig<MenuItem, MenuItemResponse>()
-                .Map(dest => dest.Id, src => src.Id.Value);
+                .Map(dest => dest.Id, src => src.Id.Value)
+                .Map(dest => dest.ImageUrl, src => $"http://192.168.0.5:8080/{src.ImageUrl}");
 
             //
             // Create

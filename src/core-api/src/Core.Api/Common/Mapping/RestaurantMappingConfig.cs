@@ -41,7 +41,6 @@ namespace Core.Api.Common.Mapping
             //
 
             config.ForType<CreateRestaurantRequest, CreateRestaurantCommand>()
-                .Map(dest => dest.Image, src => src.Image)
                 .Map(dest => dest.Categories, src => src.Categories.Adapt<List<CategoryId>>())
                 .PreserveReference(true);
 
@@ -62,10 +61,9 @@ namespace Core.Api.Common.Mapping
             // Get
             //
 
-            config.NewConfig<(Guid, (double?, double?), List<Guid>), GetRestaurantQuery>()
+            config.NewConfig<(Guid, GetRestaurantRequest), GetRestaurantQuery>()
                 .Map(dest => dest.RestaurantId, src => RestaurantId.Create(src.Item1))
-                .Map(dest => dest.Latitude, src => src.Item2)
-                .Map(dest => dest.Longitude, src => src.Item3);
+                .Map(dest => dest, src => src.Item2);
 
             config.NewConfig<GetRestaurantsRequest, GetRestaurantsQuery>()
                 .Map(dest => dest.CategoriesIds, src => (src.Categories ?? new List<Guid>()).ConvertAll(CategoryId.Create));

@@ -36,7 +36,7 @@ namespace Core.Application.Authentication.Commands.Register
                 .NotEqual(Domain.UserAggregate.UserRole.Admin)
                 .IsInEnum();
 
-            RuleFor(x => x.AvatarImage)
+            RuleFor(x => x.Image)
                .NotNull()
                .Must(BeAValidFile).WithMessage("Unsupported file format. Accepted are only JPG, JPEG, PNG.")
                .Must(BeWithinSizeLimit).WithMessage("File is too big. Max size is 10 MB.");
