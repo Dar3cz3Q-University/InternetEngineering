@@ -8,6 +8,6 @@
         string City,
         string State,
         string Country,
-        double? Latitude,
-        double? Longitude);
+        double Latitude,
+        double Longitude);
 }
