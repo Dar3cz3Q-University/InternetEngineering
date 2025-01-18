@@ -9,5 +9,6 @@ namespace Core.Application.Common.Interfaces.Persistance
         Task<ErrorOr<Created>> AddAsync(User user);
         Task<ErrorOr<User>> GetByEmailAsync(string email);
         Task<ErrorOr<User>> GetByIdAsync(UserId id);
+        Task<ErrorOr<Updated>> UpdateAsync(User user);
     }
 }

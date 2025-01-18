@@ -46,11 +46,9 @@ namespace Core.Application.Restaurants.Commands.CreateRestaurant
                 .NotEmpty();
 
             RuleFor(x => x.Location.Latitude)
-                .NotEmpty()
                 .InclusiveBetween(-90, 90);
 
             RuleFor(x => x.Location.Longitude)
-                .NotEmpty()
                 .InclusiveBetween(-180, 180);
 
             //

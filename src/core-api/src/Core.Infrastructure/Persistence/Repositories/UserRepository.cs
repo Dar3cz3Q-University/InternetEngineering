@@ -45,5 +45,15 @@ namespace Core.Infrastructure.Persistence.Repositories
 
             return user;
         }
+
+        public async Task<ErrorOr<Updated>> UpdateAsync(User user)
+        {
+            ArgumentNullException.ThrowIfNull(user);
+
+            _dbContext.Users.Update(user);
+            await _dbContext.SaveChangesAsync();
+
+            return Result.Updated;
+        }
     }
 }

@@ -69,5 +69,15 @@ namespace Core.Domain.UserAggregate
 #pragma warning disable CS8618
         protected User() { }
 #pragma warning restore CS8618
+
+        public void AddAddress(Address address)
+        {
+            _addresses.Add(address);
+        }
+
+        public void UpdateMaxSearchDistance(double maxSearchDistance)
+        {
+            MaxSearchDistance = maxSearchDistance;
+        }
     }
 }

@@ -67,11 +67,9 @@ namespace Core.Application.Authentication.Commands.Register
                 .NotEmpty();
 
             RuleFor(x => x.Address.Latitude)
-                .NotEmpty()
                 .InclusiveBetween(-90, 90);
 
             RuleFor(x => x.Address.Longitude)
-                .NotEmpty()
                 .InclusiveBetween(-180, 180);
 
             RuleFor(x => x.MaxSearchDistance)
