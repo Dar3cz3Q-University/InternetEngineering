@@ -33,7 +33,7 @@ public class OrderUpdateService {
         List<Order> orders = orderRepository.findAll();
 
         for (var order : orders) {
-            if (order.getNextUpdateTime().isBefore(LocalDateTime.now()))
+            if (order.getNextUpdateTime().isAfter(LocalDateTime.now()))
                 continue;
 
             boolean remove = order.getStatus() == OrderStatus.Cancelled || order.getStatus() == OrderStatus.ReadyForCollection;
