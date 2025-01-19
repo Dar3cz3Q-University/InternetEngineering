@@ -45,3 +45,14 @@ management:
             - rabbit
             - diskSpace
             - ping
+
+order-update:
+  update-fixed-rate: 5000
+  next-update-time-min: 10
+  next-update-time-max: 15
+
+delivery:
+  time-per-km: 10
+  time-per-product: 1
+  random-range: 5
+  unit: "seconds"

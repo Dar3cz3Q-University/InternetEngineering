@@ -33,7 +33,7 @@ namespace Core.Application.Services
             if (order is not null)
             {
                 order.SetOrderStatus(message.OrderStatus);
-                order.SetDeliveryDateTime(message.DeliveryDateTime);
+                order.SetDeliveryDateTime(message?.DeliveryDateTime);
 
                 await _orderRepository.UpdateAsync(order);
             }

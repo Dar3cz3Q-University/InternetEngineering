@@ -14,7 +14,7 @@ public class MqttPublisherService {
     private final Mqtt5AsyncClient mqttClient;
     private final MqttTopicService mqttTopicService;
 
-    private void publish(String topic, byte[] message) {
+    public void publish(String topic, byte[] message) {
         mqttClient.publishWith()
                 .topic(mqttTopicService.getTopic(topic))
                 .qos(MqttQos.AT_LEAST_ONCE)

@@ -2,11 +2,8 @@
 using Core.Application.Orders.Commands.DeleteOrder;
 using Core.Application.Orders.Common;
 using Core.Application.Orders.Queries.GetOrder;
-using Core.Application.Restaurants.Queries.GetRestaurants;
 using Core.Contracts.Order.Request;
 using Core.Contracts.Order.Response;
-using Core.Contracts.Restaurant.Request;
-using Core.Domain.CategoryAggregate.ValueObjects;
 using Core.Domain.Common.ValueObjects;
 using Core.Domain.OrderAggregate;
 using Core.Domain.OrderAggregate.ValueObjects;
@@ -108,23 +105,17 @@ namespace Core.Api.Common.Mapping
 
         private static string ConvertToString(OrderStatus orderStatus)
         {
-            switch (orderStatus)
+            return orderStatus switch
             {
-                case OrderStatus.Cancelled:
-                    return "Cancelled";
-                case OrderStatus.Pending:
-                    return "Pending";
-                case OrderStatus.Accepted:
-                    return "Accepted";
-                case OrderStatus.InPreparation:
-                    return "In Progress";
-                case OrderStatus.InDelivery:
-                    return "In Delivery";
-                case OrderStatus.Delivered:
-                    return "Delivered";
-                default:
-                    throw new ApplicationException("Invalid order status enum.");
-            }
+                OrderStatus.Cancelled => "Cancelled",
+                OrderStatus.Pending => "Pending",
+                OrderStatus.Accepted => "Accepted",
+                OrderStatus.InPreparation => "In Progress",
+                OrderStatus.ReadyForCollection => "Ready For Collection",
+                OrderStatus.InDelivery => "In Delivery",
+                OrderStatus.Delivered => "Delivered",
+                _ => throw new ApplicationException("Invalid order status enum."),
+            };
         }
     }
 }

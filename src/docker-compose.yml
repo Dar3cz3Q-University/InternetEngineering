@@ -111,6 +111,7 @@ services:
       - '${RABBITMQ_MQTT_PORT}:1883'
     volumes:
       - ./.docker/rabbitmq/enabled_plugins:/etc/rabbitmq/enabled_plugins
+      - ./data/rabbitmq:/var/lib/rabbitmq/mnesia
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}

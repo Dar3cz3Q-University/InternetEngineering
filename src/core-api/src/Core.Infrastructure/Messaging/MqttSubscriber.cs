@@ -10,6 +10,7 @@ namespace Core.Infrastructure.Messaging
 {
     public class MqttSubscriber : IHostedService, IDisposable
     {
+        private readonly int RECONNECT_DELAY_SECONDS = 5;
         private readonly string TOPIC = "/maslo/orders/+/update"; // TODO: Move to a different file
         private readonly IMqttClient _client;
         private readonly MqttClientOptions _options;
@@ -35,6 +36,29 @@ namespace Core.Infrastructure.Messaging
             _options = optionsBuilder.Build();
 
             _client.ApplicationMessageReceivedAsync += OnMessageReceived;
+
+            _client.DisconnectedAsync += OnDisconnectedAsync;
+        }
+
+        private async Task ConnectWithRetryAsync()
+        {
+            while (true)
+            {
+                if (!_client.IsConnected)
+                {
+                    try
+                    {
+                        await _client.ConnectAsync(_options);
+                        Console.WriteLine("MQTT Client connected.");
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Connection failed: {ex.Message}. Retrying in 5 seconds...");
+                        await Task.Delay(TimeSpan.FromSeconds(RECONNECT_DELAY_SECONDS));
+                    }
+                }
+            }
         }
 
         public async Task StartAsync(CancellationToken cancellationToken)
@@ -82,6 +106,16 @@ namespace Core.Infrastructure.Messaging
             catch (Exception ex)
             {
                 Console.WriteLine($"Błąd podczas przetwarzania wiadomości MQTT: {ex.Message}");
+            }
+        }
+
+        private async Task OnDisconnectedAsync(MqttClientDisconnectedEventArgs args)
+        {
+            Console.WriteLine("Disconnected from MQTT broker.");
+            if (args.ClientWasConnected)
+            {
+                Console.WriteLine("Attempting to reconnect...");
+                await ConnectWithRetryAsync();
             }
         }
 

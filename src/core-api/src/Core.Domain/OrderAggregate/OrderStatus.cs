@@ -6,6 +6,7 @@
         Pending,
         Accepted,
         InPreparation,
+        ReadyForCollection,
         InDelivery,
         Delivered
     }

@@ -4,6 +4,7 @@ import com.hivemq.client.mqtt.MqttGlobalPublishFilter;
 import com.hivemq.client.mqtt.datatypes.MqttQos;
 import com.hivemq.client.mqtt.mqtt5.Mqtt5AsyncClient;
 import com.maselniczka.restaurant_service.config.MqttProperties;
+import com.maselniczka.restaurant_service.handler.MqttMessageHandler;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 public class MqttSubscriberService {
 
     private final Mqtt5AsyncClient mqttClient;
+    private final MqttMessageHandler mqttMessageHandler;
 
     private void subscribe() {
         mqttClient.publishes(MqttGlobalPublishFilter.SUBSCRIBED, context -> log.info("New message published on: {}", context.getTopic()));
@@ -22,8 +24,10 @@ public class MqttSubscriberService {
         mqttClient.subscribeWith()
                 .topicFilter(MqttProperties.ROOT_TOPIC)
                 .qos(MqttQos.AT_LEAST_ONCE)
-                .callback(x -> {
-                    log.info("New message");
+                .callback(publish -> {
+                    String topic = publish.getTopic().toString();
+                    String payload = new String(publish.getPayloadAsBytes());
+                    mqttMessageHandler.Handle(topic, payload);
                 })
                 .send()
                 .whenComplete((subAck, throwable) -> {

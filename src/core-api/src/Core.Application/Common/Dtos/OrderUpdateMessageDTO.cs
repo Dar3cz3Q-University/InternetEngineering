@@ -5,5 +5,5 @@ namespace Core.Application.Common.Dtos
     public record OrderUpdateMessageDTO(
         Guid OrderId,
         OrderStatus OrderStatus,
-        DateTime DeliveryDateTime);
+        DateTime? DeliveryDateTime);
 }

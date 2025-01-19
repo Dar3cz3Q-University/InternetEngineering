@@ -76,7 +76,7 @@ namespace Core.Domain.OrderAggregate
             OrderStatus = orderStatus;
         }
 
-        public void SetDeliveryDateTime(DateTime deliveryDateTime)
+        public void SetDeliveryDateTime(DateTime? deliveryDateTime)
         {
             DeliveryTime = deliveryDateTime;
         }
