@@ -16,7 +16,7 @@ namespace Core.Infrastructure.Authentication.Token
         private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
         private readonly JwtSettings _jwtSettings = jwtOptions.Value;
 
-        public string GenerateToken(User user)
+        public (string, DateTime)GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(
@@ -32,14 +32,16 @@ namespace Core.Infrastructure.Authentication.Token
                 new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
             };
 
+            var expires = _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes);
+
             var securityToken = new JwtSecurityToken(
                 issuer: _jwtSettings.Issuer,
                 audience: _jwtSettings.Audience,
-                expires: _dateTimeProvider.UtcNow.AddMinutes(_jwtSettings.ExpiryMinutes),
+                expires: expires,
                 claims: claims,
                 signingCredentials: signingCredentials);
 
-            return new JwtSecurityTokenHandler().WriteToken(securityToken);
+            return (new JwtSecurityTokenHandler().WriteToken(securityToken), expires);
         }
     }
 }

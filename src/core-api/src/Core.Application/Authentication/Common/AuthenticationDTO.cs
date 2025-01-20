@@ -4,6 +4,7 @@ namespace Core.Application.Authentication.Common
 {
     public record AuthenticationDTO(
         User User,
-        string Token
+        string Token,
+        DateTime TokenExpiryDate
     );
 }

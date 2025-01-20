@@ -64,9 +64,9 @@ namespace Core.Application.Authentication.Commands.Register
             if (result.IsError)
                 throw new ApplicationException("Failed to add user to database.");
 
-            var token = _jwtTokenGenerator.GenerateToken(user);
+            var (token, expires) = _jwtTokenGenerator.GenerateToken(user);
 
-            return new AuthenticationDTO(user, token);
+            return new AuthenticationDTO(user, token, expires);
         }
     }
 }

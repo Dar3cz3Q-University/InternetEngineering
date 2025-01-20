@@ -40,9 +40,9 @@ namespace Core.Application.Authentication.Queries.Login
             if (!_passwordHasher.VerifyPassword(user.Password, query.Password))
                 return Errors.Authentication.InvalidCredentials;
 
-            var token = _jwtTokenGenerator.GenerateToken(user);
+            var (token, expires) = _jwtTokenGenerator.GenerateToken(user);
 
-            return new AuthenticationDTO(user, token);
+            return new AuthenticationDTO(user, token, expires);
         }
     }
 }

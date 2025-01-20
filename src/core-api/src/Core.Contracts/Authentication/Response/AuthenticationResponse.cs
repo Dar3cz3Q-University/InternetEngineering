@@ -13,7 +13,6 @@ namespace Core.Contracts.Authentication.Response
         UserRoleDTO UserRole,
         List<AddressResponse> Addresses,
         double MaxSearchDistance,
-        string Token,
         DateTime UpdatedDateTime,
         DateTime CreatedDateTime
     );
