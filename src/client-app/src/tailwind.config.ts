@@ -13,7 +13,10 @@ export default {
         chakra: ["var(--font-chakra)"]
       },
       colors: {
-        primary: "var(--color-primary)",
+        primary: {
+          DEFAULT: "var(--color-primary)",
+          light: "var(--color-primary-light)"
+        },
         secondary: "var(--color-secondary)",
         background_dark: "var(--color-background-dark)",
         background_light: "var(--color-background-light)",

@@ -1,14 +1,14 @@
+import DashboardProviders from "@/components/dashboard/providers/DashboardProviders";
 import DashboardPageWrapper from "@/components/dashboard/wrappers/DashboardPageWrapper"
-import MenuHeader from "./_components/header/MenuHeader";
+import CategoriesList from "./_components/categories/CategoriesList";
 
 const DashboardMenuPage = () => {
     return (
-        <DashboardPageWrapper
-            header={<MenuHeader />}
-            main={
-                <p className="h-[2000px] text-black">HOME</p>
-            }
-        />
+        <DashboardProviders>
+            <DashboardPageWrapper>
+                <CategoriesList />
+            </DashboardPageWrapper>
+        </DashboardProviders>
     )
 }
 

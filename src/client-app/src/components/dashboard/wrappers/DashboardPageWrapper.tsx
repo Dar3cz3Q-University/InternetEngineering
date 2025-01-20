@@ -1,23 +1,25 @@
+"use client";
+
+import { useDashboardSearch } from "@/components/contexts/DashboardSearchContext";
 import DashboardNavigation from "../navigation/DashboardNavigation";
+import React from "react";
+import SearchResults from "../search_results/SearchResults";
+import DashboardHeader from "../header/DashboardHeader";
+import { useUser } from "@/components/contexts/UserContext";
 
-interface DashboardPageWrapperProps {
-    header: React.ReactNode;
-    main: React.ReactNode;
-}
-
-const DashboardPageWrapper: React.FC<DashboardPageWrapperProps> = ({
-    header,
-    main
-}) => {
+const DashboardPageWrapper: React.FC<{children: React.ReactNode}> = ({ children }) => {
+    const {searchValue} = useDashboardSearch();
+    const {user} = useUser();
+    
     return (
         <div className="min-w-screen min-h-screen flex flex-col items-center bg-background_dark text-black overflow-x-hidden">
             <header className="w-full p-[24px]">
-                {header}
+                <DashboardHeader />
             </header>
             <main className="w-full flex-1 flex flex-col items-center bg-background_light rounded-t-3xl mb-[54px]">
-                {main}
+                {searchValue ? <SearchResults /> : children}
             </main>
-            <nav className="fixed bottom-0 w-full shadow-lg">
+            <nav className="fixed bottom-0 w-full">
                 <DashboardNavigation />
             </nav>
         </div>

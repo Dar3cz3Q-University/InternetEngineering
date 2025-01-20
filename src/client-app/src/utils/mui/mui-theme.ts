@@ -1,5 +1,7 @@
 import { createTheme } from "@mui/material";
 import { mui_bottom_navigation } from "./components/bottom-navigation";
+import { mui_dialog } from "./components/dialog";
+import { mui_text_field } from "./components/text_field";
 
 const mui_theme = createTheme({
     typography: {
@@ -15,11 +17,13 @@ const mui_theme = createTheme({
         },
         background: {
             default: "#FAFAFA",
-            paper: "#111111"
+            paper: "var(--color-background-dark)"
         }
     },
     components: {
-        ...mui_bottom_navigation
+        ...mui_bottom_navigation,
+        ...mui_dialog,
+        ...mui_text_field
     }
 })
 

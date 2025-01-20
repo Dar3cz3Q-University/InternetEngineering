@@ -14,7 +14,9 @@ const DashboardNavigation = () => {
     const pathname = usePathname();
 
     React.useEffect(() => {
-        const currentRouteIndex = routes.indexOf(pathname);
+        const currentRouteIndex = routes.findIndex(route => 
+            pathname.startsWith(route)
+        );
         if (currentRouteIndex !== -1) {
             setValue(currentRouteIndex);
         }

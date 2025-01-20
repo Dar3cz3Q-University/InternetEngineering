@@ -5,15 +5,22 @@ import React from "react";
 import PlaceIcon from '@mui/icons-material/Place';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import { useUser } from "@/components/contexts/UserContext";
+import { useCurrentLocation } from "@/components/contexts/CurrentLocatonContext";
+import { AddressType } from "@/types/common/AddressType";
 
 const LocationBox = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const [currentLocation, setCurrentLocation] = React.useState<string | null>("Kraków, Plan Inwalidów 22/2");
+    const {user} = useUser();
+    const {currentLocation, setCurrentLocation} = useCurrentLocation();
 
-    //TODO: Get data from API
-    const DUMMY_DATA_USER_LOCATIONS: string[] = ["Kraków, Na błonie 11/96", "Kraków, Henryka Pachońskiego 13/18", "Skawa, 242"];
+    React.useEffect(() => {
+        if (user?.addresses && user.addresses.length > 0 && !currentLocation) {
+            setCurrentLocation(user?.addresses[0]);
+        }
+    }, [user, currentLocation, setCurrentLocation])
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorEl(event.currentTarget);
@@ -23,8 +30,10 @@ const LocationBox = () => {
         setAnchorEl(null);
     }
 
-    const handleLocationChange = (location: string) => {
-        setCurrentLocation(location);
+    const handleLocationChange = (address: AddressType) => {
+        if (address !== currentLocation) {
+            setCurrentLocation(address);
+        }
         handleClose();
     }
 
@@ -50,7 +59,7 @@ const LocationBox = () => {
                 }}
             >
                 <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                    {currentLocation}
+                {`${currentLocation?.city}, ${currentLocation?.street !== currentLocation?.city ? currentLocation?.street : ""} ${currentLocation?.buildingNumber}${currentLocation?.apartmentNumber ? "/" + currentLocation?.apartmentNumber : ""}`}
                 </span>  
             </Button>
             <Menu
@@ -69,13 +78,13 @@ const LocationBox = () => {
                     }
                 }}
             >
-                {DUMMY_DATA_USER_LOCATIONS.map((location, index) => (
+                {user?.addresses.map(address => (
                     <MenuItem 
-                        key={index}
+                        key={address.id}
                         sx={{fontWeight: "500"}}
-                        onClick={() => handleLocationChange(location)}
+                        onClick={() => handleLocationChange(address)}
                     >
-                        {location}
+                        {`${address.city}, ${address.street !== address.city ? address.street : ""} ${address.buildingNumber}${address.apartmentNumber ? "/" + address.apartmentNumber : ""}`}
                     </MenuItem>
                 ))}
                 <MenuItem sx={{

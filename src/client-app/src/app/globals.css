@@ -6,7 +6,8 @@
   --font-chakra: 'Chakra Petch', sans-serif;
   --font-roboto: 'Roboto', sans-serif;
 
-  --color-primary: #fe5c01;
+  --color-primary: rgb(254, 92, 1);
+  --color-primary-light: rgba(254, 92, 1, 0.5);
   --color-secondary: #2e2e2e;
   --color-background-dark: #111111;
   --color-background-light: #FAFAFA;
