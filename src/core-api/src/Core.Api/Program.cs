@@ -17,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
     {
         options.AddPolicy("AllowSpecificOrigin", policy =>
         {
-            policy.WithOrigins("http://localhost:3000")
+            policy.WithOrigins("http://maselniczka:3000", "http://localhost:3000")
                   .AllowAnyHeader()
                   .AllowAnyMethod()
                   .AllowCredentials();

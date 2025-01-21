@@ -24,14 +24,14 @@ namespace Core.Api.Common.Mapping
             // TODO: Move prefix to env
             config.NewConfig<RestaurantDTO, RestaurantResponseWithDetails>()
                 .Map(dest => dest.Id, src => src.Restaurant.Id.Value)
-                .Map(dest => dest.ImageUrl, src => $"http://192.168.0.5:8080/{src.Restaurant.ImageUrl}")
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.Restaurant.ImageUrl}")
                 .Map(dest => dest.IsActive, src => IsActive(src.Restaurant))
                 .Map(dest => dest.Distance, src => src.Distance)
                 .Map(dest => dest, src => src.Restaurant);
 
             config.NewConfig<RestaurantDTO, RestaurantResponse>()
                 .Map(dest => dest.Id, src => src.Restaurant.Id.Value)
-                .Map(dest => dest.ImageUrl, src => $"http://192.168.0.5:8080/{src.Restaurant.ImageUrl}")
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.Restaurant.ImageUrl}")
                 .Map(dest => dest.IsActive, src => IsActive(src.Restaurant))
                 .Map(dest => dest.Distance, src => src.Distance)
                 .Map(dest => dest, src => src.Restaurant);

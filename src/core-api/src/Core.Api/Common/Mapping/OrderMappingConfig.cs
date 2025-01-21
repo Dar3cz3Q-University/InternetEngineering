@@ -1,5 +1,6 @@
 ﻿using Core.Application.Orders.Commands.CreateOrder;
 using Core.Application.Orders.Commands.DeleteOrder;
+using Core.Application.Orders.Commands.TakeOrder;
 using Core.Application.Orders.Common;
 using Core.Application.Orders.Queries.GetOrder;
 using Core.Contracts.Order.Request;
@@ -45,9 +46,31 @@ namespace Core.Api.Common.Mapping
             config.NewConfig<OrderedItemDTO, ItemReponse>()
                 .Map(dest => dest.Id, src => src.MenuItem.Id.Value)
                 .Map(dest => dest.Name, src => src.MenuItem.Name)
-                //.Map(dest => dest.ImageUrl, src => src.MenuItem.ImageUrl)
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.MenuItem.ImageUrl}")
                 .Map(dest => dest.Price, src => src.MenuItem.Price)
                 .Map(dest => dest.Quantity, src => src.Quantity);
+
+            config.NewConfig<OrderWithAddressesDTO, OrderReadyToCollectResponse>()
+                .Map(dest => dest.Id, src => src.Order.Id.Value)
+                .Map(dest => dest.RestaurantName, src => src.Restaurant.Restaurant.Name)
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.Restaurant.Restaurant.ImageUrl}")
+                .Map(dest => dest.Distance, src => src.Restaurant.Distance)
+                .Map(dest => dest.RestaurantAddress, src => src.Restaurant.Restaurant.Location)
+                .Map(dest => dest.DeliveryAddress, src => src.DeliveryAddress)
+                .Map(dest => dest.UpdatedDateTime, src => src.Order.UpdatedDateTime)
+                .Map(dest => dest.CreatedDateTime, src => src.Order.CreatedDateTime);
+
+            config.NewConfig<ActiveOrderForCourierDTO, ActiveOrderForCourierResponse>()
+                .Map(dest => dest.Id, src => src.Order.Id.Value)
+                .Map(dest => dest.RestaurantName, src => src.Restaurant.Name)
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.Restaurant.ImageUrl}")
+                .Map(dest => dest.Distance, src => src.Distance)
+                .Map(dest => dest.RestaurantAddress, src => src.Restaurant.Location)
+                .Map(dest => dest.DeliveryAddress, src => src.DeliveryAddress)
+                .Map(dest => dest.TotalPrice, src => src.Order.TotalPrice)
+                .Map(dest => dest.EstimatedDeliveryTime, src => src.Order.DeliveryTime)
+                .Map(dest => dest.UpdatedDateTime, src => src.Order.UpdatedDateTime)
+                .Map(dest => dest.CreatedDateTime, src => src.Order.CreatedDateTime);
 
             //
             // Create
@@ -73,7 +96,8 @@ namespace Core.Api.Common.Mapping
             // Update
             //
 
-
+            config.NewConfig<Guid, TakeOrderCommand>()
+               .Map(dest => dest.OrderId, src => OrderId.Create(src));
 
             //
             // Get

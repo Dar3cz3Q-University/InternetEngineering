@@ -19,6 +19,9 @@ namespace Core.Infrastructure.Persistence.Configurations
                     value => UserId.Create(value))
                 .ValueGeneratedNever();
 
+            builder.HasIndex(u => u.Email)
+                .IsUnique();
+
             builder.Property(u => u.ImageUrl);
 
             builder.Property(u => u.FirstName)

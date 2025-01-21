@@ -1,5 +1,4 @@
-﻿using Core.Application.Restaurants.Queries.GetRestaurants;
-using Core.Domain.CategoryAggregate.ValueObjects;
+﻿using Core.Domain.CategoryAggregate.ValueObjects;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.ValueObjects;
 using ErrorOr;

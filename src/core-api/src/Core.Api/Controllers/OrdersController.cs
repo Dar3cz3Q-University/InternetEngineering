@@ -1,7 +1,11 @@
 ﻿using Core.Application.Orders.Commands.CreateOrder;
 using Core.Application.Orders.Commands.DeleteOrder;
+using Core.Application.Orders.Commands.DeliverOrder;
+using Core.Application.Orders.Commands.TakeOrder;
+using Core.Application.Orders.Queries.GetActiveOrderForCourier;
 using Core.Application.Orders.Queries.GetOrder;
 using Core.Application.Orders.Queries.GetOrders;
+using Core.Application.Orders.Queries.GetOrdersReadyToCollect;
 using Core.Contracts.Order.Request;
 using Core.Contracts.Order.Response;
 using Core.Domain.Common.Errors;
@@ -33,6 +37,60 @@ namespace Core.Api.Controllers
 
             return orders.Match(
                 o => Ok(o.ConvertAll(o => _mapper.Map<OrderResponse>(o))),
+                e => Problem(e));
+        }
+
+        [HttpGet("ready-for-collection")]
+        [Authorize(Roles = "Admin,Courier")]
+        public async Task<IActionResult> GetAllForCollection(
+            [FromQuery] GetOrdersReadyToCollectRequest request)
+        {
+            var query = _mapper.Map<GetOrdersReadyToCollectQuery>(request);
+
+            var orders = await _mediator.Send(query);
+
+            return orders.Match(
+                o => Ok(o.ConvertAll(o => _mapper.Map<OrderReadyToCollectResponse>(o))),
+                e => Problem(e));
+        }
+
+        [HttpGet("active")]
+        [Authorize(Roles = "Courier")]
+        public async Task<IActionResult> GetActiveForCourier(
+            [FromQuery] GetActiveOrderForCourier request)
+        {
+            var query = _mapper.Map<GetActiveOrderForCourierQuery>(request);
+
+            var orders = await _mediator.Send(query);
+
+            return orders.Match(
+                o => Ok(_mapper.Map<ActiveOrderForCourierResponse>(o)),
+                e => Problem(e));
+        }
+
+        [HttpPatch("{id:guid}/take")]
+        [Authorize(Roles = "Courier")]
+        public async Task<IActionResult> TakeOrder(Guid id)
+        {
+            var command = _mapper.Map<TakeOrderCommand>(id);
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                r => NoContent(),
+                e => Problem(e));
+        }
+
+        [HttpPatch("deliver")]
+        [Authorize(Roles = "Courier")]
+        public async Task<IActionResult> DeliverOrder()
+        {
+            var command = new DeliverOrderCommand();
+
+            var result = await _mediator.Send(command);
+
+            return result.Match(
+                r => NoContent(),
                 e => Problem(e));
         }
 

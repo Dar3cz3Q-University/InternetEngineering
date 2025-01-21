@@ -49,6 +49,7 @@ namespace Core.Application.Restaurants.Queries.GetRestaurants
                 })
                 .Where(x => x.Distance <= maxDistance)
                 .Select(x => new RestaurantDTO(x.Restaurant, x.Distance))
+                .OrderBy(dto => dto.Distance ?? double.MaxValue)
                 .ToList();
 
             return nearbyRestaurants;

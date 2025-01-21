@@ -80,5 +80,10 @@ namespace Core.Domain.OrderAggregate
         {
             DeliveryTime = deliveryDateTime;
         }
+
+        public void SetCourierId(UserId courierId)
+        {
+            CourierId = courierId;
+        }
     }
 }

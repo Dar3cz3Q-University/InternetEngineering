@@ -39,9 +39,24 @@ namespace Core.Infrastructure.Persistence.Repositories
             return Result.Deleted;
         }
 
+        public async Task<ErrorOr<Order>> GetActiveForCourier(UserId id)
+        {
+            var order = await _dbContext.Orders.Where(o => o.CourierId == id && o.OrderStatus == OrderStatus.InDelivery).OrderByDescending(o => o.CreatedDateTime).Take(1).FirstOrDefaultAsync();
+
+            if (order is null)
+                return Errors.Order.NoActiveOrder;
+
+            return order;
+        }
+
         public async Task<ErrorOr<List<Order>>> GetAllAsync()
         {
             return await _dbContext.Set<Order>().ToListAsync();
+        }
+
+        public async Task<ErrorOr<List<Order>>> GetAllReadyToCollectAsync()
+        {
+            return await _dbContext.Orders.Where(o => o.OrderStatus == OrderStatus.ReadyForCollection).ToListAsync();
         }
 
         public async Task<ErrorOr<Order>> GetByIdAsync(OrderId id)

@@ -54,6 +54,13 @@ namespace Core.Infrastructure.Persistence.Repositories
             return address;
         }
 
+        public async Task<ErrorOr<List<Address>>> GetByIdsAsync(List<AddressId> ids)
+        {
+            return await _dbContext.Addresses
+                .Where(r => ids.Contains(r.Id))
+                .ToListAsync();
+        }
+
         public async Task<ErrorOr<Updated>> UpdateAsync(Address address)
         {
             ArgumentNullException.ThrowIfNull(address);

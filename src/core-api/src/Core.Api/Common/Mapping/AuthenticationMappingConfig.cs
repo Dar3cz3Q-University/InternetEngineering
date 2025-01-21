@@ -17,7 +17,7 @@ namespace Core.Api.Common.Mapping
 
             config.NewConfig<AuthenticationDTO, AuthenticationResponse>()
                 .Map(dest => dest.Id, src => src.User.Id.Value)
-                .Map(dest => dest.ImageUrl, src => $"http://192.168.0.5:8080/{src.User.ImageUrl}")
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.User.ImageUrl}")
                 .Map(dest => dest, src => src.User);
 
             //

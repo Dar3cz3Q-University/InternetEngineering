@@ -107,6 +107,7 @@ namespace Core.Infrastructure
             services.AddAuthorization(options =>
             {
                 options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
+                options.AddPolicy("Courier", policy => policy.RequireRole("Courier"));
             });
 
             return services;
