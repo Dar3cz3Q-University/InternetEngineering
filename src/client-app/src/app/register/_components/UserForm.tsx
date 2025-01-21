@@ -13,7 +13,7 @@ type PropType = {
 }
 
 const UserForm = (props: PropType) => {
-    const {userData, onNext} = props;
+    const { userData, onNext } = props;
     const [formData, setFormData] = React.useState<Omit<RegisterUserType, "address">>(userData);
 
     const [errors, setErrors] = React.useState({
@@ -43,9 +43,8 @@ const UserForm = (props: PropType) => {
         }
     }
 
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value} = e.target;
+        const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -63,7 +62,7 @@ const UserForm = (props: PropType) => {
         const file = e.target.files?.[0] || null;
         setFormData((prev) => ({
             ...prev,
-            avatarImage: file,
+            image: file,
         }));
     };
 
@@ -161,8 +160,8 @@ const UserForm = (props: PropType) => {
                             onChange={handleFileChange}
                         />
                     </Button>
-                    {formData.avatarImage && (
-                        <p className="text-sm mt-2">Selected file: {formData.avatarImage.name}</p>
+                    {formData.image && (
+                        <p className="text-sm mt-2">Selected file: {formData.image.name}</p>
                     )}
                 </div>
                 <FormControlLabel

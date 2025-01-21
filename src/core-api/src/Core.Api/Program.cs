@@ -13,6 +13,17 @@ var builder = WebApplication.CreateBuilder(args);
         options.ListenAnyIP(5042);
     });
 
+    builder.Services.AddCors(options =>
+    {
+        options.AddPolicy("AllowSpecificOrigin", policy =>
+        {
+            policy.WithOrigins("http://localhost:3000")
+                  .AllowAnyHeader()
+                  .AllowAnyMethod()
+                  .AllowCredentials();
+        });
+    });
+
     builder.Configuration
         .AddJsonFile("appsettings.json")
         .AddJsonFile("appsettings.Development.json")
@@ -48,6 +59,8 @@ var app = builder.Build();
             await next();
         });
     }
+
+    app.UseCors("AllowSpecificOrigin");
 
     app.UseHttpsRedirection();
     app.UseAuthentication();

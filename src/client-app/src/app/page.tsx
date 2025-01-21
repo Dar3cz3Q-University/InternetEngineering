@@ -1,6 +1,14 @@
+"use client"
 
-export default function Home() {
-  return (
-    <h1>Home</h1>
-  );
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function RedirectPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.push('/dashboard/home');
+  }, [router]);
+
+  return null;
 }

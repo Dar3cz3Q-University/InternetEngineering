@@ -7,7 +7,7 @@ export type RegisterUserType = {
     lastName: string;
     phoneNumber: string;
     userRole: number;
-    avatarImage: File | null;
+    image: File | null;
     maxSearchDistance: number;
     address: Omit<AddressType, "id">;
 }
