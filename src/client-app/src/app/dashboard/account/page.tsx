@@ -4,13 +4,14 @@ import { useUser } from "@/components/contexts/UserContext";
 import DashboardProviders from "@/components/dashboard/providers/DashboardProviders";
 import DashboardPageWrapper from "@/components/dashboard/wrappers/DashboardPageWrapper";
 import { UserType } from "@/types/user/UserType";
-import { Divider } from "@mui/material";
+import { Button, Divider } from "@mui/material";
 import AddressesList from "./_components/AddressesList";
 import ApplyChangesButton from "./_components/ApplyChangesButton";
 import DistanceSlider from "./_components/DistanceSlider";
 import UserInfo from "./_components/UserInfo";
 
 import React from "react";
+import LogoutButton from "./_components/LogoutButton";
 
 const DashboardAccountPage = () => {
     const {user} = useUser();
@@ -44,6 +45,7 @@ const DashboardAccountPage = () => {
                         user={modifiedUser}
                         setUser={setModifiedUser}
                     />
+                    <LogoutButton />
                 </div>
             </DashboardPageWrapper>
         </DashboardProviders>
