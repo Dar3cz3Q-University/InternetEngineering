@@ -1,6 +1,6 @@
 "use client";
 
-import { CurrentLocationProvider } from "../contexts/CurrentLocatonContext";
+import { CurrentLocationProvider } from "../contexts/CurrentLocationContext";
 import { ToastProvider } from "../contexts/ToastContext";
 import { UserProvider } from "../contexts/UserContext";
 import MuiThemeProvider from "./MuiThemeProvider"

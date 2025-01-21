@@ -1,12 +1,21 @@
 "use client";
 
+import { useToast } from "@/components/contexts/ToastContext";
 import { LoginType } from "@/types/user/LoginType";
 import { isValidEmail, isValidPassword } from "@/utils/validators/regexes";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import { Button, Divider, IconButton, InputAdornment, Link, TextField } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
 import React from "react";
+import loginRequest from "./_mutations/LoginMutation";
+import { UserType } from "@/types/user/UserType";
+import { useUser } from "@/components/contexts/UserContext";
+import formatAxiosError from "@/utils/api/error-formatter";
 
 const LoginPage = () => {
+    const { login } = useUser();
+    const { openToast } = useToast();
+
     const [formData, setFormData] = React.useState<LoginType>({
         email: "",
         password: ""
@@ -16,6 +25,18 @@ const LoginPage = () => {
         email: false,
         password: false,
         invalidUserData: false
+    });
+
+    const { mutate } = useMutation({
+        mutationFn: loginRequest,
+        onSuccess: (res: UserType) => {
+            login(res);
+        },
+        onError: (err: any) => {
+            // TODO: Change any to error type
+            const message = formatAxiosError(err);
+            openToast(message, "error");
+        }
     });
 
     const validateFields = () => {
@@ -31,12 +52,12 @@ const LoginPage = () => {
 
     const handleLogin = () => {
         if (validateFields()) {
-            console.log("OK")
+            mutate(formData);
         }
     }
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value} = e.target;
+        const { name, value } = e.target;
         setFormData(prev => ({
             ...prev,
             [name]: value
@@ -96,7 +117,7 @@ const LoginPage = () => {
                     fullWidth
                 >LOGIN
                 </Button>
-                <Divider sx={{width: "100%"}}>OR</Divider>
+                <Divider sx={{ width: "100%" }}>OR</Divider>
                 <div className="w-full flex items-center justify-center">
                     <p>Don't have account?</p>
                     <Link className="font-bold text-primary ml-[8px]" href="/register">Register</Link>

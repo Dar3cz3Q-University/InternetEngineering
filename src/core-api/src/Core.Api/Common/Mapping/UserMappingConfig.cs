@@ -1,4 +1,6 @@
-﻿using Core.Domain.UserAggregate.ValueObjects;
+﻿using Core.Contracts.Authentication.Response;
+using Core.Domain.UserAggregate;
+using Core.Domain.UserAggregate.ValueObjects;
 using Mapster;
 
 namespace Core.Api.Common.Mapping
@@ -7,6 +9,11 @@ namespace Core.Api.Common.Mapping
     {
         public void Register(TypeAdapterConfig config)
         {
+            config.NewConfig<User, AuthenticationResponse>()
+                .Map(dest => dest.Id, src => src.Id.Value)
+                .Map(dest => dest.ImageUrl, src => $"http://192.168.0.5:8080/{src.ImageUrl}")
+                .Map(dest => dest, src => src);
+
             config.NewConfig<UserId, UserId>()
                 .MapWith(src => src);
         }

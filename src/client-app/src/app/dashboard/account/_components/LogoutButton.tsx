@@ -1,9 +1,29 @@
 import { Button } from "@mui/material";
+import { useMutation } from "@tanstack/react-query";
+import logoutRequest from "./_mutations/LogoutMutation";
+import { useToast } from "@/components/contexts/ToastContext";
+import formatAxiosError from "@/utils/api/error-formatter";
+import { useRouter } from "next/navigation";
+import { useUser } from "@/components/contexts/UserContext";
 
 const LogoutButton = () => {
+    const { setUser } = useUser();
+    const { openToast } = useToast();
+    const router = useRouter();
+
+    const { mutate } = useMutation({
+        mutationFn: logoutRequest,
+        onError: (err: any) => {
+            // TODO: Change any to error type
+            const message = formatAxiosError(err);
+            openToast(message, "error");
+        }
+    });
 
     const handleLogout = () => {
-        console.log("LOGOUT")
+        mutate();
+        setUser(null);
+        router.push("/login");
     }
 
     return (

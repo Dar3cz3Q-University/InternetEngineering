@@ -5,27 +5,37 @@ import AddressesListItem from "./AddressesListItem";
 import AddIcon from '@mui/icons-material/Add';
 import React from "react";
 import AddAddressDialog from "./AddAddressDialog";
-import { UserType } from "@/types/user/UserType";
 import { AddressType } from "@/types/common/AddressType";
+import { useToast } from "@/components/contexts/ToastContext";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import newAddressRequest from "./_mutations/NewAddressMutation";
+import formatAxiosError from "@/utils/api/error-formatter";
+import { useUser } from "@/components/contexts/UserContext";
 
-type PropType = {
-    user: UserType | null;
-    setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
-}
+const AddressesList = () => {
+    const { user } = useUser();
+    const { openToast } = useToast();
+    const queryClient = useQueryClient();
 
-const AddressesList = (props: PropType) => {
-    const {user, setUser} = props;
+    const { mutate } = useMutation({
+        mutationFn: newAddressRequest,
+        onSuccess: () => {
+            openToast("Address added successfully.", "success");
+            queryClient.invalidateQueries({ queryKey: ['user'] });
+        },
+        onError: (err: any) => {
+            // TODO: Change any to error type
+            const message = formatAxiosError(err);
+            openToast(message, "error");
+        }
+    });
 
     const [openAddAddressDialog, setOpenAddAddressDialog] = React.useState<boolean>(false);
-    const handleAddAddresDialogOpen = () => setOpenAddAddressDialog(true);
-    const handleAddAddresDialogClose = () => setOpenAddAddressDialog(false);
+    const handleAddAddressDialogOpen = () => setOpenAddAddressDialog(true);
+    const handleAddAddressDialogClose = () => setOpenAddAddressDialog(false);
     const handleAddressAdd = (newAddress: Omit<AddressType, "id">) => {
         if (user) {
-            const updatedAddresses = [
-                ...user.addresses,
-                {...newAddress, id: `${user.addresses.length + 1}`}
-            ];
-            setUser({...user, addresses: updatedAddresses})
+            mutate(newAddress);
         }
     }
 
@@ -33,10 +43,10 @@ const AddressesList = (props: PropType) => {
         <div className="w-full flex flex-col mt-[24px]">
             <div className="w-full flex flex-row justify-between items-center">
                 <p className="font-semibold text-lg">Addresses:</p>
-                <IconButton 
-                    color="primary" 
+                <IconButton
+                    color="primary"
                     size="small"
-                    onClick={handleAddAddresDialogOpen}
+                    onClick={handleAddAddressDialogOpen}
                 >
                     <AddIcon />
                 </IconButton>
@@ -65,7 +75,7 @@ const AddressesList = (props: PropType) => {
             </List>
             <AddAddressDialog
                 open={openAddAddressDialog}
-                handleClose={handleAddAddresDialogClose}
+                handleClose={handleAddAddressDialogClose}
                 handleAdd={handleAddressAdd}
             />
         </div>

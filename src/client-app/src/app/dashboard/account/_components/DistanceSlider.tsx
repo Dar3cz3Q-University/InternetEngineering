@@ -1,25 +1,20 @@
 "use client";
 
-import { UserType } from "@/types/user/UserType";
+import { useUser } from "@/components/contexts/UserContext";
 import { Slider } from "@mui/material";
 
-type PropType = {
-    user: UserType | null;
-    setUser: React.Dispatch<React.SetStateAction<UserType | null>>;
-}
-
-const DistanceSlider = (props: PropType) => {
-    const {user, setUser} = props;
+const DistanceSlider = () => {
+    const { user, setUser } = useUser();
 
     const marks = [
-        {value: 1, label: "1 km"},
-        {value: 8, label: "8 km"},
-        {value: 15, label: "15 km"},
+        { value: 1, label: "1 km" },
+        { value: 8, label: "8 km" },
+        { value: 15, label: "15 km" },
     ]
 
     const handelDistanceChange = (event: Event, newValue: number | number[]) => {
         if (user) {
-            setUser({...user, maxSearchDistance: newValue as number});
+            setUser({ ...user, maxSearchDistance: newValue as number });
         }
     }
 

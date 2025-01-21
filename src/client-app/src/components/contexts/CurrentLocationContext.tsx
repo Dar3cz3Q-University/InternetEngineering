@@ -10,11 +10,11 @@ type CurrentLocationContextType = {
 
 const CurrentLocationContext = React.createContext<CurrentLocationContextType | undefined>(undefined);
 
-const CurrentLocationProvider = ({children}: {children: React.ReactNode}) => {
+const CurrentLocationProvider = ({ children }: { children: React.ReactNode }) => {
     const [currentLocation, setCurrentLocation] = React.useState<AddressType | null>(null);
 
     return (
-        <CurrentLocationContext.Provider value={{currentLocation, setCurrentLocation}}>
+        <CurrentLocationContext.Provider value={{ currentLocation, setCurrentLocation }}>
             {children}
         </CurrentLocationContext.Provider>
     )
@@ -28,4 +28,4 @@ const useCurrentLocation = (): CurrentLocationContextType => {
     return context;
 }
 
-export {CurrentLocationProvider, useCurrentLocation};
+export { CurrentLocationProvider, useCurrentLocation };

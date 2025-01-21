@@ -1,6 +1,7 @@
 ﻿using Core.Application.Users.Commands.AddAddress;
 using Core.Application.Users.Commands.UpdateMaxSearchDistance;
-using Core.Contracts.Common.Request;
+using Core.Application.Users.Queries.GetUser;
+using Core.Contracts.Authentication.Response;
 using Core.Contracts.User.Request;
 using MapsterMapper;
 using MediatR;
@@ -18,6 +19,19 @@ namespace Core.Api.Controllers
         {
             _mediator = mediator;
             _mapper = mapper;
+        }
+
+        [HttpGet("me")]
+        public async Task<IActionResult> GetUser()
+        {
+            var query = new GetUserQuery();
+
+            var result = await _mediator.Send(query);
+
+            return result.Match(
+                r => Ok(_mapper.Map<AuthenticationResponse>(r)),
+                e => Problem(e)
+            );
         }
 
         [HttpPost("address")]

@@ -1,9 +1,9 @@
 "use client";
 
-import { useCurrentLocation } from "@/components/contexts/CurrentLocatonContext";
+import { useCurrentLocation } from "@/components/contexts/CurrentLocationContext";
 
 const AddressData = () => {
-    const {currentLocation} = useCurrentLocation();
+    const { currentLocation } = useCurrentLocation();
 
     return (
         <div className="flex flex-col">

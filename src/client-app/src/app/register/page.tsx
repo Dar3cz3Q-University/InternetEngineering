@@ -13,12 +13,13 @@ import registerRequest from "./_mutations/RegisterMutation";
 import { useToast } from "@/components/contexts/ToastContext";
 import { UserType } from "@/types/user/UserType";
 import { useUser } from "@/components/contexts/UserContext";
-import { useRouter } from "next/navigation";
+import formatAxiosError from "@/utils/api/error-formatter";
 
 const RegisterPage = () => {
-    const router = useRouter();
-    const { setUser } = useUser();
+    const { login } = useUser();
     const [step, setStep] = React.useState(0);
+    const { openToast } = useToast();
+
     const [userData, setUserData] = React.useState<RegisterUserType>({
         email: "",
         password: "",
@@ -40,17 +41,16 @@ const RegisterPage = () => {
             longitude: 0
         }
     });
-    const { openToast } = useToast();
+
     const { mutate } = useMutation({
         mutationFn: registerRequest,
         onSuccess: (res: UserType) => {
-            setUser(res);
+            login(res);
             openToast("Account created successfully.", "success");
-            router.push("/dashboard/home");
         },
-        onError: (e: any) => {
+        onError: (err: any) => {
             // TODO: Change any to error type
-            const message = e?.response?.data?.title ?? "Internal server error.";
+            const message = formatAxiosError(err);
             openToast(message, "error");
         }
     });
@@ -113,6 +113,3 @@ const RegisterPage = () => {
 }
 
 export default RegisterPage;
-function openToast(arg0: string, arg1: string) {
-    throw new Error("Function not implemented.");
-}

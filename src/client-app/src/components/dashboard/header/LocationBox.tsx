@@ -6,7 +6,7 @@ import PlaceIcon from '@mui/icons-material/Place';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { useUser } from "@/components/contexts/UserContext";
-import { useCurrentLocation } from "@/components/contexts/CurrentLocatonContext";
+import { useCurrentLocation } from "@/components/contexts/CurrentLocationContext";
 import { AddressType } from "@/types/common/AddressType";
 
 const LocationBox = () => {
@@ -20,7 +20,6 @@ const LocationBox = () => {
         if (user?.addresses && user.addresses.length > 0 && !currentLocation) {
             setCurrentLocation(user?.addresses[0]);
         }
-        console.log(user)
     }, [user, currentLocation, setCurrentLocation])
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
