@@ -13,13 +13,14 @@ const LocationBox = () => {
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const open = Boolean(anchorEl);
 
-    const {user} = useUser();
-    const {currentLocation, setCurrentLocation} = useCurrentLocation();
+    const { user } = useUser();
+    const { currentLocation, setCurrentLocation } = useCurrentLocation();
 
     React.useEffect(() => {
         if (user?.addresses && user.addresses.length > 0 && !currentLocation) {
             setCurrentLocation(user?.addresses[0]);
         }
+        console.log(user)
     }, [user, currentLocation, setCurrentLocation])
 
     const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -46,7 +47,7 @@ const LocationBox = () => {
                 aria-haspopup="true"
                 aria-expanded={open ? "true" : undefined}
                 onClick={handleClick}
-                startIcon={<PlaceIcon sx={{color: "primary.main"}} />}
+                startIcon={<PlaceIcon sx={{ color: "primary.main" }} />}
                 endIcon={open ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                 sx={{
                     color: "var(--color-white)",
@@ -59,8 +60,8 @@ const LocationBox = () => {
                 }}
             >
                 <span className="overflow-hidden text-ellipsis whitespace-nowrap">
-                {`${currentLocation?.city}, ${currentLocation?.street !== currentLocation?.city ? currentLocation?.street : ""} ${currentLocation?.buildingNumber}${currentLocation?.apartmentNumber ? "/" + currentLocation?.apartmentNumber : ""}`}
-                </span>  
+                    {`${currentLocation?.city}, ${currentLocation?.street !== currentLocation?.city ? currentLocation?.street : ""} ${currentLocation?.buildingNumber}${currentLocation?.apartmentNumber ? "/" + currentLocation?.apartmentNumber : ""}`}
+                </span>
             </Button>
             <Menu
                 id="location-menu"
@@ -79,18 +80,18 @@ const LocationBox = () => {
                 }}
             >
                 {user?.addresses.map(address => (
-                    <MenuItem 
+                    <MenuItem
                         key={address.id}
-                        sx={{fontWeight: "500"}}
+                        sx={{ fontWeight: "500" }}
                         onClick={() => handleLocationChange(address)}
                     >
                         {`${address.city}, ${address.street !== address.city ? address.street : ""} ${address.buildingNumber}${address.apartmentNumber ? "/" + address.apartmentNumber : ""}`}
                     </MenuItem>
                 ))}
                 <MenuItem sx={{
-                    color: "primary.main", 
+                    color: "primary.main",
                     fontWeight: "600"
-                    }} 
+                }}
                     onClick={handleClose}>
                     Get current location
                 </MenuItem>

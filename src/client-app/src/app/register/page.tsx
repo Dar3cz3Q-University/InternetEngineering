@@ -7,13 +7,17 @@ import { RegisterUserType } from "@/types/user/RegisterUserType";
 import LocationForm from "./_components/LocationForm";
 import { AddressType } from "@/types/common/AddressType";
 import Link from "next/link";
-import { useToast } from "@/components/contexts/ToastContext";
 import jsonObjectToFormData from "@/utils/converter/JsonToFormData";
-import registerMutation from "./_mutations/RegisterMutation";
 import { useMutation } from "@tanstack/react-query";
-import apiRequest from "@/utils/api/api";
+import registerRequest from "./_mutations/RegisterMutation";
+import { useToast } from "@/components/contexts/ToastContext";
+import { UserType } from "@/types/user/UserType";
+import { useUser } from "@/components/contexts/UserContext";
+import { useRouter } from "next/navigation";
 
 const RegisterPage = () => {
+    const router = useRouter();
+    const { setUser } = useUser();
     const [step, setStep] = React.useState(0);
     const [userData, setUserData] = React.useState<RegisterUserType>({
         email: "",
@@ -36,24 +40,20 @@ const RegisterPage = () => {
             longitude: 0
         }
     });
-    const [send, setSend] = React.useState(false);
-
-    const registerMutation = useMutation({
-        mutationFn: (userData: FormData) => {
-            return apiRequest({
-                method: "POST",
-                url: "/auth/register",
-                data: userData
-            });
+    const { openToast } = useToast();
+    const { mutate } = useMutation({
+        mutationFn: registerRequest,
+        onSuccess: (res: UserType) => {
+            setUser(res);
+            openToast("Account created successfully.", "success");
+            router.push("/dashboard/home");
         },
-        onSuccess: () => {
-            openToast("Account created successfully", "success");
-        },
-        onError: (e) => {
-            openToast("Could not create account", "error");
-            console.error(e);
+        onError: (e: any) => {
+            // TODO: Change any to error type
+            const message = e?.response?.data?.title ?? "Internal server error.";
+            openToast(message, "error");
         }
-    })
+    });
 
     const handleUserFormNext = (formData: Omit<RegisterUserType, "address">) => {
         setUserData((prev) => ({
@@ -73,18 +73,12 @@ const RegisterPage = () => {
             handleRegister(updatedUserData);
             return updatedUserData;
         });
-        setSend(prev => !prev);
     };
 
-    const handleRegister = (updatedUserData: RegisterUserType) => {
+    const handleRegister = async (updatedUserData: RegisterUserType) => {
         const form = jsonObjectToFormData(updatedUserData);
-
-        registerMutation.mutate(form);
+        mutate(form);
     };
-
-    React.useEffect(() => {
-        console.log(userData);
-    }, [send])
 
     return (
         <div className="w-full min-h-screen flex flex-col justify-center items-center p-[32px]">

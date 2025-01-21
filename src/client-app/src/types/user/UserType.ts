@@ -10,7 +10,6 @@ export type UserType = {
     userRole: number;
     addresses: AddressType[];
     maxSearchDistance: number;
-    token: string;
     createdDateTime: string;
     updatedDateTime: string;
 }
