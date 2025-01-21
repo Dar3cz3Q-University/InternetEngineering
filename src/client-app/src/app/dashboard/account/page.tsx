@@ -8,7 +8,6 @@ import AddressesList from "./_components/AddressesList";
 import ApplyChangesButton from "./_components/ApplyChangesButton";
 import DistanceSlider from "./_components/DistanceSlider";
 import UserInfo from "./_components/UserInfo";
-
 import React from "react";
 import LogoutButton from "./_components/LogoutButton";
 

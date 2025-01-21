@@ -12,7 +12,7 @@ const ORDERS_DUMMY_DATA: OrderType[] = [
 
 const OrdersList = () => {
     return (
-        <div className="w-full flex flex-col p-[32px] gap-[32px]">
+        <div className="w-full flex flex-col gap-[32px]">
             {ORDERS_DUMMY_DATA.map(order => (
                 <OrdersListItem
                     key={order.id}
