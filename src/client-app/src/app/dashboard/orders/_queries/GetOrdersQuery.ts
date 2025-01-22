@@ -1,11 +1,9 @@
 import { OrderType } from "@/types/order/OrderType";
 import apiRequest from "@/utils/api/api";
 
-const getOrdersRequest = async (
-    userID: string
-): Promise<OrderType[]> => apiRequest({
+const getOrdersRequest = async (): Promise<OrderType[]> => apiRequest({
     method: "GET",
-    url: `/orders/${userID}`
+    url: "/orders"
 });
 
 export default getOrdersRequest;

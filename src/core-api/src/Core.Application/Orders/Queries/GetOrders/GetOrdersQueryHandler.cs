@@ -44,6 +44,7 @@ namespace Core.Application.Orders.Queries.GetOrders
                 var restaurant = restaurants.Value.FirstOrDefault(r => r.Id == order.RestaurantId);
                 return new OrderDTO(order, restaurant); // TODO: Check if null
             })
+            .OrderByDescending(o => o.Order.CreatedDateTime)
             .ToList();
 
             return ordersWithRestaurants;

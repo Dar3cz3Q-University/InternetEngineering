@@ -2,11 +2,12 @@ import { useToast } from "@/components/contexts/ToastContext";
 import { NearbyOrderType } from "@/types/order/NearbyOrderType";
 import { formatAddressToShortInfo } from "@/utils/formatters/address-formatter";
 import { Button, ListItem } from "@mui/material";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import takeOrderRequest from "../_mutations/TakeOrderMutation";
 import formatAxiosError from "@/utils/api/error-formatter";
 import convert from "convert-units";
+import { useRouter } from "next/navigation";
 
 type PropType = {
     orderData: NearbyOrderType;
@@ -15,14 +16,14 @@ type PropType = {
 const NearbyOrdersListItem = (props: PropType) => {
     const { orderData } = props;
     const { openToast } = useToast();
-    const queryClient = useQueryClient();
+    const router = useRouter();
     const { val, unit } = convert(orderData.distance).from("km").toBest();
 
     const { mutate } = useMutation({
         mutationFn: takeOrderRequest,
         onSuccess: () => {
             openToast("Order has been taken successfully.", "success");
-            queryClient.invalidateQueries({ queryKey: ['nearByOrders'] });
+            router.refresh();
         },
         onError: (err: any) => {
             // TODO: Change any to error type

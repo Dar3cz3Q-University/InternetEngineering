@@ -35,12 +35,13 @@ const OrderButton = (props: PropType) => {
         mutationFn: createOrderRequest,
         onSuccess: (res: OrderDetailsType) => {
             openToast("Order created successfully.", "success");
-            removeRestaurantCart(res.restaurant.id);
+            removeRestaurantCart(restaurantId!);
             router.push(`/dashboard/orders/${res.id}`);
         },
         onError: (err: any) => {
             // TODO: Change any to error type
             const message = formatAxiosError(err);
+            console.log(err);
             openToast(message, "error");
         }
     });

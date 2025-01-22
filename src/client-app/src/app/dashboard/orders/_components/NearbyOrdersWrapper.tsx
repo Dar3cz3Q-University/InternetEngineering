@@ -6,7 +6,8 @@ import NearbyOrdersList from "./NearbyOrdersList";
 const NearbyOrdersWrapper = () => {
     const { data } = useQuery({
         queryKey: ['active_order'],
-        queryFn: activeOrderRequest
+        queryFn: activeOrderRequest,
+        refetchInterval: 5000
     });
 
     if (data !== undefined) {

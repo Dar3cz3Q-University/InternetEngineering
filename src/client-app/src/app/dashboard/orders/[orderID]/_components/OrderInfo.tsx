@@ -21,7 +21,7 @@ const OrderInfo = (props: PropType) => {
             <p>Status: <span className="font-semibold">{status}</span></p>
             <p>Date: <span className="font-semibold">{formatDate(date)}</span></p>
             <p>Total: <span className="font-semibold">{total.amount} {total.currency}</span></p>
-            <p>Delivered by: <span className="font-semibold">{courierName || ""}</span></p>
+            {courierName && <p>Delivered by: <span className="font-semibold">{courierName}</span></p>}
         </div>
     )
 }

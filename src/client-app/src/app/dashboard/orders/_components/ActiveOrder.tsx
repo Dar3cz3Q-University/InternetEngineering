@@ -8,6 +8,7 @@ import convert from "convert-units";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import deliverOrderRequest from "../_mutations/DeliverOrderMutation";
 import formatAxiosError from "@/utils/api/error-formatter";
+import { useRouter } from "next/navigation";
 
 type PropType = {
     activeOrderData: ActiveOrderType;
@@ -16,14 +17,14 @@ type PropType = {
 const ActiveOrder = (props: PropType) => {
     const { activeOrderData } = props;
     const { openToast } = useToast();
-    const queryClient = useQueryClient();
+    const router = useRouter();
     const { val, unit } = convert(activeOrderData.distance).from("km").toBest();
 
     const { mutate } = useMutation({
         mutationFn: deliverOrderRequest,
         onSuccess: () => {
             openToast("Order has been delivered successfully.", "success");
-            queryClient.invalidateQueries({ queryKey: ['active_order'] });
+            router.refresh();
         },
         onError: (err: any) => {
             // TODO: Change any to error type

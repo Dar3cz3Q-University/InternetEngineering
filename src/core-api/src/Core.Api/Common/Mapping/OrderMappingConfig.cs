@@ -24,7 +24,7 @@ namespace Core.Api.Common.Mapping
             config.NewConfig<OrderDTO, OrderResponse>()
                 .Map(dest => dest.Id, src => src.Order.Id.Value)
                 .Map(dest => dest.RestaurantName, src => src.Restaurant.Name)
-                .Map(dest => dest.ImageUrl, src => src.Restaurant.ImageUrl)
+                .Map(dest => dest.ImageUrl, src => $"http://maselniczka:8080/{src.Restaurant.ImageUrl}")
                 .Map(dest => dest.OrderStatus, src => ConvertToString(src.Order.OrderStatus))
                 .Map(dest => dest.IsActive, src => IsActive(src.Order.OrderStatus))
                 .Map(dest => dest.CreatedDateTime, src => src.Order.CreatedDateTime)

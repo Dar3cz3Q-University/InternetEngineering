@@ -28,7 +28,7 @@ namespace Core.Infrastructure.Messaging
             var optionsBuilder = new MqttClientOptionsBuilder()
                 .WithTcpServer(settings.BrokerHost, settings.BrokerPort)
                 .WithClientId(settings.ClientId + "-subscriber")
-                .WithCleanStart(true);
+                .WithCleanStart(false);
 
             if (!string.IsNullOrEmpty(settings.Username) && !string.IsNullOrEmpty(settings.Password))
                 optionsBuilder.WithCredentials(settings.Username, settings.Password);

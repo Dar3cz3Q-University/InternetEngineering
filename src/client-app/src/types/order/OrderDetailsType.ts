@@ -12,6 +12,6 @@ export type OrderDetailsType = {
     deliveryAddress: AddressType;
     totalPrice: PriceType;
     isActive: boolean;
-    estimatedDeliveryTime: string;
+    estimatedDeliveryDateTime: string;
     createdDateTime: string;
 }

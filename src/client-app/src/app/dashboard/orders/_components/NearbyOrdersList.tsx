@@ -11,8 +11,9 @@ const NearbyOrdersList = () => {
         queryKey: ['nearByOrders'],
         queryFn: () => nearbyOrderRequest(
             currentLocation?.latitude,
-            currentLocation?.longitude
-        )
+            currentLocation?.longitude,
+        ),
+        refetchInterval: 5000
     });
 
     return (
