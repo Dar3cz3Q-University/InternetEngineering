@@ -2,7 +2,7 @@
 
 import CategoriesListItem from "./CategoriesListItem";
 import { useQuery } from "@tanstack/react-query";
-import getCategoriesRequest from "@/app/dashboard/home/_components/_queries/GetCategoriesQuery";
+import getCategoriesRequest from "../_queries/GetCategoriesQuery";
 
 const CategoriesList = () => {
 

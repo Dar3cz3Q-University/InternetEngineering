@@ -1,6 +1,8 @@
 import { useDashboardSearch } from "@/components/contexts/DashboardSearchContext";
 import { colors, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import getCategoriesRequest from "./_queries/GetCategoriesQuery";
 
 //DUMMY DATA FOR TESTS
 type CategoryType = {
@@ -23,6 +25,11 @@ const ToogleCategories = () => {
         toggleSelectedCategoryID
     } = useDashboardSearch();
 
+    const { data } = useQuery({
+        queryKey: ['categories'],
+        queryFn: getCategoriesRequest
+    });
+
     return (
         <div className="w-full flex flex-col">
             <p className="font-bold text-lg mb-[8px]">Categories</p>
@@ -39,7 +46,7 @@ const ToogleCategories = () => {
                     }
                 }}
             >
-                {CATEGORIES_DUMMY_DATA.map(category => (
+                {data?.map(category => (
                     <ToggleButton
                         key={category.id}
                         value={category.id}

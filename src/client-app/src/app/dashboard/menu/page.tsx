@@ -1,6 +1,6 @@
 import DashboardProviders from "@/components/dashboard/providers/DashboardProviders";
 import DashboardPageWrapper from "@/components/dashboard/wrappers/DashboardPageWrapper"
-import CategoriesList from "./_components/categories/CategoriesList";
+import CategoriesList from "./_components/CategoriesList";
 
 const DashboardMenuPage = () => {
     return (

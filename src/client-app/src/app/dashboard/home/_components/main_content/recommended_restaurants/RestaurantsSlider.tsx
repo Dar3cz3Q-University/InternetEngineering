@@ -13,12 +13,16 @@ const RestaurantsSlider = (props: PropType) => {
     const { currentLocation } = useCurrentLocation();
 
     const { data } = useQuery({
-        queryKey: [categoryID, currentLocation?.id],
+        queryKey: ["restaurants", categoryID, currentLocation?.id],
         queryFn: () => getRestaurantsRequest(
             categoryID,
             currentLocation?.latitude,
             currentLocation?.longitude
         ),
+        enabled: !!categoryID && !!currentLocation,
+        refetchOnMount: true,
+        refetchOnWindowFocus: false,
+        staleTime: 0
     });
 
     return (

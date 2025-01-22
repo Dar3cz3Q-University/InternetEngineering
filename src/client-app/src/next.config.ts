@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: 'http',
-        hostname: 'maselniczka',
+        hostname: 'localhost',
         port: '8080',
         pathname: '/uploads/images/**',
       },

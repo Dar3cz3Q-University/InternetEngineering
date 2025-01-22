@@ -20,7 +20,9 @@ const DashboardMenuByCategory = async (props: PropType) => {
                         <ReturnButton />
                         <p className="text-xl font-bold font-roboto">{categoryName}</p>
                     </div>
-                    <RestaurantsList />
+                    <RestaurantsList
+                        categoryID={categoryID}
+                    />
                 </div>
             </DashboardPageWrapper>
         </DashboardProviders>

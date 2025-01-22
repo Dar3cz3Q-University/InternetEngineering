@@ -5,8 +5,8 @@ import React from "react"
 type DashboardSearchContextType = {
     searchValue: string | null;
     setSearchValue: (value: string | null) => void;
-    selectedCategoryIDs: number[];
-    toggleSelectedCategoryID: (id: number) => void;
+    selectedCategoryIDs: string[];
+    toggleSelectedCategoryID: (id: string) => void;
 }
 
 const DashboardSearchContext = React.createContext<DashboardSearchContextType>({
@@ -18,9 +18,9 @@ const DashboardSearchContext = React.createContext<DashboardSearchContextType>({
 
 const DashboardSearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const [searchValue, setSearchValue] = React.useState<string | null>(null);
-    const [selectedCategoryIDs, setSelectedCategoryIDs] = React.useState<number[]>([]);
+    const [selectedCategoryIDs, setSelectedCategoryIDs] = React.useState<string[]>([]);
 
-    const toggleSelectedCategoryID = (id: number) => {
+    const toggleSelectedCategoryID = (id: string) => {
         if (selectedCategoryIDs.includes(id)) {
             setSelectedCategoryIDs(prev => prev.filter(categoryID => categoryID !== id));
         }
@@ -28,6 +28,8 @@ const DashboardSearchProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setSelectedCategoryIDs(prev => [...prev, id]);
         }
     }
+
+    React.useEffect(() => console.log(selectedCategoryIDs), [selectedCategoryIDs])
 
     return (
         <DashboardSearchContext.Provider

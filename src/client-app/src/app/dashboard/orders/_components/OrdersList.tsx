@@ -1,24 +1,42 @@
+"use client";
+
+import { useUser } from "@/components/contexts/UserContext";
+import ListSkeleton from "@/components/ui/skeletons/ListSkeleton";
 import { OrderType } from "@/types/order/OrderType";
+import { useQuery } from "@tanstack/react-query";
+import getOrdersRequest from "../_queries/GetOrdersQuery";
 import OrdersListItem from "./OrdersListItem";
 
-//DUMMY DATA FOR TESTS
-const ORDERS_DUMMY_DATA: OrderType[] = [
-    { id: "89361e38-7560-40ba-9d7f-cdc388d13680", restaurantName: "New Lisan Kebab1", imageUrl: "/images/dish-example.jpg", createdDateTime: "2025-01-17T09:36:34.052084Z", orderStatus: "In progress", isActive: true },
-    { id: "89362e38-7560-40ba-9d7f-cdc388d13680", restaurantName: "New Lisan Kebab2", imageUrl: "/images/dish-example.jpg", createdDateTime: "2025-01-17T09:36:34.052084Z", orderStatus: "In progress", isActive: false },
-    { id: "89363e38-7560-40ba-9d7f-cdc388d13680", restaurantName: "New Lisan Kebab3", imageUrl: "/images/dish-example.jpg", createdDateTime: "2025-01-17T09:36:34.052084Z", orderStatus: "In progress", isActive: false },
-    { id: "89364e38-7560-40ba-9d7f-cdc388d13680", restaurantName: "New Lisan Kebab4", imageUrl: "/images/dish-example.jpg", createdDateTime: "2025-01-17T09:36:34.052084Z", orderStatus: "In progress", isActive: false },
-    { id: "89365e38-7560-40ba-9d7f-cdc388d13680", restaurantName: "New Lisan Kebab5", imageUrl: "/images/dish-example.jpg", createdDateTime: "2025-01-17T09:36:34.052084Z", orderStatus: "In progress", isActive: false },
-]
-
 const OrdersList = () => {
+    const {user} = useUser();
+
+    const { data, isLoading, error } = useQuery({
+        queryKey: [user?.id],
+        queryFn: () => getOrdersRequest(
+            user?.id as string
+        ),
+        retry: false
+    });
+
+    if (error) {
+        const errorStatus = (error as any)?.response?.status;
+        if (errorStatus === 404) {
+          return <p className="font-semibold text-lg">No orders found</p>;
+        }
+        return <p className="font-semibold text-lg">An unexpected error occurred</p>;
+    }
+
     return (
         <div className="w-full flex flex-col gap-[32px]">
-            {ORDERS_DUMMY_DATA.map(order => (
+            {
+            isLoading ? <ListSkeleton /> :
+            data?.map(order => (
                 <OrdersListItem
                     key={order.id}
                     orderData={order}
                 />
-            ))}
+            ))
+            }
         </div>
     )
 }

@@ -16,6 +16,8 @@ type UserContextType = {
 
 const UserContext = React.createContext<UserContextType | undefined>(undefined);
 
+const excludedPaths = ["/login", "/register"];
+
 const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const router = useRouter();
     const pathname = usePathname();
@@ -40,7 +42,11 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     }, [user])
 
     React.useEffect(() => {
-        if (!isAuthenticated() && pathname.startsWith("/dashboard")) {
+        console.log(user);
+    }, [user])
+
+    React.useEffect(() => {
+        if (!isAuthenticated() && !excludedPaths.includes(pathname)) {
             router.push("/login")
         }
 

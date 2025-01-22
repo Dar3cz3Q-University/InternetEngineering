@@ -8,6 +8,7 @@ import CircleIcon from '@mui/icons-material/Circle';
 import { formatShortTime } from "@/utils/formatters/date-formatter";
 import { Divider } from "@mui/material";
 import PreviousPageButton from "@/components/ui/buttons/PreviousPageButton";
+import convert from "convert-units";
 
 type PropType = {
     name: string;
@@ -34,6 +35,8 @@ const RestaurantInfo = (props: PropType) => {
         openingHours
     } = props;
 
+    const { val, unit } = convert(distance).from("km").toBest();
+
     return (
         <div className="w-full flex flex-col items-center">
             <div className="absolute top-[16px] left-[16px] z-10">
@@ -52,9 +55,9 @@ const RestaurantInfo = (props: PropType) => {
                 <div className="w-[120px] flex flex-row font-roboto justify-between items-center opacity-70">
                     <div className="flex flex-row">
                         <StarIcon fontSize="small" sx={{marginTop: "1px", marginRight: "2px", color: "primary.main"}}/>
-                        <p>{averageRate}</p>
+                        <p>{averageRate.toFixed(1)}</p>
                     </div>
-                    <p>{distance}km</p>
+                    <p>{val.toFixed(2)} {unit}</p>
                 </div>
                 <p className="w-[90%] text-center mt-[8px] opacity-70">{description}</p>
                 <div className="w-full flex flex-row justify-between mt-[16px]">

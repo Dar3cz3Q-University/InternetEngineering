@@ -1,7 +1,15 @@
+"use client";
+
+import { useCurrentLocation } from "@/components/contexts/CurrentLocationContext";
 import { RestaurantDetailsType } from "@/types/restaurant/RestaurantDetailsType";
+import { useQuery } from "@tanstack/react-query";
 import CartRedirectButton from "./_components/CartRedirectButton";
 import Menu from "./_components/Menu";
 import RestaurantInfo from "./_components/RestaurantInfo";
+import getRestaurantDetailsRequest from "./_queries/GetRestaurantDetailsQuery";
+import React from "react";
+import { useParams } from "next/navigation";
+import FullscreenLoader from "@/components/ui/loaders/FullScreenLoader";
 
 //DUMMY DATA FOR TESTS
 const RESTAURANT_DUMMY_DATA: RestaurantDetailsType = {
@@ -104,30 +112,48 @@ const RESTAURANT_DUMMY_DATA: RestaurantDetailsType = {
 //----
 
 
-type PropType = {
-    params: Promise<{restaurantID: string}>;
-}
+const RestaurantPage = () => {
+    const {currentLocation} = useCurrentLocation();
+    const params = useParams();
+    const restaurantID = params.restaurantID as string;
 
-const RestaurantPage = async (props: PropType) => {
-    const restaurantID = (await props.params).restaurantID;
+    const { data, isLoading, isError } = useQuery({
+        queryKey: [restaurantID, currentLocation?.id],
+        queryFn: () => getRestaurantDetailsRequest(
+            restaurantID,
+            currentLocation?.latitude,
+            currentLocation?.longitude
+        ),
+        enabled: !!restaurantID
+    });
+
+    if (isError || !data) {
+        return <p>Error loading restaurant details.</p>;
+    }
+
+    if (isLoading) {
+        return (
+            <FullscreenLoader />
+        )
+    }
 
     return (
         <div className="w-full flex flex-col">
             <RestaurantInfo
-                name={RESTAURANT_DUMMY_DATA.name}
-                description={RESTAURANT_DUMMY_DATA.description}
-                imageUrl={RESTAURANT_DUMMY_DATA.imageUrl}
-                distance={RESTAURANT_DUMMY_DATA.distance}
-                averageRate={RESTAURANT_DUMMY_DATA.averageRate}
-                rateCount={RESTAURANT_DUMMY_DATA.rateCount}
-                location={RESTAURANT_DUMMY_DATA.location}
-                contactInfo={RESTAURANT_DUMMY_DATA.contactInfo}
-                openingHours={RESTAURANT_DUMMY_DATA.openingHours}
+                name={data?.name}
+                description={data?.description}
+                imageUrl={data?.imageUrl}
+                distance={data?.distance}
+                averageRate={data?.averageRate}
+                rateCount={data?.rateCount}
+                location={data?.location}
+                contactInfo={data?.contactInfo}
+                openingHours={data?.openingHours}
             />
             <Menu
-                menuData={RESTAURANT_DUMMY_DATA.menu}
+                menuData={data?.menu}
                 restaurantId={restaurantID}
-                restaurantName={RESTAURANT_DUMMY_DATA.name}
+                restaurantName={data?.name}
             />
             <CartRedirectButton 
                 restaurantId={restaurantID}
