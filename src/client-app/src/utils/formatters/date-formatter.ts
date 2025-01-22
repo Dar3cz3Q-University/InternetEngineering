@@ -1,5 +1,3 @@
-import { format } from "date-fns-tz";
-
 const getUserTimezoneOffset = (): number => {
     return new Date().getTimezoneOffset() * -1.0;
 };
@@ -17,7 +15,6 @@ const formatDate = (isoString: string): string => {
 };
 
 const formatTime = (isoString: string): string => {
-    return format(isoString, "HH:mm");
     const timezoneOffset = getUserTimezoneOffset();
     console.log(timezoneOffset);
     const date = new Date(isoString);
@@ -29,7 +26,6 @@ const formatTime = (isoString: string): string => {
 };
 
 const formatShortTime = (timeString: string): string => {
-    return format(timeString, "HH:mm");
     const [hours, minutes] = timeString.split(":");
     return `${hours}:${minutes}`;
 };
