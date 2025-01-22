@@ -66,7 +66,7 @@ namespace Core.Api.Common.Mapping
                 .Map(dest => dest, src => src.Item2);
 
             config.NewConfig<GetRestaurantsRequest, GetRestaurantsQuery>()
-                .Map(dest => dest.CategoriesIds, src => (src.Categories ?? new List<Guid>()).ConvertAll(CategoryId.Create));
+                .Map(dest => dest.CategoriesIds, src => ParseCategoryIds(src.Categories));
 
             //
             // Utils
@@ -88,6 +88,19 @@ namespace Core.Api.Common.Mapping
             }
 
             return false;
+        }
+
+        private static List<CategoryId> ParseCategoryIds(string categories)
+        {
+            if (string.IsNullOrWhiteSpace(categories))
+                return [];
+
+            return categories
+                .Split(",", StringSplitOptions.RemoveEmptyEntries)
+                .Select(id => Guid.TryParse(id, out var guid) ? (Guid?)guid : null)
+                .Where(guid => guid.HasValue)
+                .Select(guid => CategoryId.Create(guid.Value))
+                .ToList();
         }
     }
 }

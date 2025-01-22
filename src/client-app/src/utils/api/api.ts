@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 export type ApiError = AxiosError<ApiErrorResponse>;
 
 const api = axios.create({
-    baseURL: "http://maselniczka:8080/api/v1", // TODO: Move to .env
+    baseURL: "http://localhost:8080/api/v1", // TODO: Move to .env
     withCredentials: true,
 });
 

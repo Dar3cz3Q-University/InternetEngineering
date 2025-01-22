@@ -42,7 +42,7 @@ namespace Core.Infrastructure.Persistence.Repositories
 
         public async Task<ErrorOr<List<Category>>> GetAllAsync()
         {
-            return await _dbContext.Set<Category>().ToListAsync();
+            return await _dbContext.Set<Category>().OrderBy(o => o.Name).ToListAsync();
         }
 
         public async Task<ErrorOr<Category>> GetByIdAsync(CategoryId id)

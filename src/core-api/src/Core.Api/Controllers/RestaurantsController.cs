@@ -24,7 +24,8 @@ namespace Core.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] GetRestaurantsRequest request)
+        public async Task<IActionResult> GetAll(
+            [FromQuery] GetRestaurantsRequest request)
         {
             var query = _mapper.Map<GetRestaurantsQuery>(request);
 

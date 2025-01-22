@@ -51,7 +51,7 @@ namespace Core.Infrastructure.Persistence.Repositories
 
         public async Task<ErrorOr<List<Order>>> GetAllAsync()
         {
-            return await _dbContext.Set<Order>().ToListAsync();
+            return await _dbContext.Set<Order>().OrderByDescending(o => o.UpdatedDateTime).ToListAsync();
         }
 
         public async Task<ErrorOr<List<Order>>> GetAllReadyToCollectAsync()

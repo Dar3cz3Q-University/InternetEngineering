@@ -3,5 +3,5 @@
     public record GetRestaurantsRequest(
         double? Latitude,
         double? Longitude,
-        List<Guid>? Categories);
+        string? Categories);
 }
