@@ -4,8 +4,8 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 export type ApiError = AxiosError<ApiErrorResponse>;
 
 const api = axios.create({
-    baseURL: "http://localhost:8080/api/v1", // TODO: Move to .env
-    withCredentials: true,    
+    baseURL: process.env.NEXT_PUBLIC_CORE_API_BASE_URL,
+    withCredentials: true,
 });
 
 const apiRequest = async <T>(config: AxiosRequestConfig): Promise<T> => {
