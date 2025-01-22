@@ -17,6 +17,8 @@
     "@tanstack/react-query-devtools": "^5.64.2",
     "axios": "^1.7.9",
     "convert-units": "^2.3.4",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
     "embla-carousel": "^8.5.1",
     "embla-carousel-react": "^8.5.1",
     "fuse.js": "^7.0.0",
