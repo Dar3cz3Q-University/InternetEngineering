@@ -80,7 +80,7 @@ namespace Core.Infrastructure
             services.AddSingleton<IPasswordHasher, Argon2PasswordHasher>();
 
             services.AddAuthentication(defaultScheme: JwtBearerDefaults.AuthenticationScheme)
-                .AddJwtBearer(options => 
+                .AddJwtBearer(options =>
                 {
                     options.TokenValidationParameters = new TokenValidationParameters()
                     {

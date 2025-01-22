@@ -16,7 +16,7 @@ namespace Core.Infrastructure.Authentication.Token
         private readonly IDateTimeProvider _dateTimeProvider = dateTimeProvider;
         private readonly JwtSettings _jwtSettings = jwtOptions.Value;
 
-        public (string, DateTime)GenerateToken(User user)
+        public (string, DateTime) GenerateToken(User user)
         {
             var signingCredentials = new SigningCredentials(
                 new SymmetricSecurityKey(
