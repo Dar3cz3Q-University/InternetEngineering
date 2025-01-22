@@ -38,14 +38,6 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
     });
 
     React.useEffect(() => {
-        console.log(user);
-    }, [user])
-
-    React.useEffect(() => {
-        console.log(user);
-    }, [user])
-
-    React.useEffect(() => {
         if (!isAuthenticated() && !excludedPaths.includes(pathname)) {
             router.push("/login")
         }

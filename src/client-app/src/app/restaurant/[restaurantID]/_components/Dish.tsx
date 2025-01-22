@@ -3,7 +3,7 @@
 import { RestaurantItemType } from "@/types/restaurant/RestaurantItemTtype";
 import Image from "next/image";
 import AddIcon from '@mui/icons-material/Add';
-import { IconButton } from "@mui/material";
+import { CircularProgress, IconButton } from "@mui/material";
 
 import React from "react";
 import { addToCart } from "@/utils/cart/cart-cookie";
@@ -15,19 +15,27 @@ type PropType = {
 }
 
 const Dish = (props: PropType) => {
-    const {dishData, restaurantId, restaurantName} = props;
+    const { dishData, restaurantId, restaurantName } = props;
+    const [loading, setLoading] = React.useState(false);
 
-    const handleAddItem = () => {
-        addToCart(
-            restaurantId, 
-            restaurantName,
-            {
-            id: dishData.id,
-            name: dishData.name,
-            quantity: 1,
-            price: dishData.price
-            }
-        );
+    const handleAddItem = async () => {
+        setLoading(true);
+        try {
+            await new Promise(resolve => setTimeout(resolve, 500));
+
+            addToCart(
+                restaurantId,
+                restaurantName,
+                {
+                    id: dishData.id,
+                    name: dishData.name,
+                    quantity: 1,
+                    price: dishData.price
+                }
+            );
+        } finally {
+            setLoading(false);
+        }
     }
 
     return (
@@ -37,7 +45,7 @@ const Dish = (props: PropType) => {
                     src={dishData.imageUrl}
                     fill={true}
                     alt="Dish image"
-                    style={{objectFit: "cover"}}
+                    style={{ objectFit: "cover" }}
                     className="rounded-t-3xl"
                 />
             </div>
@@ -50,16 +58,20 @@ const Dish = (props: PropType) => {
                     onClick={handleAddItem}
                     size="small"
                     sx={{
-                        color: "var(--color-white)", 
+                        color: "var(--color-white)",
                         backgroundColor: "var(--color-primary)",
                         width: "32px",
                         height: "32px",
                         borderRadius: "100%",
                         "&:hover": {
-                            backgroundColor: "var(--color-gray)"
+                            backgroundColor: "var(--color-primary)"
                         }
                     }}>
-                    <AddIcon />
+                    {loading ? (
+                        <CircularProgress size={16} color="inherit" />
+                    ) : (
+                        <AddIcon />
+                    )}
                 </IconButton>
             </div>
         </div>

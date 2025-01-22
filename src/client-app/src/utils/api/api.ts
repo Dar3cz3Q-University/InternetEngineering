@@ -4,7 +4,7 @@ import axios, { AxiosError, AxiosRequestConfig } from "axios";
 export type ApiError = AxiosError<ApiErrorResponse>;
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_CORE_API_BASE_URL,
+    baseURL: "http://localhost:8080",
     withCredentials: true,
 });
 

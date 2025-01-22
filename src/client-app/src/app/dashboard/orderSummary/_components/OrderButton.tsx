@@ -41,7 +41,6 @@ const OrderButton = (props: PropType) => {
         onError: (err: any) => {
             // TODO: Change any to error type
             const message = formatAxiosError(err);
-            console.log(err);
             openToast(message, "error");
         }
     });

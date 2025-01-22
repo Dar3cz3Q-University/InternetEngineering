@@ -11,9 +11,9 @@ type DashboardSearchContextType = {
 
 const DashboardSearchContext = React.createContext<DashboardSearchContextType>({
     searchValue: null,
-    setSearchValue: () => {},
+    setSearchValue: () => { },
     selectedCategoryIDs: [],
-    toggleSelectedCategoryID: () => {}
+    toggleSelectedCategoryID: () => { }
 });
 
 const DashboardSearchProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
@@ -28,8 +28,6 @@ const DashboardSearchProvider: React.FC<{ children: React.ReactNode }> = ({ chil
             setSelectedCategoryIDs(prev => [...prev, id]);
         }
     }
-
-    React.useEffect(() => console.log(selectedCategoryIDs), [selectedCategoryIDs])
 
     return (
         <DashboardSearchContext.Provider
@@ -53,4 +51,4 @@ const useDashboardSearch = (): DashboardSearchContextType => {
     return context;
 }
 
-export {DashboardSearchProvider, useDashboardSearch};
+export { DashboardSearchProvider, useDashboardSearch };

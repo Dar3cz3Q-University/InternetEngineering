@@ -7,5 +7,6 @@
         string ImageUrl,
         double? Distance,
         double AverageRate,
+        double RatesCount,
         bool IsActive);
 }

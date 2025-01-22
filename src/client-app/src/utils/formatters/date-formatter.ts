@@ -1,6 +1,13 @@
+const getUserTimezoneOffset = (): number => {
+    return new Date().getTimezoneOffset() * -1.0;
+};
+
 const formatDate = (isoString: string): string => {
-    //ADD UTC +1
+    const timezoneOffset = getUserTimezoneOffset();
     const date = new Date(isoString);
+    date.setMinutes(date.getMinutes() + timezoneOffset);
+    console.log(date);
+
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const year = date.getFullYear();
@@ -8,8 +15,11 @@ const formatDate = (isoString: string): string => {
 };
 
 const formatTime = (isoString: string): string => {
-    //ADD UTC +1
+    const timezoneOffset = getUserTimezoneOffset();
+    console.log(timezoneOffset);
     const date = new Date(isoString);
+    date.setMinutes(date.getMinutes() + timezoneOffset);
+
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
     return `${hours}:${minutes}`;
@@ -20,4 +30,4 @@ const formatShortTime = (timeString: string): string => {
     return `${hours}:${minutes}`;
 };
 
-export {formatDate, formatTime, formatShortTime};
+export { formatDate, formatTime, formatShortTime };

@@ -6,22 +6,23 @@ import convert from "convert-units";
 
 type PropType = {
     restaurantData: Omit<RestaurantType, "description">;
+    href: string;
 }
 
 const RestaurantsListItem = (props: PropType) => {
-    const { restaurantData } = props;
+    const { restaurantData, href } = props;
 
     const { val, unit } = convert(restaurantData.distance).from("km").toBest();
 
     return (
-        <Link href={`/restaurant/${restaurantData.id}`} className="w-full">
+        <Link href={href} className="w-full">
             <div className={`flex-shrink-0 w-full h-[250px] flex flex-col shadow-lg rounded-3xl font-roboto relative ${!restaurantData.isActive ? "opacity-80 grayscale pointer-events-none" : ""}`}>
                 <div className="relative w-full h-[70%]">
                     <Image
                         src={restaurantData.imageUrl}
                         fill={true}
                         alt="Recommended restaurant image"
-                        style={{objectFit: "cover"}}
+                        style={{ objectFit: "cover" }}
                         className="rounded-t-3xl"
                     />
                 </div>
@@ -30,8 +31,8 @@ const RestaurantsListItem = (props: PropType) => {
                     <p className="opacity-70">{val.toFixed(2)} {unit}</p>
                 </div>
                 <div className="flex flex-row justify-end absolute bottom-[12px] right-[16px]">
-                    <StarIcon fontSize="small" sx={{marginTop: "1px", marginRight: "2px", color: "primary.main"}}/>
-                    <p className="opacity-70">{restaurantData.averageRate.toFixed(1)} ({restaurantData.ratesCount || 100})</p>
+                    <StarIcon fontSize="small" sx={{ marginTop: "1px", marginRight: "2px", color: "primary.main" }} />
+                    <p className="opacity-70">{restaurantData.averageRate.toFixed(1)} ({restaurantData.ratesCount})</p>
                 </div>
             </div>
         </Link>

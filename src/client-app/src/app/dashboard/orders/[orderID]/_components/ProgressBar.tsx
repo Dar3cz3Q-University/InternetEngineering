@@ -16,7 +16,7 @@ const ProgressBar = (props: PropType) => {
         <div className="w-full flex flex-col mb-[24px]">
             <div className="w-full flex flex-row justify-between">
                 <p>{formatTime(createdDateTime)}</p>
-                <p>{formatTime(estimatedDeliveryTime)}</p>
+                {estimatedDeliveryTime !== null ? <p>{formatTime(estimatedDeliveryTime)}</p> : null}
             </div>
             <LinearProgress />
         </div>

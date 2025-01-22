@@ -1,15 +1,14 @@
 import { CartItemType } from "@/types/cart/CartItemType";
 import { CartType } from "@/types/cart/CartType";
 import { RestaurantCartType } from "@/types/cart/RestaurantCartType";
-import Cookies from "js-cookie"
 
-const COOKIE_NAME = "cart";
+const STORAGE_KEY = "cart";
 
 export const addToCart = (restaurantId: string, restaurantName: string, item: CartItemType): void => {
     const cart: CartType = getCart();
 
-    if(!cart[restaurantId]) {
-        cart[restaurantId] = {restaurantName, items: []};
+    if (!cart[restaurantId]) {
+        cart[restaurantId] = { restaurantName, items: [] };
     }
 
     const existingItemIndex = cart[restaurantId].items.findIndex((cartItem: CartItemType) => cartItem.id === item.id);
@@ -21,14 +20,14 @@ export const addToCart = (restaurantId: string, restaurantName: string, item: Ca
         cart[restaurantId].items.push(item);
     }
 
-    Cookies.set(COOKIE_NAME, JSON.stringify(cart), {expires: 1});
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
 
     const event = new CustomEvent("cartUpdated");
     window.dispatchEvent(event);
 }
 
 export const getCart = (): CartType => {
-    const cart = Cookies.get(COOKIE_NAME);
+    const cart = localStorage.getItem(STORAGE_KEY);
 
     if (!cart) {
         return {};
@@ -38,8 +37,8 @@ export const getCart = (): CartType => {
         return JSON.parse(cart) as CartType;
     }
     catch (error) {
-        console.error("Error parsing cart cookie: ", error);
-        return {}
+        console.error("Error parsing cart data: ", error);
+        return {};
     }
 };
 
@@ -58,7 +57,7 @@ export const removeRestaurantCart = (restaurantId: string): void => {
 
     if (cart[restaurantId]) {
         delete cart[restaurantId];
-        Cookies.set(COOKIE_NAME, JSON.stringify(cart), { expires: 1 });
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(cart));
     }
 };
 

@@ -11,9 +11,9 @@ type PropType = {
 }
 
 const RestaurantsList = (props: PropType) => {
-    const {categoryID} = props;
-    const {currentLocation} = useCurrentLocation();
-    
+    const { categoryID } = props;
+    const { currentLocation } = useCurrentLocation();
+
     const { data, isLoading } = useQuery({
         queryKey: [categoryID, currentLocation?.id],
         queryFn: () => getRestaurantsRequest(
@@ -26,13 +26,21 @@ const RestaurantsList = (props: PropType) => {
     return (
         <div className="w-full flex flex-col items-center gap-[32px]">
             {
-            isLoading ? <ListSkeleton /> :
-            data?.map(restaurant => (
-                <RestaurantsListItem
-                    key={restaurant.id}
-                    restaurantData={restaurant}
-                />
-            ))
+                isLoading ? (
+                    <ListSkeleton />
+                ) : (
+                    data !== undefined && data?.length > 0 ? (
+                        data.map(restaurant => (
+                            <RestaurantsListItem
+                                key={restaurant.id}
+                                restaurantData={restaurant}
+                                href={restaurant.isActive ? `/restaurant/${restaurant.id}` : "#"}
+                            />
+                        ))
+                    ) : (
+                        <p className="font-semibold text-lg opacity-70">No nearby restaurants in this category</p>
+                    )
+                )
             }
         </div>
     )

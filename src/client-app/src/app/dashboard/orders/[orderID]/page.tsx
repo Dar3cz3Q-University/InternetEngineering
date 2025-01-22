@@ -26,8 +26,6 @@ const DashboardOrderDetailsPage = () => {
         return null;
     }
 
-    console.log(data);
-
     return (
         <DashboardProviders>
             <DashboardPageWrapper>

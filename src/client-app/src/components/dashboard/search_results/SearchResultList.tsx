@@ -8,8 +8,8 @@ import { useCurrentLocation } from "@/components/contexts/CurrentLocationContext
 import getRestaurantsRequest from "./_queries/GetRestaurantsQuery";
 
 const SearchResultList = () => {
-    const {searchValue, selectedCategoryIDs} = useDashboardSearch();
-    const {currentLocation} = useCurrentLocation();
+    const { searchValue, selectedCategoryIDs } = useDashboardSearch();
+    const { currentLocation } = useCurrentLocation();
 
     const { data = [], isLoading } = useQuery({
         queryKey: [selectedCategoryIDs, currentLocation?.id],

@@ -28,7 +28,7 @@ namespace Core.Infrastructure.Messaging
             var optionsBuilder = new MqttClientOptionsBuilder()
                 .WithTcpServer(settings.BrokerHost, settings.BrokerPort)
                 .WithClientId(settings.ClientId + "-subscriber")
-                .WithCleanStart(false);
+                .WithCleanSession(false);
 
             if (!string.IsNullOrEmpty(settings.Username) && !string.IsNullOrEmpty(settings.Password))
                 optionsBuilder.WithCredentials(settings.Username, settings.Password);
@@ -36,8 +36,8 @@ namespace Core.Infrastructure.Messaging
             _options = optionsBuilder.Build();
 
             _client.ApplicationMessageReceivedAsync += OnMessageReceived;
-
             _client.DisconnectedAsync += OnDisconnectedAsync;
+            _client.ConnectedAsync += OnConnectedAsync;
         }
 
         private async Task ConnectWithRetryAsync()
@@ -54,7 +54,7 @@ namespace Core.Infrastructure.Messaging
                     }
                     catch (Exception ex)
                     {
-                        Console.WriteLine($"Connection failed: {ex.Message}. Retrying in 5 seconds...");
+                        Console.WriteLine($"Connection failed: {ex.Message}. Retrying in {RECONNECT_DELAY_SECONDS} seconds...");
                         await Task.Delay(TimeSpan.FromSeconds(RECONNECT_DELAY_SECONDS));
                     }
                 }
@@ -63,12 +63,24 @@ namespace Core.Infrastructure.Messaging
 
         public async Task StartAsync(CancellationToken cancellationToken)
         {
+            Console.WriteLine("Łączenie z brokerem MQTT...");
+            await ConnectWithRetryAsync();
+        }
+
+        public async Task StopAsync(CancellationToken cancellationToken)
+        {
+            Console.WriteLine("Rozłączanie z brokerem MQTT...");
+            if (_client.IsConnected)
+            {
+                await _client.DisconnectAsync();
+            }
+        }
+
+        private async Task OnConnectedAsync(MqttClientConnectedEventArgs args)
+        {
+            Console.WriteLine("MQTT Client connected. Subscribing to topic...");
             try
             {
-                Console.WriteLine("Łączenie z brokerem MQTT...");
-                await _client.ConnectAsync(_options, cancellationToken);
-                Console.WriteLine("Połączono z brokerem MQTT.");
-
                 await _client.SubscribeAsync(new MqttTopicFilter
                 {
                     Topic = TOPIC,
@@ -78,16 +90,7 @@ namespace Core.Infrastructure.Messaging
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Błąd podczas łączenia lub subskrypcji: {ex.Message}");
-            }
-        }
-
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            Console.WriteLine("Rozłączanie z brokerem MQTT...");
-            if (_client.IsConnected)
-            {
-                await _client.DisconnectAsync();
+                Console.WriteLine($"Błąd podczas subskrypcji: {ex.Message}");
             }
         }
 
