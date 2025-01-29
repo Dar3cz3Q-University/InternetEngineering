@@ -7,11 +7,11 @@ Glovo but only butter.
 ---
 
 ## Applications workflows
-[![Client-App workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client-app.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client)
+[![Client-App workflow status](https://github.com/Dar3cz3Q-University/InternetEngineering/actions/workflows/client-app.yml/badge.svg)](https://github.com/Dar3cz3Q-University/InternetEngineering/tree/master/src/client)
 
-[![Core-Api workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/core-api.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/core-api)
+[![Core-Api workflow status](https://github.com/Dar3cz3Q-University/InternetEngineering/actions/workflows/core-api.yml/badge.svg)](https://github.com/Dar3cz3Q-University/InternetEngineering/tree/master/src/core-api)
 
-[![Restaurant-Service workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/restaurant-service)
+[![Restaurant-Service workflow status](https://github.com/Dar3cz3Q-University/InternetEngineering/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/Dar3cz3Q-University/InternetEngineering/master/src/restaurant-service)
 
 ---
 
@@ -23,7 +23,7 @@ Glovo but only butter.
 ### Local development
 1. Clone the repository:
    ```shell
-   git clone https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka.git
+   git clone https://github.com/Dar3cz3Q-University/InternetEngineering
    cd projekt-zaliczeniowy-maselniczka
    ```
 2. Setup applications:
