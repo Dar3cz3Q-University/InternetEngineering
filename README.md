@@ -24,7 +24,7 @@ Glovo but only butter.
 1. Clone the repository:
    ```shell
    git clone https://github.com/Dar3cz3Q-University/InternetEngineering
-   cd projekt-zaliczeniowy-maselniczka
+   cd InternetEngineering
    ```
 2. Setup applications:
     * [Client-App](/src/client-app)
