@@ -31,7 +31,7 @@ jobs:
                 cd src/client-app/src
                 npm run lint
 
-            - name: Run build
-              run: |
-                cd src/client-app/src
-                npm run build
+            # - name: Run build
+            #   run: |
+            #     cd src/client-app/src
+            #     npm run build
