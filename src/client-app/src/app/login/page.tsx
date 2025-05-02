@@ -11,6 +11,7 @@ import loginRequest from "./_mutations/LoginMutation";
 import { UserType } from "@/types/user/UserType";
 import { useUser } from "@/components/contexts/UserContext";
 import formatAxiosError from "@/utils/api/error-formatter";
+import { AxiosError } from "axios";
 
 const LoginPage = () => {
     const { login } = useUser();
@@ -32,8 +33,7 @@ const LoginPage = () => {
         onSuccess: (res: UserType) => {
             login(res);
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }
@@ -119,7 +119,7 @@ const LoginPage = () => {
                 </Button>
                 <Divider sx={{ width: "100%" }}>OR</Divider>
                 <div className="w-full flex items-center justify-center">
-                    <p>Don't have account?</p>
+                    <p>Don&apos;t have account?</p>
                     <Link className="font-bold text-primary ml-[8px]" href="/register">Register</Link>
                 </div>
             </div>

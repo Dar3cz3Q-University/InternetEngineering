@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation"
 import createOrderRequest from "./_mutations/CreateOrderMutation";
 import { OrderDetailsType } from "@/types/order/OrderDetailsType";
 import formatAxiosError from "@/utils/api/error-formatter";
+import { AxiosError } from "axios";
 
 type PropType = {
     restaurantId: string | null;
@@ -38,8 +39,7 @@ const OrderButton = (props: PropType) => {
             removeRestaurantCart(restaurantId!);
             router.push(`/dashboard/orders/${res.id}`);
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

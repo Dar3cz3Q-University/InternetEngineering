@@ -6,7 +6,7 @@ const getRestaurantsRequest = async (
   lat?: number,
   lng?: number
 ): Promise<RestaurantType[]> => {
-  const params: Record<string, any> = {
+  const params: Record<string, any> = { // eslint-disable-line @typescript-eslint/no-explicit-any
     latitude: lat,
     longitude: lng,
   };

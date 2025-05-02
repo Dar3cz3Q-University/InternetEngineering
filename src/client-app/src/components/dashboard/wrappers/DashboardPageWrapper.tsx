@@ -5,12 +5,10 @@ import DashboardNavigation from "../navigation/DashboardNavigation";
 import React from "react";
 import SearchResults from "../search_results/SearchResults";
 import DashboardHeader from "../header/DashboardHeader";
-import { useUser } from "@/components/contexts/UserContext";
 
-const DashboardPageWrapper: React.FC<{children: React.ReactNode}> = ({ children }) => {
-    const {searchValue} = useDashboardSearch();
-    const {user} = useUser();
-    
+const DashboardPageWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+    const { searchValue } = useDashboardSearch();
+
     return (
         <div className="min-w-screen min-h-screen flex flex-col items-center bg-background_dark text-black overflow-x-hidden">
             <header className="w-full p-[24px]">

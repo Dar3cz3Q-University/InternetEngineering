@@ -11,6 +11,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import newAddressRequest from "./_mutations/NewAddressMutation";
 import formatAxiosError from "@/utils/api/error-formatter";
 import { useUser } from "@/components/contexts/UserContext";
+import { AxiosError } from "axios";
 
 const AddressesList = () => {
     const { user } = useUser();
@@ -23,8 +24,7 @@ const AddressesList = () => {
             openToast("Address added successfully.", "success");
             queryClient.invalidateQueries({ queryKey: ['user'] });
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

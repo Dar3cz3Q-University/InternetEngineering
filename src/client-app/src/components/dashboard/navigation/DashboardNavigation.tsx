@@ -14,12 +14,13 @@ const DashboardNavigation = () => {
     const pathname = usePathname();
 
     React.useEffect(() => {
-        const currentRouteIndex = routes.findIndex(route => 
+        const currentRouteIndex = routes.findIndex(route =>
             pathname.startsWith(route)
         );
         if (currentRouteIndex !== -1) {
             setValue(currentRouteIndex);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pathname])
 
     const routes = [
@@ -37,10 +38,10 @@ const DashboardNavigation = () => {
                 if (newValue !== value) {
                     setValue(newValue);
                     router.push(routes[newValue]);
-                }  
+                }
             }}
         >
-            <BottomNavigationAction label="Home" icon={<HomeIcon />}/>
+            <BottomNavigationAction label="Home" icon={<HomeIcon />} />
             <BottomNavigationAction label="Menu" icon={<RestaurantMenuIcon />} />
             <BottomNavigationAction label="Orders" icon={<HistoryIcon />} />
             <BottomNavigationAction label="Account" icon={<PersonIcon />} />

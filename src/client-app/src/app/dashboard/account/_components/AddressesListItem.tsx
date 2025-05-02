@@ -16,14 +16,11 @@ type PropType = {
 const AddressesListItem = (props: PropType) => {
     const {
         index,
-        id,
         country,
         city,
         street,
         buildingNumber,
         apartmentNumber,
-        latitude,
-        longitude
     } = props;
 
     return (
@@ -48,7 +45,7 @@ const AddressesListItem = (props: PropType) => {
                     <DeleteIcon
                         sx={{
                             color: "var(--color-white)"
-                        }} 
+                        }}
                     />
                 </IconButton>
             </div>

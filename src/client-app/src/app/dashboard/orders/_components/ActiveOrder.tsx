@@ -5,10 +5,11 @@ import { formatTime } from "@/utils/formatters/date-formatter";
 import { Button } from "@mui/material";
 import Image from "next/image";
 import convert from "convert-units";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import deliverOrderRequest from "../_mutations/DeliverOrderMutation";
 import formatAxiosError from "@/utils/api/error-formatter";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 type PropType = {
     activeOrderData: ActiveOrderType;
@@ -26,8 +27,7 @@ const ActiveOrder = (props: PropType) => {
             openToast("Order has been delivered successfully.", "success");
             router.refresh();
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

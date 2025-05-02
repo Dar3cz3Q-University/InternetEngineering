@@ -1,6 +1,5 @@
 "use client";
 
-import { RegisterType } from "@/types/user/RegisterType";
 import { RegisterUserType } from "@/types/user/RegisterUserType";
 import { isValidEmail, isValidPassword, isNonEmptyTextWithoutNumbersAndSpecialChars, isValidPhoneNumber } from "@/utils/validators/regexes";
 import { Visibility, VisibilityOff } from "@mui/icons-material";

@@ -5,6 +5,7 @@ import { useToast } from "@/components/contexts/ToastContext";
 import formatAxiosError from "@/utils/api/error-formatter";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/components/contexts/UserContext";
+import { AxiosError } from "axios";
 
 const LogoutButton = () => {
     const { setUser } = useUser();
@@ -13,8 +14,7 @@ const LogoutButton = () => {
 
     const { mutate } = useMutation({
         mutationFn: logoutRequest,
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

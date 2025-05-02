@@ -5,6 +5,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import changeDistanceRequest from "./_mutations/ChangeDistanceMutation";
 import formatAxiosError from "@/utils/api/error-formatter";
 import { useUser } from "@/components/contexts/UserContext";
+import { AxiosError } from "axios";
 
 const ApplyChangesButton = () => {
     const { user } = useUser();
@@ -17,8 +18,7 @@ const ApplyChangesButton = () => {
             openToast("Max search distance updated successfully.", "success");
             queryClient.invalidateQueries({ queryKey: ['user'] });
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

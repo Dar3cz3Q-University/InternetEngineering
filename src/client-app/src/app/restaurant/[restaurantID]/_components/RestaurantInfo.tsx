@@ -2,9 +2,7 @@ import { AddressType } from "@/types/common/AddressType";
 import { ContactInfoType } from "@/types/restaurant/ContactInfoType";
 import { OpeningHoursType } from "@/types/restaurant/OpeningHoursType";
 import Image from "next/image";
-import Breadcrumbs from "@mui/material/Breadcrumbs"
 import StarIcon from '@mui/icons-material/Star';
-import CircleIcon from '@mui/icons-material/Circle';
 import { formatShortTime } from "@/utils/formatters/date-formatter";
 import { Divider } from "@mui/material";
 import PreviousPageButton from "@/components/ui/buttons/PreviousPageButton";
@@ -29,7 +27,6 @@ const RestaurantInfo = (props: PropType) => {
         imageUrl,
         distance,
         averageRate,
-        rateCount,
         location,
         contactInfo,
         openingHours
@@ -47,14 +44,14 @@ const RestaurantInfo = (props: PropType) => {
                     src={imageUrl}
                     fill={true}
                     alt="Restaurant image"
-                    style={{objectFit: "cover"}}
+                    style={{ objectFit: "cover" }}
                 />
             </div>
             <div className="w-full flex flex-col px-[32px] items-center">
                 <p className="text-center text-2xl font-bold mt-[8px]">{name}</p>
                 <div className="w-[120px] flex flex-row font-roboto justify-between items-center opacity-70">
                     <div className="flex flex-row">
-                        <StarIcon fontSize="small" sx={{marginTop: "1px", marginRight: "2px", color: "primary.main"}}/>
+                        <StarIcon fontSize="small" sx={{ marginTop: "1px", marginRight: "2px", color: "primary.main" }} />
                         <p>{averageRate.toFixed(1)}</p>
                     </div>
                     <p>{val.toFixed(2)} {unit}</p>
@@ -72,9 +69,9 @@ const RestaurantInfo = (props: PropType) => {
                         <p className="font-semibold">{contactInfo.email}</p>
                     </div>
                 </div>
-                <Divider sx={{width: "100%", marginTop: "16px"}} />
+                <Divider sx={{ width: "100%", marginTop: "16px" }} />
             </div>
-            
+
         </div>
     )
 }

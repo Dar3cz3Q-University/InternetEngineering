@@ -14,6 +14,7 @@ import { useToast } from "@/components/contexts/ToastContext";
 import { UserType } from "@/types/user/UserType";
 import { useUser } from "@/components/contexts/UserContext";
 import formatAxiosError from "@/utils/api/error-formatter";
+import { AxiosError } from "axios";
 
 const RegisterPage = () => {
     const { login } = useUser();
@@ -48,8 +49,7 @@ const RegisterPage = () => {
             login(res);
             openToast("Account created successfully.", "success");
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

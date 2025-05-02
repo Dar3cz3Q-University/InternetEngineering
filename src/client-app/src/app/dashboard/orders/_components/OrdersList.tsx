@@ -4,6 +4,7 @@ import ListSkeleton from "@/components/ui/skeletons/ListSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import getOrdersRequest from "../_queries/GetOrdersQuery";
 import OrdersListItem from "./OrdersListItem";
+import { AxiosError } from "axios";
 
 const OrdersList = () => {
     const { data, isLoading, error } = useQuery({
@@ -13,7 +14,7 @@ const OrdersList = () => {
     });
 
     if (error) {
-        const errorStatus = (error as any)?.response?.status;
+        const errorStatus = (error as AxiosError)?.response?.status;
         if (errorStatus === 404) {
             return <p className="font-semibold text-lg">No orders found</p>;
         }

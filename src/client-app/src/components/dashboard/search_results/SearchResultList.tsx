@@ -1,5 +1,4 @@
 import { useDashboardSearch } from "@/components/contexts/DashboardSearchContext";
-import { RestaurantType } from "@/types/restaurant/RestaurantType";
 import SearchResultListItem from "./SearchResultListItem";
 import Fuse from "fuse.js";
 import React from "react"
@@ -11,7 +10,7 @@ const SearchResultList = () => {
     const { searchValue, selectedCategoryIDs } = useDashboardSearch();
     const { currentLocation } = useCurrentLocation();
 
-    const { data = [], isLoading } = useQuery({
+    const { data = [] } = useQuery({
         queryKey: [selectedCategoryIDs, currentLocation?.id],
         queryFn: () => getRestaurantsRequest(
             selectedCategoryIDs,

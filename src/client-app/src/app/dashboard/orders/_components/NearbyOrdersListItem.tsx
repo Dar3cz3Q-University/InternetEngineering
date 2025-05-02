@@ -8,6 +8,7 @@ import takeOrderRequest from "../_mutations/TakeOrderMutation";
 import formatAxiosError from "@/utils/api/error-formatter";
 import convert from "convert-units";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 type PropType = {
     orderData: NearbyOrderType;
@@ -25,8 +26,7 @@ const NearbyOrdersListItem = (props: PropType) => {
             openToast("Order has been taken successfully.", "success");
             router.refresh();
         },
-        onError: (err: any) => {
-            // TODO: Change any to error type
+        onError: (err: AxiosError) => {
             const message = formatAxiosError(err);
             openToast(message, "error");
         }

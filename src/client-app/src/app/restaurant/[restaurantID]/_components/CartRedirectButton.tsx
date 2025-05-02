@@ -9,7 +9,7 @@ type PropType = {
 }
 
 const CartRedirectButton = (props: PropType) => {
-    const {restaurantId} = props;
+    const { restaurantId } = props;
     const [isVisible, setIsVisible] = React.useState(true);
     const [itemCount, setItemCount] = React.useState(0);
 
@@ -21,7 +21,7 @@ const CartRedirectButton = (props: PropType) => {
     React.useEffect(() => {
         updateItemCount();
         const handleCartUpdate = () => {
-                updateItemCount();
+            updateItemCount();
         }
 
         const handleScroll = () => {
@@ -35,6 +35,7 @@ const CartRedirectButton = (props: PropType) => {
             window.removeEventListener("scroll", handleScroll);
             window.removeEventListener("cartUpdated", handleCartUpdate);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [restaurantId])
 
     return (

@@ -43,7 +43,7 @@ const UserProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => 
         }
 
         setUser(data || null);
-    }, [data, isLoading])
+    }, [data, isLoading, pathname, router])
 
     return (
         <UserContext.Provider

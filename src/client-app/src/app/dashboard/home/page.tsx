@@ -1,6 +1,5 @@
 import DashboardProviders from "@/components/dashboard/providers/DashboardProviders";
 import DashboardPageWrapper from "@/components/dashboard/wrappers/DashboardPageWrapper"
-import HomeHeader from "../../../components/dashboard/header/DashboardHeader";
 import PromotionsList from "./_components/main_content/promotions/PromotionsList";
 import RestaurantsTabs from "./_components/main_content/recommended_restaurants/RestaurantsTabs";
 import SponsoredBanner from "./_components/main_content/SponsoredBanner";

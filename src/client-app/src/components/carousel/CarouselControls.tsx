@@ -49,7 +49,7 @@ const usePrevNextButtons = (
 
 
 const PrevButton: React.FC<IconButtonProps> = (props) => {
-    const { children, ...restProps} = props;
+    const { children, ...restProps } = props; // eslint-disable-line @typescript-eslint/no-unused-vars
 
     return (
         <IconButton
@@ -64,7 +64,7 @@ const PrevButton: React.FC<IconButtonProps> = (props) => {
 }
 
 const NextButton: React.FC<IconButtonProps> = (props) => {
-    const { children, ...restProps} = props;
+    const { children, ...restProps } = props; // eslint-disable-line @typescript-eslint/no-unused-vars
 
     return (
         <IconButton
@@ -76,6 +76,6 @@ const NextButton: React.FC<IconButtonProps> = (props) => {
             <NavigateNextIcon fontSize="inherit" />
         </IconButton>
     )
-} 
+}
 
-export {usePrevNextButtons, PrevButton, NextButton}
+export { usePrevNextButtons, PrevButton, NextButton }

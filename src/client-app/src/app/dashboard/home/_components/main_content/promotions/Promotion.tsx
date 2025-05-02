@@ -9,7 +9,7 @@ type PropType = {
 }
 
 const Promotion: React.FC<PropType> = (props) => {
-    const {id, imageUrl, title, description} = props;
+    const { imageUrl, title, description } = props;
 
     return (
         <div className="w-full flex flex-row justify-start items-center py-[12px]">
@@ -26,7 +26,7 @@ const Promotion: React.FC<PropType> = (props) => {
                 <p className="opacity-70 leading-tight">{description}</p>
             </div>
             <div className="flex flex-col justify-center ml-[8px]">
-                <NavigateNextIcon fontSize="large" sx={{color: "var(--color-gray)"}} />
+                <NavigateNextIcon fontSize="large" sx={{ color: "var(--color-gray)" }} />
             </div>
         </div>
     )
