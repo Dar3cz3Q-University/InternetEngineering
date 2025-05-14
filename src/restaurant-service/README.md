@@ -1,6 +1,6 @@
 # GlovoMaslo - Restaurant Service
 
-[![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/restaurant-service)
+[![workflow status](https://github.com/Dar3cz3Q-University/InternetEngineering/actions/workflows/restaurant-service.yml/badge.svg)](https://github.com/Dar3cz3Q-University/InternetEngineering/master/src/restaurant-service)
 
 {description}
 

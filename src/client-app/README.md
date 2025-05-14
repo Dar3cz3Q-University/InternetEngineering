@@ -1,6 +1,6 @@
 # GlovoMaslo - Client
 
-[![workflow status](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/actions/workflows/client-app.yml/badge.svg)](https://github.com/KISiM-AGH/projekt-zaliczeniowy-maselniczka/tree/master/src/client-app)
+[![workflow status](https://github.com/Dar3cz3Q-University/InternetEngineering/actions/workflows/client-app.yml/badge.svg)](https://github.com/Dar3cz3Q-University/InternetEngineering/tree/master/src/client)
 
 {description}
 
