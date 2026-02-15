@@ -3,6 +3,7 @@ import StarIcon from '@mui/icons-material/Star';
 import { RestaurantType } from "@/types/restaurant/RestaurantType";
 import convert from "convert-units";
 import Link from "next/link";
+import FavoriteButton from "@/components/ui/buttons/FavoriteButton";
 
 type PropType = {
     restaurantData: Omit<RestaurantType, "description" | "isActive" | "ratesCount">;
@@ -15,6 +16,9 @@ const Restaurant = (props: PropType) => {
 
     return (
         <Link href={`/restaurant/${restaurantData.id}`} className="flex-shrink-0 w-[200px] h-[200px] flex flex-col shadow-lg rounded-3xl font-roboto relative">
+            <div className="absolute top-[8px] right-[8px] z-10">
+                <FavoriteButton restaurantId={restaurantData.id} />
+            </div>
             <div className="relative w-full h-[60%]">
                 <Image
                     src={restaurantData.imageUrl}

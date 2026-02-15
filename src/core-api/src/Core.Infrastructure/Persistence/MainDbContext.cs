@@ -6,6 +6,7 @@ using Core.Domain.OrderAggregate;
 using Core.Domain.RestaurantAggregate;
 using Core.Domain.RestaurantAggregate.Entities;
 using Core.Domain.UserAggregate;
+using Core.Domain.UserAggregate.Entities;
 using Core.Infrastructure.Persistence.Interceptors;
 using Microsoft.EntityFrameworkCore;
 
@@ -31,6 +32,7 @@ namespace Core.Infrastructure.Persistence
         public DbSet<Menu> Menus { get; set; } = null!;
         public DbSet<Order> Orders { get; set; } = null!;
         public DbSet<Category> Categories { get; set; } = null!;
+        public DbSet<FavoriteRestaurant> FavoriteRestaurants { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

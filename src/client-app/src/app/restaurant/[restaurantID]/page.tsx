@@ -38,6 +38,7 @@ const RestaurantPage = () => {
     return (
         <div className="w-full flex flex-col">
             <RestaurantInfo
+                restaurantId={restaurantID}
                 name={data?.name}
                 description={data?.description}
                 imageUrl={data?.imageUrl}

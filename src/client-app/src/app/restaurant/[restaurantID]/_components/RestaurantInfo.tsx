@@ -6,9 +6,11 @@ import StarIcon from '@mui/icons-material/Star';
 import { formatShortTime } from "@/utils/formatters/date-formatter";
 import { Divider } from "@mui/material";
 import PreviousPageButton from "@/components/ui/buttons/PreviousPageButton";
+import FavoriteButton from "@/components/ui/buttons/FavoriteButton";
 import convert from "convert-units";
 
 type PropType = {
+    restaurantId: string;
     name: string;
     description: string | null;
     imageUrl: string;
@@ -22,6 +24,7 @@ type PropType = {
 
 const RestaurantInfo = (props: PropType) => {
     const {
+        restaurantId,
         name,
         description,
         imageUrl,
@@ -38,6 +41,9 @@ const RestaurantInfo = (props: PropType) => {
         <div className="w-full flex flex-col items-center">
             <div className="absolute top-[16px] left-[16px] z-10">
                 <PreviousPageButton />
+            </div>
+            <div className="absolute top-[16px] right-[16px] z-10">
+                <FavoriteButton restaurantId={restaurantId} size="medium" />
             </div>
             <div className="relative w-full h-[200px]">
                 <Image
