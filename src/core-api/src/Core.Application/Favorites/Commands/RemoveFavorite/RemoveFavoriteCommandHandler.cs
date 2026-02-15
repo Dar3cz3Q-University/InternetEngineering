@@ -27,7 +27,7 @@ namespace Core.Application.Favorites.Commands.RemoveFavorite
             var userId = _ctxService.GetUserId();
             var restaurantId = RestaurantId.Create(request.RestaurantId);
 
-            var result = await _favoriteRepository.RemoveAsync(userId, restaurantId);
+            var result = _favoriteRepository.Remove(userId, restaurantId);
 
             if (result.IsError)
                 return result.Errors;
