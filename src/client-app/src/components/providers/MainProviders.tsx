@@ -1,6 +1,7 @@
 "use client";
 
 import { CurrentLocationProvider } from "../contexts/CurrentLocationContext";
+import { FavoritesProvider } from "../contexts/FavoritesContext";
 import { ToastProvider } from "../contexts/ToastContext";
 import { UserProvider } from "../contexts/UserContext";
 import MuiThemeProvider from "./MuiThemeProvider"
@@ -13,7 +14,9 @@ const MainProviders = ({ children }: { children: React.ReactNode }) => {
                 <UserProvider>
                     <CurrentLocationProvider>
                         <ToastProvider>
-                            {children}
+                            <FavoritesProvider>
+                                {children}
+                            </FavoritesProvider>
                         </ToastProvider>
                     </CurrentLocationProvider>
                 </UserProvider>
